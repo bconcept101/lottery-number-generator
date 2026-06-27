@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lottery Number Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Lottery Number Generator</h1>
+    <p class="subtitle">Educational and entertainment random number generator website.</p>
+
+    <section class="card">
+      <h2>Choose a Game</h2>
+
+      <select id="gameSelect">
+        <option value="powerball">Powerball</option>
+        <option value="mega">Mega Millions</option>
+        <option value="pick5">Pick 5 / Georgia Five</option>
+      </select>
+
+      <button onclick="generateNumbers()">Generate Numbers</button>
+
+      <div id="result" class="result"></div>
+      <div id="historyCheck" class="history-check"></div>
+    </section>
+
+    <section class="card">
+      <h2>Disclaimer</h2>
+      <p>This website is for educational and entertainment purposes only. It does not guarantee winning numbers or lottery results.</p>
+    </section>
+
+    <section class="card">
+      <h2>Support</h2>
+      <p>Past number updates can be added manually weekly or monthly.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
