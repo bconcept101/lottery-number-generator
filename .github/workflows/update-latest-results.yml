@@ -1,0 +1,38 @@
+name: Update Latest Lottery Results
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-results:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run latest results update
+        run: node scripts/update-latest-results.js
+
+      - name: Commit updated latest results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          if git diff --quiet latest-results.js; then
+            echo "No latest result changes found."
+          else
+            git add latest-results.js
+            git commit -m "Update latest lottery results"
+            git push
+          fi
