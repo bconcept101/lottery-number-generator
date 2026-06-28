@@ -7,8 +7,7 @@ const SOURCES = {
   lotteryUsaMega: "https://www.lotteryusa.com/mega-millions/",
   lotteryUsaGeorgiaFiveMidday: "https://www.lotteryusa.com/georgia/midday-georgia-five/",
   lotteryUsaGeorgiaFiveEvening: "https://www.lotteryusa.com/georgia/georgia-five/",
-  lotteryUsaFantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/",
-  wsbLottery: "https://www.wsbtv.com/lottery/"
+  lotteryUsaFantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/"
 };
 
 const MONTHS = {
@@ -81,7 +80,10 @@ function formatNumbers(numbers, useLeadingZero = true) {
 }
 
 function dateKeyFromText(value) {
-  const text = String(value || "").replace(",", "").replace(/\s+/g, " ").trim();
+  const text = String(value || "")
+    .replace(/,/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   const shortMatch = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (shortMatch) {
@@ -91,7 +93,10 @@ function dateKeyFromText(value) {
     return `${year}-${month}-${day}`;
   }
 
-  const longMatch = text.match(/(?:sun|mon|tue|wed|thu|fri|sat|sunday|monday|tuesday|wednesday|thursday|friday|saturday)?\.?,?\s*([a-z]+)\s+(\d{1,2}),?\s+(\d{4})/i);
+  const longMatch = text.match(
+    /(?:sun|mon|tue|wed|thu|fri|sat|sunday|monday|tuesday|wednesday|thursday|friday|saturday)?\.?\s*(jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october|nov|november|dec|december)\s+(\d{1,2})\s+(\d{4})/i
+  );
+
   if (longMatch) {
     const monthName = longMatch[1].toLowerCase();
     const month = MONTHS[monthName];
@@ -132,7 +137,9 @@ function todayEasternDate() {
 
 function parsePowerballOfficial(html) {
   const text = htmlToLines(html).join(" ");
-  const match = text.match(/((?:Sun|Mon|Tue|Wed|Thu|Fri|Sat),\s+[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+Power Play/i);
+  const match = text.match(
+    /((?:Sun|Mon|Tue|Wed|Thu|Fri|Sat),\s+[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+Power Play/i
+  );
 
   if (!match) {
     throw new Error("Unable to parse official Powerball result");
@@ -144,6 +151,29 @@ function parsePowerballOfficial(html) {
   };
 }
 
+function findLatestDate(lines, startIndex) {
+  for (let i = startIndex; i < Math.min(lines.length, startIndex + 40); i++) {
+    const candidates = [
+      lines[i],
+      `${lines[i]} ${lines[i + 1] || ""}`,
+      `${lines[i]} ${lines[i + 1] || ""} ${lines[i + 2] || ""}`
+    ];
+
+    for (const candidate of candidates) {
+      try {
+        return {
+          dateKey: dateKeyFromText(candidate),
+          dateIndex: i
+        };
+      } catch {
+        continue;
+      }
+    }
+  }
+
+  throw new Error("Unable to find latest result date");
+}
+
 function parseLotteryUsaLatest(html, expectedCount) {
   const lines = htmlToLines(html);
   const latestIndex = lines.findIndex((line) => normalizeText(line) === "latest numbers");
@@ -152,29 +182,17 @@ function parseLotteryUsaLatest(html, expectedCount) {
     throw new Error("Unable to find latest numbers section");
   }
 
-  let dateText = null;
-  let dateIndex = -1;
-
-  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 30); i++) {
-    if (/(sunday|monday|tuesday|wednesday|thursday|friday|saturday),/i.test(lines[i])) {
-      dateText = lines[i];
-      dateIndex = i;
-      break;
-    }
-  }
-
-  if (!dateText) {
-    throw new Error("Unable to find latest result date");
-  }
-
+  const latestDate = findLatestDate(lines, latestIndex);
   const numbers = [];
 
-  for (let i = dateIndex + 1; i < Math.min(lines.length, dateIndex + 30); i++) {
+  for (let i = latestDate.dateIndex + 1; i < Math.min(lines.length, latestDate.dateIndex + 45); i++) {
     const foundNumbers = getNumbersFromLine(lines[i]);
 
-    if (foundNumbers.length === 1) {
-      numbers.push(foundNumbers[0]);
-    }
+    foundNumbers.forEach((number) => {
+      if (numbers.length < expectedCount) {
+        numbers.push(number);
+      }
+    });
 
     if (numbers.length === expectedCount) {
       break;
@@ -186,7 +204,7 @@ function parseLotteryUsaLatest(html, expectedCount) {
   }
 
   return {
-    dateKey: dateKeyFromText(dateText),
+    dateKey: latestDate.dateKey,
     numbers
   };
 }
@@ -235,6 +253,7 @@ async function buildLatestResults() {
   const powerballBackup = await safeParseBackup("Powerball LotteryUSA", async () =>
     parseLotteryUsaLatest(powerballLotteryUsaHtml, 6)
   );
+
   compareResults("Powerball", powerballOfficial, powerballBackup);
 
   const megaResult = parseLotteryUsaLatest(megaLotteryUsaHtml, 6);
