@@ -8,7 +8,41 @@ body {
 .container {
   max-width: 950px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 30px 20px 40px;
+}
+
+.top-nav {
+  background: white;
+  padding: 18px 22px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-brand {
+  font-weight: bold;
+  color: #12355b;
+  font-size: 18px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #12355b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
 }
 
 .hero {
@@ -152,6 +186,19 @@ button:hover {
 }
 
 @media (max-width: 700px) {
+  .container {
+    padding: 20px 14px 35px;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
   .result-list {
     grid-template-columns: 1fr;
   }
