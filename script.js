@@ -1,18 +1,3 @@
-const pastNumbers = {
-  powerball: [
-    "12-18-24-36-45 PB 7",
-    "3-15-27-41-62 PB 19"
-  ],
-  mega: [
-    "8-14-22-39-50 MB 12",
-    "5-17-31-44-66 MB 20"
-  ],
-  pick5: [
-    "1-2-3-4-5",
-    "7-4-9-0-2"
-  ]
-};
-
 function getRandomNumbers(count, max) {
   let numbers = [];
 
@@ -41,18 +26,33 @@ function createNumberSet(game) {
   if (game === "powerball") {
     const mainNumbers = getRandomNumbers(5, 69);
     const powerball = Math.floor(Math.random() * 26) + 1;
-    return `${mainNumbers.join("-")} PB ${powerball}`;
+
+    return {
+      display: `${mainNumbers.join("-")} PB ${powerball}`,
+      numbers: mainNumbers,
+      specialBall: powerball
+    };
   }
 
   if (game === "mega") {
     const mainNumbers = getRandomNumbers(5, 70);
     const megaBall = Math.floor(Math.random() * 25) + 1;
-    return `${mainNumbers.join("-")} MB ${megaBall}`;
+
+    return {
+      display: `${mainNumbers.join("-")} MB ${megaBall}`,
+      numbers: mainNumbers,
+      specialBall: megaBall
+    };
   }
 
   if (game === "pick5") {
     const digits = getRandomDigits(5);
-    return digits.join("-");
+
+    return {
+      display: digits.join("-"),
+      numbers: digits,
+      specialBall: null
+    };
   }
 }
 
@@ -71,7 +71,7 @@ function generateNumbers() {
 
     resultItem.innerHTML = `
       <div class="result-index">${i}</div>
-      <div class="result-number">${numberSet}</div>
+      <div class="result-number">${numberSet.display}</div>
     `;
 
     resultBox.appendChild(resultItem);
