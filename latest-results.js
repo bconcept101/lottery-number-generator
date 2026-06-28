@@ -19,15 +19,15 @@ const latestResults = {
   },
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
-    "status": "Latest verified result reviewed daily",
-    "drawDate": "Saturday, June 27, 2026",
-    "winningNumbers": "Midday: 4 - 2 - 6 - 9 - 6 | Evening: 2 - 5 - 3 - 5 - 7",
+    "status": "Latest result reviewed daily",
+    "drawDate": "Sunday, June 28, 2026",
+    "winningNumbers": "Midday: 1 - 0 - 4 - 4 - 9 | Evening: 1 - 7 - 9 - 6 - 8",
     "drawType": "Midday and Evening",
     "lastUpdated": "June 28, 2026"
   },
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
-    "status": "Latest verified result reviewed daily",
+    "status": "Latest result reviewed daily",
     "drawDate": "Saturday, June 27, 2026",
     "winningNumbers": "01 - 04 - 20 - 23 - 24",
     "drawType": "Night draw",
