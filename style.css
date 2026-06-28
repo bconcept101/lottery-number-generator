@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #222;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #12355b;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+select,
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+select {
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #12355b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0d2947;
+}
+
+.result {
+  margin-top: 25px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #12355b;
+}
+
+.history-check {
+  margin-top: 15px;
+  text-align: center;
+  color: #444;
+}
