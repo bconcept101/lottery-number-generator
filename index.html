@@ -8,33 +8,70 @@
 </head>
 <body>
   <main class="container">
-    <h1>Lottery Number Generator</h1>
-    <p class="subtitle">Educational and entertainment random number generator website.</p>
 
-    <section class="card">
+    <header class="hero">
+      <h1>Lottery Number Generator</h1>
+      <p>
+        Generate random lottery-style numbers for educational and entertainment purposes.
+      </p>
+    </header>
+
+    <section class="card generator-card">
       <h2>Choose a Game</h2>
+      <p class="section-note">
+        Select a game, choose how many number sets you want, then generate your numbers.
+      </p>
 
+      <label for="gameSelect">Game</label>
       <select id="gameSelect">
         <option value="powerball">Powerball</option>
         <option value="mega">Mega Millions</option>
         <option value="pick5">Pick 5 / Georgia Five</option>
       </select>
 
+      <label for="numberCount">How many sets?</label>
+      <select id="numberCount">
+        <option value="10">10 Number Sets</option>
+        <option value="15">15 Number Sets</option>
+        <option value="20">20 Number Sets</option>
+      </select>
+
       <button onclick="generateNumbers()">Generate Numbers</button>
 
-      <div id="result" class="result"></div>
-      <div id="historyCheck" class="history-check"></div>
+      <div id="result" class="result-list"></div>
     </section>
 
     <section class="card">
+      <h2>How It Works</h2>
+      <p>
+        This tool creates random number sets based on the selected game rules.
+        Each generated set is checked against the saved sample past-number database.
+      </p>
+      <p>
+        Generated numbers are not saved into the past-number database. The database is only for real past draw results that are added manually.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Database Updates</h2>
+      <p>
+        Past winning number history can be added to the number database manually on a weekly or monthly schedule.
+        A real database system will be added later using Supabase.
+      </p>
+    </section>
+
+    <section class="card disclaimer-card">
       <h2>Disclaimer</h2>
-      <p>This website is for educational and entertainment purposes only. It does not guarantee winning numbers or lottery results.</p>
+      <p>
+        This website is for educational and entertainment purposes only.
+        It does not guarantee winning numbers, predict lottery results, or provide gambling advice.
+      </p>
     </section>
 
-    <section class="card">
-      <h2>Support</h2>
-      <p>Past number updates can be added manually weekly or monthly.</p>
-    </section>
+    <footer class="footer">
+      <p>Lottery Number Generator Website</p>
+    </footer>
+
   </main>
 
   <script src="script.js"></script>
