@@ -36,6 +36,9 @@ const MONTHS = {
   december: 12
 };
 
+const WEEKDAY_PATTERN = /(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i;
+const MONTH_PATTERN = /(jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october|nov|november|dec|december)/i;
+
 function readCurrentLatestResults() {
   const filePath = path.join(__dirname, "..", "latest-results.js");
 
@@ -101,6 +104,8 @@ function htmlToLines(html) {
     .replace(/&nbsp;/gi, " ")
     .replace(/&#x27;/gi, "'")
     .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
     .replace(/<[^>]+>/g, "\n")
     .split(/\n+/)
     .map((line) => line.replace(/\s+/g, " ").trim())
@@ -131,12 +136,12 @@ function dateKeyFromText(value) {
     .replace(/\s+/g, " ")
     .trim();
 
-  const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const isoMatch = text.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
   if (isoMatch) {
     return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
   }
 
-  const shortMatch = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const shortMatch = text.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/);
   if (shortMatch) {
     const month = shortMatch[1].padStart(2, "0");
     const day = shortMatch[2].padStart(2, "0");
@@ -178,6 +183,18 @@ function formatDateFromKey(dateKey) {
   }).format(date);
 }
 
+function formatShortDateFromKey(dateKey) {
+  const [year, month, day] = dateKey.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(date);
+}
+
 function todayEasternDate() {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -197,32 +214,74 @@ function validateNumberRange(gameName, numbers, min, max) {
   });
 }
 
-function parseLotteryUsaLatest(html, expectedCount) {
-  const lines = htmlToLines(html);
-  const latestIndex = lines.findIndex((line) => normalizeText(line) === "latest numbers");
+function findLotteryUsaDateBlock(lines, latestIndex) {
+  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 60); i++) {
+    const possibleDateStart =
+      WEEKDAY_PATTERN.test(lines[i]) ||
+      MONTH_PATTERN.test(lines[i]) ||
+      /\b\d{1,2}\/\d{1,2}\/\d{4}\b/.test(lines[i]) ||
+      /\b\d{4}-\d{2}-\d{2}\b/.test(lines[i]);
 
-  if (latestIndex === -1) {
-    throw new Error("Latest numbers section was not found");
-  }
+    if (!possibleDateStart) {
+      continue;
+    }
 
-  let dateText = "";
-  let dateIndex = -1;
+    let combinedDateText = "";
 
-  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 30); i++) {
-    if (/(sunday|monday|tuesday|wednesday|thursday|friday|saturday),/i.test(lines[i])) {
-      dateText = lines[i];
-      dateIndex = i;
-      break;
+    for (let j = i; j < Math.min(lines.length, i + 8); j++) {
+      combinedDateText = `${combinedDateText} ${lines[j]}`.trim();
+
+      try {
+        return {
+          dateKey: dateKeyFromText(combinedDateText),
+          dateText: combinedDateText,
+          endIndex: j
+        };
+      } catch (error) {
+      }
     }
   }
 
-  if (!dateText) {
-    throw new Error("Latest draw date was not found");
+  throw new Error("Latest draw date was not found");
+}
+
+function shouldSkipNumberLine(line, expectedCount) {
+  const normalized = normalizeText(line);
+  const numbers = getNumbers(line);
+
+  if (numbers.length === 0) {
+    return true;
   }
 
+  if (
+    /(prize|payout|jackpot|winner|winners|past|next drawing|estimated|cash option|odds|ticket|tickets|subscribe|draw schedule|days|advertisement)/i.test(normalized)
+  ) {
+    return true;
+  }
+
+  if (!/[a-z]/i.test(line)) {
+    return false;
+  }
+
+  if (/(midday|evening|night|winning numbers|numbers)/i.test(normalized) && numbers.length >= expectedCount) {
+    return false;
+  }
+
+  if (numbers.length === 1 && /^\d{1,2}$/.test(line.trim())) {
+    return false;
+  }
+
+  return true;
+}
+
+function collectLotteryUsaNumbers(lines, startIndex, expectedCount) {
   const numbers = [];
 
-  for (let i = dateIndex + 1; i < Math.min(lines.length, dateIndex + 40); i++) {
+  for (let i = startIndex; i < Math.min(lines.length, startIndex + 80); i++) {
+    if (shouldSkipNumberLine(lines[i], expectedCount)) {
+      continue;
+    }
+
     const foundNumbers = getNumbers(lines[i]);
 
     foundNumbers.forEach((number) => {
@@ -240,8 +299,22 @@ function parseLotteryUsaLatest(html, expectedCount) {
     throw new Error("Latest winning numbers were not found");
   }
 
+  return numbers;
+}
+
+function parseLotteryUsaLatest(html, expectedCount) {
+  const lines = htmlToLines(html);
+  const latestIndex = lines.findIndex((line) => normalizeText(line) === "latest numbers");
+
+  if (latestIndex === -1) {
+    throw new Error("Latest numbers section was not found");
+  }
+
+  const dateBlock = findLotteryUsaDateBlock(lines, latestIndex);
+  const numbers = collectLotteryUsaNumbers(lines, dateBlock.endIndex + 1, expectedCount);
+
   return {
-    dateKey: dateKeyFromText(dateText),
+    dateKey: dateBlock.dateKey,
     numbers
   };
 }
@@ -296,11 +369,17 @@ function buildGeorgiaFive(middayResult, eveningResult, lastUpdated) {
   validateNumberRange("Georgia Five Midday numbers", middayResult.numbers, 0, 9);
   validateNumberRange("Georgia Five Evening numbers", eveningResult.numbers, 0, 9);
 
+  const sameDate = middayResult.dateKey === eveningResult.dateKey;
+
   return {
     gameName: "Pick 5 / Georgia Five",
     status: "Latest result reviewed daily",
-    drawDate: formatDateFromKey(eveningResult.dateKey),
-    winningNumbers: `Midday: ${formatNumbers(middayResult.numbers, false)} | Evening: ${formatNumbers(eveningResult.numbers, false)}`,
+    drawDate: sameDate
+      ? formatDateFromKey(middayResult.dateKey)
+      : `Midday: ${formatDateFromKey(middayResult.dateKey)}; Evening: ${formatDateFromKey(eveningResult.dateKey)}`,
+    winningNumbers: sameDate
+      ? `Midday: ${formatNumbers(middayResult.numbers, false)} | Evening: ${formatNumbers(eveningResult.numbers, false)}`
+      : `Midday (${formatShortDateFromKey(middayResult.dateKey)}): ${formatNumbers(middayResult.numbers, false)} | Evening (${formatShortDateFromKey(eveningResult.dateKey)}): ${formatNumbers(eveningResult.numbers, false)}`,
     drawType: "Midday and Evening",
     lastUpdated
   };
