@@ -10,7 +10,7 @@
 
 This website is an **educational and entertainment random number generator website**.
 
-The website allows visitors to generate random lottery-style numbers for selected games. The project is also being prepared to include a manually updated past-number database.
+The website allows visitors to generate random lottery-style numbers for selected games. The project is also being prepared to include a verified past-number history database.
 
 This website does **not** guarantee winning numbers, predict lottery results, or provide gambling advice.
 
@@ -42,8 +42,9 @@ The website currently includes:
 9. Support page
 10. PayPal support button
 11. Basic responsive design for desktop, tablet, and mobile
-12. Separate `database.js` file for past-number storage structure
+12. Separate `database.js` file for database structure
 13. Separate `script.js` file for generator logic
+14. Project planning files for data sources, security, automation, Supabase, and full-history import
 
 ---
 
@@ -87,7 +88,7 @@ Linktree may be used later as an optional link hub.
 
 ## PayPal
 
-A PayPal support/donation link has been created and connected to the website.
+A PayPal support link has been created and connected to the website.
 
 ---
 
@@ -140,6 +141,20 @@ The repository currently includes:
 7. `about.html`
 8. `disclaimer.html`
 9. `support.html`
+
+---
+
+# Current Planning Files
+
+The repository also includes planning and production files:
+
+1. `HISTORY-UPDATE-GUIDE.md`
+2. `DATA-SOURCES.md`
+3. `AUTOMATION-PLAN.md`
+4. `SECURITY-CHECKLIST.md`
+5. `SUPABASE-SCHEMA.md`
+6. `DATABASE-MANUAL-TEMPLATE.md`
+7. `FULL-HISTORY-IMPORT-PLAN.md`
 
 ---
 
@@ -207,26 +222,32 @@ Main generator logic file.
 
 Current purpose:
 
-1. Stores game rules
+1. Uses game settings from the database structure
 2. Generates Powerball numbers
 3. Generates Mega Millions numbers
 4. Generates Pick 5 / Georgia Five numbers
 5. Generates Fantasy 5 / Georgia Fantasy 5 numbers
 6. Displays 10, 15, or 20 number sets
 7. Keeps number results clean and boxed
+8. Prepares the project for future database match checking
 
 ---
 
 ## database.js
 
-Database structure file.
+Current database structure file.
 
 Current purpose:
 
-1. Stores sample past-number data
-2. Separates database storage from generator logic
-3. Prepares the project for future manual history updates
-4. Prepares the project for future Supabase upgrade
+1. Stores game database settings
+2. Stores sample or temporary database structure
+3. Keeps database-related information separate from generator logic
+4. Prepares the project for future manual history updates
+5. Prepares the project for future Supabase upgrade
+
+Important rule:
+
+Do **not** add large partial history batches until the full-history import process is planned, researched, and verified.
 
 ---
 
@@ -274,6 +295,106 @@ Current purpose:
 
 ---
 
+# Planning File Purpose
+
+## HISTORY-UPDATE-GUIDE.md
+
+Explains the manual update process for past winning numbers.
+
+Purpose:
+
+1. Shows how manual updates should work
+2. Explains how to format results
+3. Explains how to update `database.js`
+4. Documents the future daily automation direction
+
+---
+
+## DATA-SOURCES.md
+
+Documents preferred sources for lottery results.
+
+Purpose:
+
+1. Lists result source direction for each supported game
+2. Helps avoid random or unreliable data
+3. Supports future manual updates
+4. Supports future automation planning
+
+---
+
+## AUTOMATION-PLAN.md
+
+Documents the future daily automatic update system.
+
+Purpose:
+
+1. Plans the daily update process
+2. Explains how automation may work later
+3. Explains possible Cloudflare Worker use
+4. Explains future Supabase connection
+5. Explains duplicate checking and error handling
+
+---
+
+## SECURITY-CHECKLIST.md
+
+Documents project security rules.
+
+Purpose:
+
+1. Protect GitHub
+2. Protect Cloudflare
+3. Protect PayPal
+4. Protect future Supabase keys
+5. Avoid placing private keys in public GitHub files
+6. Keep the website secure before adding database and automation features
+
+---
+
+## SUPABASE-SCHEMA.md
+
+Documents the future Supabase database structure.
+
+Purpose:
+
+1. Defines future database table structure
+2. Defines fields for lottery results
+3. Defines duplicate prevention ideas
+4. Defines future read and write plans
+5. Keeps Supabase planning organized before setup
+
+---
+
+## DATABASE-MANUAL-TEMPLATE.md
+
+Provides copy-and-paste templates for manual result entries.
+
+Purpose:
+
+1. Gives clean templates for Powerball
+2. Gives clean templates for Mega Millions
+3. Gives clean templates for Pick 5 / Georgia Five
+4. Gives clean templates for Fantasy 5 / Georgia Fantasy 5
+5. Helps keep manual updates consistent
+
+---
+
+## FULL-HISTORY-IMPORT-PLAN.md
+
+Documents the plan for collecting and importing full past-number history.
+
+Purpose:
+
+1. Prevents random partial history from being added too early
+2. Plans full history collection by game
+3. Explains verification rules
+4. Explains formatting rules
+5. Prepares for Supabase import later
+6. Supports the future daily automated update system
+
+---
+
 # Current Game Rules Used in Website
 
 ## Powerball
@@ -308,6 +429,7 @@ Generates:
 
 1. Five digits
 2. Digits may repeat
+3. Exact order matters
 
 Display format:
 
@@ -343,6 +465,10 @@ The PayPal support link has been created and connected.
 
 Visitors can support the continued development, updates, maintenance, testing, and future improvements of the website.
 
+Important rule:
+
+Do not describe the project as a charity or nonprofit unless it is legally registered that way.
+
 ---
 
 # Responsive Design Status
@@ -361,6 +487,45 @@ Current responsive features:
 4. Cards resize properly
 5. Support button becomes full width on mobile
 6. Page spacing adjusts on smaller screens
+
+---
+
+# Visitor-Facing Wording Rule
+
+All visitor-facing wording should be complete and final.
+
+Do not leave unfinished internal project notes on the live website.
+
+Avoid visitor-facing statements such as:
+
+1. “A real database system may be added later”
+2. “This will be updated later”
+3. “Temporary structure”
+4. “Pending future feature”
+
+Those statements are acceptable inside project planning files, but not on public-facing pages unless written professionally.
+
+---
+
+# Current Database Update Statement
+
+Homepage database statement should explain that updates may happen around noon, but are not guaranteed.
+
+Recommended visitor-facing wording:
+
+```html
+<p>
+  Past winning number history may be updated daily around 12:00 noon. Update times are not guaranteed and may vary due to result availability, system maintenance, or other delays.
+</p>
+```
+
+If a second sentence is needed:
+
+```html
+<p>
+  The database is intended to include past results for Powerball, Mega Millions, Pick 5 / Georgia Five, and Fantasy 5 / Georgia Fantasy 5.
+</p>
+```
 
 ---
 
@@ -395,110 +560,214 @@ Current responsive features:
 25. Fantasy 5 / Georgia Fantasy 5 added
 26. Website tested on phone, tablet, and computer
 27. Current website is working properly
+28. `HISTORY-UPDATE-GUIDE.md` created
+29. `DATA-SOURCES.md` created
+30. `AUTOMATION-PLAN.md` created
+31. `SECURITY-CHECKLIST.md` created
+32. `SUPABASE-SCHEMA.md` created
+33. `DATABASE-MANUAL-TEMPLATE.md` created
+34. `FULL-HISTORY-IMPORT-PLAN.md` created
 
 ---
 
 # Current Production Position
 
-The project is now entering:
+The project is now entering the full-history planning and research stage.
 
-## Phase 5: Build the Past Numbers Database
+Current direction:
 
-The website currently has a sample database structure. The next major production step is to prepare a clean manual history update process.
-
----
-
-# Next Production Steps
-
-## Step 1: Create History Update Guide
-
-Create a new file:
-
-`HISTORY-UPDATE-GUIDE.md`
-
-Purpose:
-
-1. Explain how past winning numbers should be collected
-2. Explain how to format numbers
-3. Explain how to add numbers to `database.js`
-4. Explain how to commit updates to GitHub
-5. Explain how to test after updates
-6. Prepare the project for weekly or monthly manual updates
+1. Do not add random partial result batches yet
+2. Research each game separately
+3. Find the best history source for each game
+4. Decide how far back history can be collected
+5. Clean and verify data
+6. Prepare data for Supabase
+7. Later connect the website to the database
+8. Later build daily automated updates
 
 ---
 
-## Step 2: Improve database.js Structure
+# Main Database Direction
 
-The database should be organized clearly for each game:
+The project will eventually need a complete past-results database.
 
-1. Powerball
-2. Mega Millions
-3. Pick 5 / Georgia Five
-4. Fantasy 5 / Georgia Fantasy 5
+The database should include:
 
-Each entry should include:
+1. Powerball history
+2. Mega Millions history
+3. Pick 5 / Georgia Five history
+4. Fantasy 5 / Georgia Fantasy 5 history
+
+The long-term goal is to collect as much verified history as possible for each game.
+
+---
+
+# Important Database Decision
+
+Do not use random partial result batches as the final database.
+
+Before adding large real history data:
+
+1. Research the source
+2. Verify the source
+3. Confirm the available history range
+4. Confirm the data format
+5. Clean the dataset
+6. Remove duplicates
+7. Prepare the import
+8. Test before connecting to the live website
+
+---
+
+# Future Full-History Import Plan
+
+## Step 1: Research Powerball History
+
+Goal:
+
+Find the most complete available Powerball history.
+
+Collect:
 
 1. Draw date
-2. Main numbers
-3. Special ball if the game has one
+2. Five main numbers
+3. Powerball number
+4. Source
+5. Verification status
 
 ---
 
-## Step 3: Add Real Past Number Samples
+## Step 2: Research Mega Millions History
 
-Start with a small batch of real past winning numbers for each game.
+Goal:
 
-Recommended starting amount:
+Find the most complete available Mega Millions history.
 
-1. 10 Powerball results
-2. 10 Mega Millions results
-3. 10 Pick 5 / Georgia Five results
-4. 10 Fantasy 5 / Georgia Fantasy 5 results
+Collect:
 
----
-
-## Step 4: Add Database Check Feature Back Visually Later
-
-The current homepage only shows clean generated numbers.
-
-Later, we may add a clean optional message such as:
-
-1. “Matched past result”
-2. “No past match found”
-3. “Check history”
-
-This should be done without making the results look crowded.
+1. Draw date
+2. Five main numbers
+3. Mega Ball number
+4. Source
+5. Verification status
 
 ---
 
-## Step 5: Supabase Later
+## Step 3: Research Pick 5 / Georgia Five History
 
-After the manual database works, Supabase may be added later.
+Goal:
 
-Supabase future purpose:
+Find the most complete available Georgia Five history.
 
-1. Store real past numbers
-2. Make updates easier
-3. Reduce large JavaScript files
-4. Prepare for automated updates later
+Collect:
+
+1. Draw date
+2. Draw time if available
+3. Five digits
+4. Source
+5. Verification status
+
+---
+
+## Step 4: Research Fantasy 5 / Georgia Fantasy 5 History
+
+Goal:
+
+Find the most complete available Georgia Fantasy 5 history.
+
+Collect:
+
+1. Draw date
+2. Five main numbers
+3. Source
+4. Verification status
+
+---
+
+## Step 5: Create Clean Data Files
+
+Possible future files:
+
+1. `powerball-history.json`
+2. `mega-millions-history.json`
+3. `georgia-five-history.json`
+4. `georgia-fantasy-five-history.json`
+
+These may be temporary files before importing into Supabase.
+
+---
+
+## Step 6: Prepare Supabase
+
+After history research is complete, create Supabase database structure using:
+
+`SUPABASE-SCHEMA.md`
+
+---
+
+## Step 7: Import History
+
+Import the cleaned and verified data into Supabase.
+
+---
+
+## Step 8: Connect Website to Supabase
+
+Later, the website should read history from Supabase instead of using only `database.js`.
+
+---
+
+## Step 9: Add Past Result Check
+
+Later, generated numbers should be checked against the past-results database.
+
+The display should stay clean and not overcrowded.
+
+---
+
+## Step 10: Build Daily Automation
+
+The future daily update system should:
+
+1. Run daily around 12:00 noon
+2. Check all supported games
+3. Pull latest results
+4. Validate data
+5. Avoid duplicates
+6. Save new results
+7. Log updates
+8. Skip if results are delayed or unavailable
+
+---
+
+# Security Direction Before Automation
+
+Before Supabase or automation is added:
+
+1. GitHub two-factor authentication should be enabled
+2. Cloudflare two-factor authentication should be enabled
+3. PayPal two-factor authentication should be enabled
+4. No secret keys should be stored in GitHub
+5. No private API keys should be placed in public website files
+6. Supabase service role keys must never be exposed in browser code
 
 ---
 
 # Future Production Phases
 
-## Phase 6: Full Database Build
+## Phase 6: Full History Research
 
 Goal:
 
-Build a larger manual past-number database.
+Research complete past-result sources for all supported games.
 
 ---
 
-## Phase 7: Database Search or Check Feature
+## Phase 7: Data Cleaning and Formatting
 
 Goal:
 
-Allow generated numbers to be checked against the stored history in a clean way.
+Prepare clean data files for future import.
 
 ---
 
@@ -510,23 +779,31 @@ Move past-number storage from `database.js` to Supabase.
 
 ---
 
-## Phase 9: Automatic Update System Later
+## Phase 9: Website Database Connection
 
 Goal:
 
-Use a future update system to help update results after new lottery drawings.
-
-Possible future structure:
-
-1. Scheduled update tool
-2. Official result source
-3. Supabase database
-4. Duplicate checking
-5. Automatic insert of new results
+Connect the website to Supabase and allow it to read stored past results.
 
 ---
 
-## Phase 10: Custom Domain Later
+## Phase 10: Past Result Match Feature
+
+Goal:
+
+Allow generated numbers to be checked against stored past results in a clean way.
+
+---
+
+## Phase 11: Daily Automation System
+
+Goal:
+
+Automatically update new draw results daily around 12:00 noon when results are available.
+
+---
+
+## Phase 12: Custom Domain Later
 
 Goal:
 
@@ -538,11 +815,11 @@ A custom domain is not needed yet.
 
 ---
 
-## Phase 11: Final Review
+## Phase 13: Final Review
 
 Goal:
 
-Review grammar, wording, layout, links, mobile display, and functionality before wider sharing.
+Review grammar, wording, layout, links, mobile display, security, and functionality before wider sharing.
 
 ---
 
@@ -557,10 +834,12 @@ Review grammar, wording, layout, links, mobile display, and functionality before
 7. Test the live website after each GitHub update.
 8. Use GitHub as the main file storage.
 9. Use Cloudflare Pages as the live hosting platform.
-10. Add Supabase later only after the manual database structure is working.
+10. Add Supabase later only after the manual database structure and history plan are clean.
 11. Always provide complete replacement files for edits.
 12. Keep instructions simple and step-by-step.
 13. Update this blueprint after major progress.
+14. Do not add large partial history batches until the full-history import plan is followed.
+15. Public website wording must be final and visitor-ready.
 
 ---
 
@@ -576,8 +855,16 @@ The project should continue from the latest completed phase.
 
 # Next Immediate Action
 
-Create the file:
+Start full-history research by game.
 
-`HISTORY-UPDATE-GUIDE.md`
+Recommended next file:
 
-Then begin preparing the manual past-number update process.
+`POWERBALL-HISTORY-RESEARCH.md`
+
+Purpose:
+
+1. Research available Powerball history sources
+2. Decide the best source
+3. Document how far back the history goes
+4. Decide how Powerball history should be collected
+5. Prepare for clean import later
