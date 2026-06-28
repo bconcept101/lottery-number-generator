@@ -34,5 +34,16 @@ const pastNumbers = {
       drawDate: "Sample",
       numbers: [7, 4, 9, 0, 2]
     }
+  ],
+
+  fantasy5: [
+    {
+      drawDate: "Sample",
+      numbers: [4, 12, 18, 27, 39]
+    },
+    {
+      drawDate: "Sample",
+      numbers: [6, 15, 22, 31, 42]
+    }
   ]
 };
