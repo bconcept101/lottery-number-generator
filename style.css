@@ -3,6 +3,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f4f7fb;
   color: #222;
+  line-height: 1.6;
 }
 
 .container {
@@ -54,11 +55,14 @@ body {
   color: #12355b;
   font-size: 34px;
   margin-bottom: 10px;
+  line-height: 1.2;
 }
 
 .hero p {
   color: #444;
   font-size: 17px;
+  max-width: 780px;
+  margin: 0 auto;
 }
 
 .card {
@@ -73,6 +77,16 @@ body {
   margin-top: 0;
   margin-bottom: 14px;
   font-size: 26px;
+  color: #12355b;
+  line-height: 1.25;
+}
+
+.card h3 {
+  color: #12355b;
+}
+
+.card p {
+  color: #333;
 }
 
 .section-note {
@@ -80,11 +94,19 @@ body {
   color: #333;
 }
 
+.section-note-small {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 16px;
+  color: #444;
+}
+
 label {
   display: block;
   margin-top: 16px;
   margin-bottom: 8px;
   font-weight: bold;
+  color: #12355b;
 }
 
 select,
@@ -150,6 +172,55 @@ button:hover {
   color: #12355b;
 }
 
+.home-info-grid,
+.schedule-list,
+.latest-results-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.home-info-card,
+.schedule-item,
+.latest-result-item {
+  background: #f8fafc;
+  border: 1px solid #d8e2ee;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.home-info-card h3,
+.schedule-item h3,
+.latest-result-item h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 1.2rem;
+  color: #12355b;
+}
+
+.home-info-card p,
+.schedule-item p,
+.latest-result-item p {
+  margin: 8px 0;
+  line-height: 1.45;
+}
+
+.info-label {
+  font-weight: 700;
+  color: #12355b;
+}
+
+.result-status {
+  font-weight: 700;
+  color: #0f3d63;
+  background: #eaf4ff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
 .disclaimer-card {
   border-left: 5px solid #12355b;
 }
@@ -185,6 +256,14 @@ button:hover {
   padding: 20px 0;
 }
 
+@media (min-width: 760px) {
+  .home-info-grid,
+  .schedule-list,
+  .latest-results-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 700px) {
   .container {
     padding: 20px 14px 35px;
@@ -199,16 +278,30 @@ button:hover {
     gap: 12px;
   }
 
-  .result-list {
-    grid-template-columns: 1fr;
-  }
-
   .hero h1 {
     font-size: 28px;
   }
 
+  .hero p {
+    font-size: 16px;
+  }
+
   .card {
     padding: 22px;
+  }
+
+  .card h2 {
+    font-size: 23px;
+  }
+
+  .result-list {
+    grid-template-columns: 1fr;
+  }
+
+  .home-info-card,
+  .schedule-item,
+  .latest-result-item {
+    padding: 16px;
   }
 
   .support-button {
