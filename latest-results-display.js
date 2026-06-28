@@ -6,6 +6,50 @@ function formatLatestResultValue(value, fallbackText) {
   return fallbackText;
 }
 
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+function displayValue(element, value, fallbackText) {
+  if (!element) {
+    return;
+  }
+
+  element.textContent = formatLatestResultValue(value, fallbackText);
+}
+
+function displayWinningNumbers(element, value, fallbackText) {
+  if (!element) {
+    return;
+  }
+
+  const finalValue = formatLatestResultValue(value, fallbackText);
+
+  clearElement(element);
+
+  if (finalValue.includes(" | ")) {
+    const parts = finalValue.split(" | ");
+
+    parts.forEach((part, index) => {
+      const line = document.createElement("span");
+      line.textContent = part;
+      line.style.display = "block";
+
+      if (index > 0) {
+        line.style.marginTop = "4px";
+      }
+
+      element.appendChild(line);
+    });
+
+    return;
+  }
+
+  element.textContent = finalValue;
+}
+
 function displayLatestResults() {
   if (typeof latestResults === "undefined") {
     return;
@@ -55,40 +99,11 @@ function displayLatestResults() {
     const drawTypeElement = document.getElementById(card.drawTypeId);
     const lastUpdatedElement = document.getElementById(card.lastUpdatedId);
 
-    if (drawDateElement) {
-      drawDateElement.textContent = formatLatestResultValue(
-        result.drawDate,
-        "Result date is being reviewed"
-      );
-    }
-
-    if (winningNumbersElement) {
-      winningNumbersElement.textContent = formatLatestResultValue(
-        result.winningNumbers,
-        "Winning numbers are being reviewed"
-      );
-    }
-
-    if (extraNumberElement) {
-      extraNumberElement.textContent = formatLatestResultValue(
-        result.extraNumber,
-        "Extra game number is being reviewed"
-      );
-    }
-
-    if (drawTypeElement) {
-      drawTypeElement.textContent = formatLatestResultValue(
-        result.drawType,
-        "Draw type is being reviewed"
-      );
-    }
-
-    if (lastUpdatedElement) {
-      lastUpdatedElement.textContent = formatLatestResultValue(
-        result.lastUpdated,
-        "Update time is being reviewed"
-      );
-    }
+    displayValue(drawDateElement, result.drawDate, "Result date is being reviewed");
+    displayWinningNumbers(winningNumbersElement, result.winningNumbers, "Winning numbers are being reviewed");
+    displayValue(extraNumberElement, result.extraNumber, "Extra game number is being reviewed");
+    displayValue(drawTypeElement, result.drawType, "Draw type is being reviewed");
+    displayValue(lastUpdatedElement, result.lastUpdated, "Update time is being reviewed");
   });
 }
 
