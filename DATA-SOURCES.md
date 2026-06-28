@@ -2,9 +2,19 @@
 
 ## Purpose
 
-This file documents the result sources that may be used for manual history updates now and future daily automated updates later.
+This file documents the data sources used for the Lottery Number Generator Website.
 
-The goal is to keep the Lottery Number Generator Website organized before moving into Supabase and automation.
+The purpose of this file is to keep result sources organized, clearly labeled, and separated by use case.
+
+This file covers:
+
+1. Current live latest-results sources
+2. Structured data sources
+3. Readable fallback sources
+4. Manual verification sources
+5. Source limitations
+6. Future source improvement plans
+7. Rules for preventing automation failure
 
 ---
 
@@ -19,203 +29,49 @@ The website currently supports:
 
 ---
 
-# Important Rule
+# Important Source Rule
 
-Only real past draw results should be added to the database.
+Only real past draw results should be used for result history or latest winning result display.
 
-Generated numbers from the website should never be saved as official past winning numbers.
-
----
-
-# Preferred Source Rule
-
-Use official lottery sources first whenever possible.
-
-If a third-party source is ever used, the result should be checked against an official source before being treated as verified.
+Generated numbers from the website should never be saved or treated as official past winning numbers.
 
 ---
 
-# Source List
+# Source Priority Rule
 
-## Powerball
+Use sources in this order:
 
-Preferred source:
+1. Structured official or government-published data source
+2. Official lottery website result page
+3. Readable fallback source
+4. Manual review only when needed
 
-`https://www.powerball.com/previous-results`
+Important:
 
-Purpose:
+If a readable fallback source is used, it must be clearly understood as a practical data source, not the final official authority.
 
-1. Check past Powerball results
-2. Confirm draw dates
-3. Confirm five main numbers
-4. Confirm Powerball number
-
-Database key:
-
-`powerball`
+Visitors should always be told to confirm final winning numbers, prize details, drawing schedules, and game rules through the official lottery source.
 
 ---
 
-## Mega Millions
+# Current Live Automation Sources
 
-Preferred source:
+The current latest-results automation uses:
 
-`https://www.megamillions.com/winning-numbers/previous-drawings.aspx`
+1. NY Open Data structured JSON for Powerball
+2. NY Open Data structured JSON for Mega Millions
+3. LotteryUSA readable result pages for Georgia Five
+4. LotteryUSA readable result page for Fantasy 5
 
-Purpose:
-
-1. Check past Mega Millions results
-2. Confirm draw dates
-3. Confirm five main numbers
-4. Confirm Mega Ball number
-
-Database key:
-
-`mega`
+This setup was chosen because structured JSON is more stable than scraping regular website pages.
 
 ---
 
-## Pick 5 / Georgia Five
+# Structured Data Sources
 
-Preferred source:
+## Powerball Structured Source
 
-`https://www.galottery.com/en-us/games/draw-games/georgia-five.html`
+Current automation source:
 
-Additional Georgia Lottery results page:
-
-`https://www.galottery.com/en-us/winning-numbers.html`
-
-Purpose:
-
-1. Check Georgia Five results
-2. Confirm draw dates
-3. Confirm midday or evening draw if needed
-4. Confirm five digits
-5. Confirm digits in exact order
-
-Database key:
-
-`pick5`
-
----
-
-## Fantasy 5 / Georgia Fantasy 5
-
-Preferred source:
-
-`https://www.galottery.com/en-us/games/draw-games/fantasy-five.html`
-
-Additional Georgia Lottery results page:
-
-`https://www.galottery.com/en-us/winning-numbers.html`
-
-Purpose:
-
-1. Check Georgia Fantasy 5 results
-2. Confirm draw dates
-3. Confirm five main numbers
-4. Confirm numbers are from 1 to 42
-
-Database key:
-
-`fantasy5`
-
----
-
-# Manual Update Plan
-
-Manual updates should follow this process:
-
-1. Open the source page
-2. Confirm the game
-3. Confirm the draw date
-4. Confirm the winning numbers
-5. Format the result for `database.js`
-6. Add the result under the correct game key
-7. Mark the result as verified if it came from an official source
-8. Commit the update to GitHub
-9. Wait for Cloudflare Pages to redeploy
-10. Test the live website
-
----
-
-# Future Automated Update Plan
-
-The long-term goal is daily automatic updates.
-
-The future system should:
-
-1. Run daily around the selected update time
-2. Check all supported games
-3. Pull the latest available result data
-4. Validate the result format
-5. Check whether the draw date already exists
-6. Save only new results
-7. Avoid duplicates
-8. Store results in Supabase
-9. Log update activity
-10. Keep the website connected to the updated database
-
----
-
-# Future Automation Tools
-
-Possible future tools:
-
-1. Supabase
-2. Cloudflare Worker
-3. Cloudflare scheduled trigger
-4. Official result pages or official result feed if available
-5. Duplicate checking logic
-6. Error handling and update logs
-
----
-
-# Future Supabase Table Idea
-
-Possible table name:
-
-`lottery_results`
-
-Possible fields:
-
-1. `id`
-2. `game_key`
-3. `game_name`
-4. `draw_date`
-5. `draw_time`
-6. `main_numbers`
-7. `special_ball`
-8. `special_ball_label`
-9. `source_url`
-10. `verified`
-11. `created_at`
-12. `updated_at`
-
----
-
-# Update Timing Note
-
-The website may state that past winning number history may be updated daily around 12:00 noon.
-
-This timing should not be guaranteed because results may be delayed by:
-
-1. Result availability
-2. Source website delays
-3. System maintenance
-4. Automation errors
-5. Manual review needs
-
----
-
-# Production Status
-
-This file is a planning file.
-
-It does not control the website yet.
-
-The website currently still uses:
-
-`database.js`
-
-Later, the project may move from `database.js` to Supabase.
+```text
+https://data.ny.gov/resource/d6yy-54nr.json?$order=draw_date%20DESC&$limit=1
