@@ -68,7 +68,11 @@ function generateNumbers() {
 
     const resultItem = document.createElement("div");
     resultItem.className = "result-item";
-    resultItem.textContent = `${i}. ${numberSet}`;
+
+    resultItem.innerHTML = `
+      <div class="result-index">${i}</div>
+      <div class="result-number">${numberSet}</div>
+    `;
 
     resultBox.appendChild(resultItem);
   }
