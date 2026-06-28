@@ -3,11 +3,7 @@ const path = require("path");
 
 const SOURCES = {
   powerballOfficial: "https://www.powerball.com/previous-results",
-  lotteryUsaPowerball: "https://www.lotteryusa.com/powerball/",
-  lotteryUsaMega: "https://www.lotteryusa.com/mega-millions/",
-  lotteryUsaGeorgiaFiveMidday: "https://www.lotteryusa.com/georgia/midday-georgia-five/",
-  lotteryUsaGeorgiaFiveEvening: "https://www.lotteryusa.com/georgia/georgia-five/",
-  lotteryUsaFantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/"
+  wsbLottery: "https://www.wsbtv.com/lottery/"
 };
 
 const MONTHS = {
@@ -36,7 +32,7 @@ const MONTHS = {
   december: 12
 };
 
-async function fetchText(url) {
+async function fetchText(url, sourceName) {
   const response = await fetch(url, {
     headers: {
       "User-Agent": "LotteryNumberGeneratorBot/1.0"
@@ -44,10 +40,19 @@ async function fetchText(url) {
   });
 
   if (!response.ok) {
-    throw new Error(`Unable to fetch source: ${url}`);
+    throw new Error(`${sourceName} could not be reached`);
   }
 
   return response.text();
+}
+
+async function fetchOptionalText(url, sourceName) {
+  try {
+    return await fetchText(url, sourceName);
+  } catch (error) {
+    console.log(`${sourceName} skipped: ${error.message}`);
+    return null;
+  }
 }
 
 function htmlToLines(html) {
@@ -76,7 +81,9 @@ function padTwo(value) {
 }
 
 function formatNumbers(numbers, useLeadingZero = true) {
-  return numbers.map((number) => (useLeadingZero ? padTwo(number) : String(number))).join(" - ");
+  return numbers
+    .map((number) => (useLeadingZero ? padTwo(number) : String(number)))
+    .join(" - ");
 }
 
 function dateKeyFromText(value) {
@@ -107,6 +114,7 @@ function dateKeyFromText(value) {
 
     const day = longMatch[2].padStart(2, "0");
     const year = longMatch[3];
+
     return `${year}-${String(month).padStart(2, "0")}-${day}`;
   }
 
@@ -135,6 +143,48 @@ function todayEasternDate() {
   }).format(new Date());
 }
 
+function findDateBeforeGame(lines, gameIndex) {
+  for (let i = gameIndex - 1; i >= Math.max(0, gameIndex - 8); i--) {
+    try {
+      return dateKeyFromText(lines[i]);
+    } catch {
+      continue;
+    }
+  }
+
+  throw new Error("Unable to find draw date");
+}
+
+function findNumbersAfterGame(lines, gameIndex, expectedCount) {
+  for (let i = gameIndex + 1; i < Math.min(lines.length, gameIndex + 12); i++) {
+    const numbers = getNumbersFromLine(lines[i]);
+
+    if (numbers.length === expectedCount) {
+      return numbers;
+    }
+  }
+
+  throw new Error("Unable to find winning numbers");
+}
+
+function parseWsbGame(lines, gameName, expectedCount) {
+  const target = normalizeText(gameName);
+
+  for (let i = 0; i < lines.length; i++) {
+    if (normalizeText(lines[i]) !== target) {
+      continue;
+    }
+
+    return {
+      source: "WSB-TV Lottery Results",
+      dateKey: findDateBeforeGame(lines, i),
+      numbers: findNumbersAfterGame(lines, i, expectedCount)
+    };
+  }
+
+  throw new Error(`Unable to find ${gameName}`);
+}
+
 function parsePowerballOfficial(html) {
   const text = htmlToLines(html).join(" ");
   const match = text.match(
@@ -142,124 +192,111 @@ function parsePowerballOfficial(html) {
   );
 
   if (!match) {
-    throw new Error("Unable to parse official Powerball result");
+    throw new Error("Unable to read official Powerball result");
   }
 
   return {
+    source: "Official Powerball Previous Results",
     dateKey: dateKeyFromText(match[1]),
     numbers: [match[2], match[3], match[4], match[5], match[6], match[7]]
   };
 }
 
-function findLatestDate(lines, startIndex) {
-  for (let i = startIndex; i < Math.min(lines.length, startIndex + 40); i++) {
-    const candidates = [
-      lines[i],
-      `${lines[i]} ${lines[i + 1] || ""}`,
-      `${lines[i]} ${lines[i + 1] || ""} ${lines[i + 2] || ""}`
-    ];
+function validateNumberRange(gameName, numbers, min, max) {
+  numbers.forEach((number) => {
+    const value = Number(number);
 
-    for (const candidate of candidates) {
-      try {
-        return {
-          dateKey: dateKeyFromText(candidate),
-          dateIndex: i
-        };
-      } catch {
-        continue;
-      }
+    if (!Number.isInteger(value) || value < min || value > max) {
+      throw new Error(`${gameName} has an invalid number: ${number}`);
     }
-  }
-
-  throw new Error("Unable to find latest result date");
+  });
 }
 
-function parseLotteryUsaLatest(html, expectedCount) {
-  const lines = htmlToLines(html);
-  const latestIndex = lines.findIndex((line) => normalizeText(line) === "latest numbers");
-
-  if (latestIndex === -1) {
-    throw new Error("Unable to find latest numbers section");
+function validatePowerball(result) {
+  if (!result || result.numbers.length !== 6) {
+    throw new Error("Powerball result is incomplete");
   }
 
-  const latestDate = findLatestDate(lines, latestIndex);
-  const numbers = [];
-
-  for (let i = latestDate.dateIndex + 1; i < Math.min(lines.length, latestDate.dateIndex + 45); i++) {
-    const foundNumbers = getNumbersFromLine(lines[i]);
-
-    foundNumbers.forEach((number) => {
-      if (numbers.length < expectedCount) {
-        numbers.push(number);
-      }
-    });
-
-    if (numbers.length === expectedCount) {
-      break;
-    }
-  }
-
-  if (numbers.length !== expectedCount) {
-    throw new Error("Unable to read latest result numbers");
-  }
-
-  return {
-    dateKey: latestDate.dateKey,
-    numbers
-  };
+  validateNumberRange("Powerball main numbers", result.numbers.slice(0, 5), 1, 69);
+  validateNumberRange("Powerball number", result.numbers.slice(5), 1, 26);
 }
 
-function compareResults(gameName, primaryResult, backupResult) {
-  if (!backupResult) {
-    return;
+function validateMegaMillions(result) {
+  if (!result || result.numbers.length !== 6) {
+    throw new Error("Mega Millions result is incomplete");
   }
 
-  if (primaryResult.dateKey !== backupResult.dateKey) {
-    throw new Error(`${gameName} verification failed: draw dates do not match`);
-  }
-
-  if (primaryResult.numbers.join(",") !== backupResult.numbers.join(",")) {
-    throw new Error(`${gameName} verification failed: winning numbers do not match`);
-  }
+  validateNumberRange("Mega Millions main numbers", result.numbers.slice(0, 5), 1, 70);
+  validateNumberRange("Mega Ball number", result.numbers.slice(5), 1, 24);
 }
 
-async function safeParseBackup(sourceName, parseFunction) {
-  try {
-    return await parseFunction();
-  } catch (error) {
-    console.log(`${sourceName} backup check skipped: ${error.message}`);
-    return null;
+function validateGeorgiaFive(result) {
+  if (!result || result.numbers.length !== 5) {
+    throw new Error("Georgia Five result is incomplete");
   }
+
+  validateNumberRange("Georgia Five numbers", result.numbers, 0, 9);
+}
+
+function validateFantasyFive(result) {
+  if (!result || result.numbers.length !== 5) {
+    throw new Error("Fantasy 5 result is incomplete");
+  }
+
+  validateNumberRange("Fantasy 5 numbers", result.numbers, 1, 42);
+}
+
+function resultsMatch(firstResult, secondResult) {
+  if (!firstResult || !secondResult) {
+    return false;
+  }
+
+  return (
+    firstResult.dateKey === secondResult.dateKey &&
+    firstResult.numbers.join(",") === secondResult.numbers.join(",")
+  );
 }
 
 async function buildLatestResults() {
-  const [
-    powerballOfficialHtml,
-    powerballLotteryUsaHtml,
-    megaLotteryUsaHtml,
-    georgiaFiveMiddayHtml,
-    georgiaFiveEveningHtml,
-    fantasyFiveHtml
-  ] = await Promise.all([
-    fetchText(SOURCES.powerballOfficial),
-    fetchText(SOURCES.lotteryUsaPowerball),
-    fetchText(SOURCES.lotteryUsaMega),
-    fetchText(SOURCES.lotteryUsaGeorgiaFiveMidday),
-    fetchText(SOURCES.lotteryUsaGeorgiaFiveEvening),
-    fetchText(SOURCES.lotteryUsaFantasyFive)
-  ]);
+  const wsbHtml = await fetchText(SOURCES.wsbLottery, "WSB-TV Lottery Results");
+  const wsbLines = htmlToLines(wsbHtml);
 
-  const powerballOfficial = parsePowerballOfficial(powerballOfficialHtml);
-  const powerballBackup = await safeParseBackup("Powerball LotteryUSA", async () =>
-    parseLotteryUsaLatest(powerballLotteryUsaHtml, 6)
+  const wsbPowerball = parseWsbGame(wsbLines, "Powerball", 6);
+  validatePowerball(wsbPowerball);
+
+  const powerballOfficialHtml = await fetchOptionalText(
+    SOURCES.powerballOfficial,
+    "Official Powerball Previous Results"
   );
 
-  compareResults("Powerball", powerballOfficial, powerballBackup);
+  let powerballResult = wsbPowerball;
 
-  const megaResult = parseLotteryUsaLatest(megaLotteryUsaHtml, 6);
-  const georgiaFiveMidday = parseLotteryUsaLatest(georgiaFiveMiddayHtml, 5);
-  const georgiaFiveEvening = parseLotteryUsaLatest(georgiaFiveEveningHtml, 5);
-  const fantasyFive = parseLotteryUsaLatest(fantasyFiveHtml, 5);
+  if (powerballOfficialHtml) {
+    try {
+      const officialPowerball = parsePowerballOfficial(powerballOfficialHtml);
+      validatePowerball(officialPowerball);
+
+      if (!resultsMatch(officialPowerball, wsbPowerball)) {
+        console.log("Powerball backup result does not match official source. Official Powerball result was used.");
+      }
+
+      powerballResult = officialPowerball;
+    } catch (error) {
+      console.log(`Official Powerball source skipped: ${error.message}`);
+    }
+  }
+
+  const megaResult = parseWsbGame(wsbLines, "Mega Millions", 6);
+  validateMegaMillions(megaResult);
+
+  const georgiaFiveMidday = parseWsbGame(wsbLines, "Georgia FIVE Midday", 5);
+  validateGeorgiaFive(georgiaFiveMidday);
+
+  const georgiaFiveEvening = parseWsbGame(wsbLines, "Georgia FIVE Evening", 5);
+  validateGeorgiaFive(georgiaFiveEvening);
+
+  const fantasyFive = parseWsbGame(wsbLines, "Fantasy 5 Night", 5);
+  validateFantasyFive(fantasyFive);
 
   const lastUpdated = todayEasternDate();
 
@@ -267,10 +304,10 @@ async function buildLatestResults() {
     powerball: {
       gameName: "Powerball",
       status: "Latest result reviewed daily",
-      drawDate: formatDateFromKey(powerballOfficial.dateKey),
-      winningNumbers: formatNumbers(powerballOfficial.numbers.slice(0, 5), true),
+      drawDate: formatDateFromKey(powerballResult.dateKey),
+      winningNumbers: formatNumbers(powerballResult.numbers.slice(0, 5), true),
       extraNumberLabel: "Powerball Number",
-      extraNumber: padTwo(powerballOfficial.numbers[5]),
+      extraNumber: padTwo(powerballResult.numbers[5]),
       lastUpdated
     },
 
