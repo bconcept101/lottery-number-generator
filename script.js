@@ -65,19 +65,10 @@ function generateNumbers() {
 
   for (let i = 1; i <= numberCount; i++) {
     const numberSet = createNumberSet(game);
-    const foundInDatabase = pastNumbers[game].includes(numberSet);
 
     const resultItem = document.createElement("div");
     resultItem.className = "result-item";
-
-    resultItem.innerHTML = `
-      <div class="result-number">${i}. ${numberSet}</div>
-      <div class="result-status">
-        ${foundInDatabase 
-          ? "Found in the sample past-number database."
-          : "Not found in the sample past-number database."}
-      </div>
-    `;
+    resultItem.textContent = `${i}. ${numberSet}`;
 
     resultBox.appendChild(resultItem);
   }
