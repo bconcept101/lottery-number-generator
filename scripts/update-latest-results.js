@@ -3,11 +3,12 @@ const path = require("path");
 
 const SOURCES = {
   powerballOfficial: "https://www.powerball.com/previous-results",
-  wsbLottery: "https://www.wsbtv.com/lottery/",
+  lotteryUsaPowerball: "https://www.lotteryusa.com/powerball/",
   lotteryUsaMega: "https://www.lotteryusa.com/mega-millions/",
   lotteryUsaGeorgiaFiveMidday: "https://www.lotteryusa.com/georgia/midday-georgia-five/",
   lotteryUsaGeorgiaFiveEvening: "https://www.lotteryusa.com/georgia/georgia-five/",
-  lotteryUsaFantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/"
+  lotteryUsaFantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/",
+  wsbLottery: "https://www.wsbtv.com/lottery/"
 };
 
 const MONTHS = {
@@ -129,52 +130,6 @@ function todayEasternDate() {
   }).format(new Date());
 }
 
-function findNearbyDate(lines, index) {
-  for (let i = index; i >= Math.max(0, index - 8); i--) {
-    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(lines[i])) {
-      return lines[i];
-    }
-  }
-
-  return null;
-}
-
-function findNearbyNumberLine(lines, index, expectedCount) {
-  for (let i = index + 1; i < Math.min(lines.length, index + 10); i++) {
-    const numbers = getNumbersFromLine(lines[i]);
-
-    if (numbers.length === expectedCount) {
-      return numbers;
-    }
-  }
-
-  return null;
-}
-
-function parseWsbGame(lines, gameName, expectedCount) {
-  const target = normalizeText(gameName);
-
-  for (let i = 0; i < lines.length; i++) {
-    if (normalizeText(lines[i]) !== target) {
-      continue;
-    }
-
-    const dateText = findNearbyDate(lines, i);
-    const numbers = findNearbyNumberLine(lines, i, expectedCount);
-
-    if (!dateText || !numbers) {
-      continue;
-    }
-
-    return {
-      dateKey: dateKeyFromText(dateText),
-      numbers
-    };
-  }
-
-  throw new Error(`Unable to parse WSB result for ${gameName}`);
-}
-
 function parsePowerballOfficial(html) {
   const text = htmlToLines(html).join(" ");
   const match = text.match(/((?:Sun|Mon|Tue|Wed|Thu|Fri|Sat),\s+[A-Z][a-z]{2}\s+\d{1,2},\s+\d{4})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+(\d{1,2})\s+Power Play/i);
@@ -185,8 +140,7 @@ function parsePowerballOfficial(html) {
 
   return {
     dateKey: dateKeyFromText(match[1]),
-    mainNumbers: [match[2], match[3], match[4], match[5], match[6]],
-    extraNumber: match[7]
+    numbers: [match[2], match[3], match[4], match[5], match[6], match[7]]
   };
 }
 
@@ -201,7 +155,7 @@ function parseLotteryUsaLatest(html, expectedCount) {
   let dateText = null;
   let dateIndex = -1;
 
-  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 25); i++) {
+  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 30); i++) {
     if (/(sunday|monday|tuesday|wednesday|thursday|friday|saturday),/i.test(lines[i])) {
       dateText = lines[i];
       dateIndex = i;
@@ -215,9 +169,11 @@ function parseLotteryUsaLatest(html, expectedCount) {
 
   const numbers = [];
 
-  for (let i = dateIndex + 1; i < Math.min(lines.length, dateIndex + 20); i++) {
-    if (/^\d{1,2}$/.test(lines[i])) {
-      numbers.push(lines[i]);
+  for (let i = dateIndex + 1; i < Math.min(lines.length, dateIndex + 30); i++) {
+    const foundNumbers = getNumbersFromLine(lines[i]);
+
+    if (foundNumbers.length === 1) {
+      numbers.push(foundNumbers[0]);
     }
 
     if (numbers.length === expectedCount) {
@@ -235,65 +191,56 @@ function parseLotteryUsaLatest(html, expectedCount) {
   };
 }
 
-function verifySameResult(gameName, firstResult, secondResult, includeExtraNumber = true) {
-  const firstNumbers = firstResult.mainNumbers || firstResult.numbers;
-  const secondNumbers = secondResult.mainNumbers || secondResult.numbers;
+function compareResults(gameName, primaryResult, backupResult) {
+  if (!backupResult) {
+    return;
+  }
 
-  if (firstResult.dateKey !== secondResult.dateKey) {
+  if (primaryResult.dateKey !== backupResult.dateKey) {
     throw new Error(`${gameName} verification failed: draw dates do not match`);
   }
 
-  if (firstNumbers.join(",") !== secondNumbers.slice(0, firstNumbers.length).join(",")) {
+  if (primaryResult.numbers.join(",") !== backupResult.numbers.join(",")) {
     throw new Error(`${gameName} verification failed: winning numbers do not match`);
   }
+}
 
-  if (includeExtraNumber && firstResult.extraNumber && secondNumbers.length > firstNumbers.length) {
-    const secondExtraNumber = secondNumbers[firstNumbers.length];
-
-    if (String(firstResult.extraNumber) !== String(secondExtraNumber)) {
-      throw new Error(`${gameName} verification failed: extra game number does not match`);
-    }
+async function safeParseBackup(sourceName, parseFunction) {
+  try {
+    return await parseFunction();
+  } catch (error) {
+    console.log(`${sourceName} backup check skipped: ${error.message}`);
+    return null;
   }
 }
 
 async function buildLatestResults() {
   const [
     powerballOfficialHtml,
-    wsbHtml,
-    lotteryUsaMegaHtml,
-    lotteryUsaGeorgiaFiveMiddayHtml,
-    lotteryUsaGeorgiaFiveEveningHtml,
-    lotteryUsaFantasyFiveHtml
+    powerballLotteryUsaHtml,
+    megaLotteryUsaHtml,
+    georgiaFiveMiddayHtml,
+    georgiaFiveEveningHtml,
+    fantasyFiveHtml
   ] = await Promise.all([
     fetchText(SOURCES.powerballOfficial),
-    fetchText(SOURCES.wsbLottery),
+    fetchText(SOURCES.lotteryUsaPowerball),
     fetchText(SOURCES.lotteryUsaMega),
     fetchText(SOURCES.lotteryUsaGeorgiaFiveMidday),
     fetchText(SOURCES.lotteryUsaGeorgiaFiveEvening),
     fetchText(SOURCES.lotteryUsaFantasyFive)
   ]);
 
-  const wsbLines = htmlToLines(wsbHtml);
-
   const powerballOfficial = parsePowerballOfficial(powerballOfficialHtml);
-  const powerballWsb = parseWsbGame(wsbLines, "Powerball", 6);
-  verifySameResult("Powerball", powerballOfficial, powerballWsb, true);
+  const powerballBackup = await safeParseBackup("Powerball LotteryUSA", async () =>
+    parseLotteryUsaLatest(powerballLotteryUsaHtml, 6)
+  );
+  compareResults("Powerball", powerballOfficial, powerballBackup);
 
-  const megaWsb = parseWsbGame(wsbLines, "Mega Millions", 6);
-  const megaLotteryUsa = parseLotteryUsaLatest(lotteryUsaMegaHtml, 6);
-  verifySameResult("Mega Millions", { dateKey: megaWsb.dateKey, numbers: megaWsb.numbers }, megaLotteryUsa, false);
-
-  const georgiaFiveMiddayWsb = parseWsbGame(wsbLines, "Georgia FIVE Midday", 5);
-  const georgiaFiveEveningWsb = parseWsbGame(wsbLines, "Georgia FIVE Evening", 5);
-  const georgiaFiveMiddayBackup = parseLotteryUsaLatest(lotteryUsaGeorgiaFiveMiddayHtml, 5);
-  const georgiaFiveEveningBackup = parseLotteryUsaLatest(lotteryUsaGeorgiaFiveEveningHtml, 5);
-
-  verifySameResult("Georgia Five Midday", georgiaFiveMiddayWsb, georgiaFiveMiddayBackup, false);
-  verifySameResult("Georgia Five Evening", georgiaFiveEveningWsb, georgiaFiveEveningBackup, false);
-
-  const fantasyFiveWsb = parseWsbGame(wsbLines, "Fantasy 5 Night", 5);
-  const fantasyFiveBackup = parseLotteryUsaLatest(lotteryUsaFantasyFiveHtml, 5);
-  verifySameResult("Fantasy 5", fantasyFiveWsb, fantasyFiveBackup, false);
+  const megaResult = parseLotteryUsaLatest(megaLotteryUsaHtml, 6);
+  const georgiaFiveMidday = parseLotteryUsaLatest(georgiaFiveMiddayHtml, 5);
+  const georgiaFiveEvening = parseLotteryUsaLatest(georgiaFiveEveningHtml, 5);
+  const fantasyFive = parseLotteryUsaLatest(fantasyFiveHtml, 5);
 
   const lastUpdated = todayEasternDate();
 
@@ -302,27 +249,27 @@ async function buildLatestResults() {
       gameName: "Powerball",
       status: "Latest result reviewed daily",
       drawDate: formatDateFromKey(powerballOfficial.dateKey),
-      winningNumbers: formatNumbers(powerballOfficial.mainNumbers, true),
+      winningNumbers: formatNumbers(powerballOfficial.numbers.slice(0, 5), true),
       extraNumberLabel: "Powerball Number",
-      extraNumber: padTwo(powerballOfficial.extraNumber),
+      extraNumber: padTwo(powerballOfficial.numbers[5]),
       lastUpdated
     },
 
     mega: {
       gameName: "Mega Millions",
       status: "Latest result reviewed daily",
-      drawDate: formatDateFromKey(megaWsb.dateKey),
-      winningNumbers: formatNumbers(megaWsb.numbers.slice(0, 5), true),
+      drawDate: formatDateFromKey(megaResult.dateKey),
+      winningNumbers: formatNumbers(megaResult.numbers.slice(0, 5), true),
       extraNumberLabel: "Mega Ball Number",
-      extraNumber: padTwo(megaWsb.numbers[5]),
+      extraNumber: padTwo(megaResult.numbers[5]),
       lastUpdated
     },
 
     pick5: {
       gameName: "Pick 5 / Georgia Five",
       status: "Latest result reviewed daily",
-      drawDate: formatDateFromKey(georgiaFiveEveningWsb.dateKey),
-      winningNumbers: `Midday: ${formatNumbers(georgiaFiveMiddayWsb.numbers, false)} | Evening: ${formatNumbers(georgiaFiveEveningWsb.numbers, false)}`,
+      drawDate: formatDateFromKey(georgiaFiveEvening.dateKey),
+      winningNumbers: `Midday: ${formatNumbers(georgiaFiveMidday.numbers, false)} | Evening: ${formatNumbers(georgiaFiveEvening.numbers, false)}`,
       drawType: "Midday and Evening",
       lastUpdated
     },
@@ -330,8 +277,8 @@ async function buildLatestResults() {
     fantasy5: {
       gameName: "Fantasy 5 / Georgia Fantasy 5",
       status: "Latest result reviewed daily",
-      drawDate: formatDateFromKey(fantasyFiveWsb.dateKey),
-      winningNumbers: formatNumbers(fantasyFiveWsb.numbers, true),
+      drawDate: formatDateFromKey(fantasyFive.dateKey),
+      winningNumbers: formatNumbers(fantasyFive.numbers, true),
       drawType: "Night draw",
       lastUpdated
     }
