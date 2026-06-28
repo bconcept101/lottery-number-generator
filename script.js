@@ -37,35 +37,48 @@ function getRandomDigits(count) {
   return digits;
 }
 
-function generateNumbers() {
-  const game = document.getElementById("gameSelect").value;
-  const resultBox = document.getElementById("result");
-  const historyBox = document.getElementById("historyCheck");
-
-  let finalNumbers = "";
-
+function createNumberSet(game) {
   if (game === "powerball") {
     const mainNumbers = getRandomNumbers(5, 69);
     const powerball = Math.floor(Math.random() * 26) + 1;
-    finalNumbers = `${mainNumbers.join("-")} PB ${powerball}`;
+    return `${mainNumbers.join("-")} PB ${powerball}`;
   }
 
   if (game === "mega") {
     const mainNumbers = getRandomNumbers(5, 70);
     const megaBall = Math.floor(Math.random() * 25) + 1;
-    finalNumbers = `${mainNumbers.join("-")} MB ${megaBall}`;
+    return `${mainNumbers.join("-")} MB ${megaBall}`;
   }
 
   if (game === "pick5") {
     const digits = getRandomDigits(5);
-    finalNumbers = digits.join("-");
+    return digits.join("-");
   }
+}
 
-  resultBox.textContent = finalNumbers;
+function generateNumbers() {
+  const game = document.getElementById("gameSelect").value;
+  const numberCount = Number(document.getElementById("numberCount").value);
+  const resultBox = document.getElementById("result");
 
-  if (pastNumbers[game].includes(finalNumbers)) {
-    historyBox.textContent = "This number set already appeared in the sample database.";
-  } else {
-    historyBox.textContent = "This number set was not found in the sample database.";
+  resultBox.innerHTML = "";
+
+  for (let i = 1; i <= numberCount; i++) {
+    const numberSet = createNumberSet(game);
+    const foundInDatabase = pastNumbers[game].includes(numberSet);
+
+    const resultItem = document.createElement("div");
+    resultItem.className = "result-item";
+
+    resultItem.innerHTML = `
+      <div class="result-number">${i}. ${numberSet}</div>
+      <div class="result-status">
+        ${foundInDatabase 
+          ? "Found in the sample past-number database."
+          : "Not found in the sample past-number database."}
+      </div>
+    `;
+
+    resultBox.appendChild(resultItem);
   }
 }
