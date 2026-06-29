@@ -1,0 +1,41 @@
+name: Clean Powerball History
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/raw/powerball.csv"
+      - "scripts/clean-powerball-history.js"
+      - ".github/workflows/clean-powerball-history.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  clean-powerball-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Powerball history cleaning script
+        run: node scripts/clean-powerball-history.js
+
+      - name: Commit cleaned Powerball history files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          if git diff --quiet data/cleaned/powerball-history-cleaned.json POWERBALL-DUPLICATE-REVIEW.md; then
+            echo "No Powerball cleaned history changes found."
+          else
+            git add data/cleaned/powerball-history-cleaned.json POWERBALL-DUPLICATE-REVIEW.md
+            git commit -m "Create cleaned Powerball history data"
+            git push
+          fi
