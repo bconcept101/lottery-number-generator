@@ -3,8 +3,8 @@ const path = require("path");
 const vm = require("vm");
 
 const SOURCES = {
-  powerballNyOpenData: "https://data.ny.gov/resource/d6yy-54nr.json?$order=draw_date%20DESC&$limit=1",
-  megaNyOpenData: "https://data.ny.gov/resource/5xaw-6ayf.json?$order=draw_date%20DESC&$limit=1",
+  powerball: "https://www.lotteryusa.com/powerball/",
+  mega: "https://www.lotteryusa.com/mega-millions/",
   georgiaFiveMidday: "https://www.lotteryusa.com/georgia/midday-georgia-five/",
   georgiaFiveEvening: "https://www.lotteryusa.com/georgia/georgia-five/",
   fantasyFive: "https://www.lotteryusa.com/georgia/fantasy-5/"
@@ -80,21 +80,6 @@ async function fetchText(url, sourceName) {
   }
 
   return response.text();
-}
-
-async function fetchJson(url, sourceName) {
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": "LotteryNumberGeneratorBot/1.0",
-      "Accept": "application/json"
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(`${sourceName} could not be reached`);
-  }
-
-  return response.json();
 }
 
 function htmlToLines(html) {
@@ -215,7 +200,7 @@ function validateNumberRange(gameName, numbers, min, max) {
 }
 
 function findLotteryUsaDateBlock(lines, latestIndex) {
-  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 60); i++) {
+  for (let i = latestIndex; i < Math.min(lines.length, latestIndex + 80); i++) {
     const possibleDateStart =
       WEEKDAY_PATTERN.test(lines[i]) ||
       MONTH_PATTERN.test(lines[i]) ||
@@ -263,7 +248,7 @@ function shouldSkipNumberLine(line, expectedCount) {
     return false;
   }
 
-  if (/(midday|evening|night|winning numbers|numbers)/i.test(normalized) && numbers.length >= expectedCount) {
+  if (/(pb|powerball|mega ball|megaball|midday|evening|night|winning numbers|numbers)/i.test(normalized) && numbers.length >= 1) {
     return false;
   }
 
@@ -277,7 +262,7 @@ function shouldSkipNumberLine(line, expectedCount) {
 function collectLotteryUsaNumbers(lines, startIndex, expectedCount) {
   const numbers = [];
 
-  for (let i = startIndex; i < Math.min(lines.length, startIndex + 80); i++) {
+  for (let i = startIndex; i < Math.min(lines.length, startIndex + 100); i++) {
     if (shouldSkipNumberLine(lines[i], expectedCount)) {
       continue;
     }
@@ -319,48 +304,42 @@ function parseLotteryUsaLatest(html, expectedCount) {
   };
 }
 
-function buildPowerballFromNyOpenData(row, lastUpdated) {
-  const numbers = getNumbers(row.winning_numbers);
+function parseLotteryUsaMainAndExtra(html, expectedMainCount) {
+  const result = parseLotteryUsaLatest(html, expectedMainCount + 1);
 
-  if (numbers.length < 6) {
-    throw new Error("Powerball numbers are incomplete");
-  }
+  return {
+    dateKey: result.dateKey,
+    mainNumbers: result.numbers.slice(0, expectedMainCount),
+    extraNumber: result.numbers[expectedMainCount]
+  };
+}
 
-  const mainNumbers = numbers.slice(0, 5);
-  const powerballNumber = numbers[5];
-
-  validateNumberRange("Powerball main numbers", mainNumbers, 1, 69);
-  validateNumberRange("Powerball number", [powerballNumber], 1, 26);
+function buildPowerball(result, lastUpdated) {
+  validateNumberRange("Powerball main numbers", result.mainNumbers, 1, 69);
+  validateNumberRange("Powerball number", [result.extraNumber], 1, 26);
 
   return {
     gameName: "Powerball",
     status: "Latest result reviewed daily",
-    drawDate: formatDateFromKey(dateKeyFromText(row.draw_date)),
-    winningNumbers: formatNumbers(mainNumbers, true),
+    drawDate: formatDateFromKey(result.dateKey),
+    winningNumbers: formatNumbers(result.mainNumbers, true),
     extraNumberLabel: "Powerball Number",
-    extraNumber: padTwo(powerballNumber),
+    extraNumber: padTwo(result.extraNumber),
     lastUpdated
   };
 }
 
-function buildMegaFromNyOpenData(row, lastUpdated) {
-  const mainNumbers = getNumbers(row.winning_numbers).slice(0, 5);
-  const megaBallNumber = row.mega_ball ? getNumbers(row.mega_ball)[0] : getNumbers(row.winning_numbers)[5];
-
-  if (mainNumbers.length !== 5 || !megaBallNumber) {
-    throw new Error("Mega Millions numbers are incomplete");
-  }
-
-  validateNumberRange("Mega Millions main numbers", mainNumbers, 1, 70);
-  validateNumberRange("Mega Ball number", [megaBallNumber], 1, 24);
+function buildMega(result, lastUpdated) {
+  validateNumberRange("Mega Millions main numbers", result.mainNumbers, 1, 70);
+  validateNumberRange("Mega Ball number", [result.extraNumber], 1, 24);
 
   return {
     gameName: "Mega Millions",
     status: "Latest result reviewed daily",
-    drawDate: formatDateFromKey(dateKeyFromText(row.draw_date)),
-    winningNumbers: formatNumbers(mainNumbers, true),
+    drawDate: formatDateFromKey(result.dateKey),
+    winningNumbers: formatNumbers(result.mainNumbers, true),
     extraNumberLabel: "Mega Ball Number",
-    extraNumber: padTwo(megaBallNumber),
+    extraNumber: padTwo(result.extraNumber),
     lastUpdated
   };
 }
@@ -414,21 +393,17 @@ async function buildLatestResults() {
   const lastUpdated = todayEasternDate();
 
   const powerball = await updateGame("powerball", currentResults, async () => {
-    const rows = await fetchJson(SOURCES.powerballNyOpenData, "NY Open Data Powerball");
-    if (!Array.isArray(rows) || !rows[0]) {
-      throw new Error("No Powerball rows returned");
-    }
+    const powerballHtml = await fetchText(SOURCES.powerball, "Powerball");
+    const powerballResult = parseLotteryUsaMainAndExtra(powerballHtml, 5);
 
-    return buildPowerballFromNyOpenData(rows[0], lastUpdated);
+    return buildPowerball(powerballResult, lastUpdated);
   });
 
   const mega = await updateGame("mega", currentResults, async () => {
-    const rows = await fetchJson(SOURCES.megaNyOpenData, "NY Open Data Mega Millions");
-    if (!Array.isArray(rows) || !rows[0]) {
-      throw new Error("No Mega Millions rows returned");
-    }
+    const megaHtml = await fetchText(SOURCES.mega, "Mega Millions");
+    const megaResult = parseLotteryUsaMainAndExtra(megaHtml, 5);
 
-    return buildMegaFromNyOpenData(rows[0], lastUpdated);
+    return buildMega(megaResult, lastUpdated);
   });
 
   const pick5 = await updateGame("pick5", currentResults, async () => {
