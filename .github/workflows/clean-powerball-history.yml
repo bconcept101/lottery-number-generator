@@ -32,10 +32,11 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          if git diff --quiet data/cleaned/powerball-history-cleaned.json POWERBALL-DUPLICATE-REVIEW.md; then
+          git add data/cleaned/powerball-history-cleaned.json POWERBALL-DUPLICATE-REVIEW.md
+
+          if git diff --cached --quiet; then
             echo "No Powerball cleaned history changes found."
           else
-            git add data/cleaned/powerball-history-cleaned.json POWERBALL-DUPLICATE-REVIEW.md
             git commit -m "Create cleaned Powerball history data"
             git push
           fi
