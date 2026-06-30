@@ -2,37 +2,68 @@ name: Update Latest Lottery Results
 
 on:
   schedule:
-    - cron: "0 16 * * *"
+    # Georgia FIVE Midday result check
+    # Runs around 1:05 PM Eastern during daylight saving time
+    - cron: "5 17 * * *"
+
+    # Georgia FIVE Evening result check
+    # Runs around 7:35 PM Eastern during daylight saving time
+    - cron: "35 23 * * *"
+
+    # Final nightly result check
+    # Covers Fantasy 5, Powerball, Mega Millions, and final daily verification
+    # Runs around 12:10 AM Eastern during daylight saving time
+    - cron: "10 4 * * *"
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: update-latest-lottery-results
+  cancel-in-progress: false
+
 jobs:
-  update-results:
+  update-latest-results:
+    name: Update Latest Lottery Results
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
 
-      - name: Run latest results update
+      - name: Run latest results updater
+        env:
+          RESULT_SOURCE_ATTEMPTS: "3"
+          RESULT_SOURCE_RETRY_DELAY_MS: "15000"
+          RESULT_FETCH_TIMEOUT_MS: "30000"
+          RESULT_UPDATE_ROUNDS: "6"
+          RESULT_UPDATE_ROUND_DELAY_MS: "300000"
+          RESULT_DELAY_BUFFER_MINUTES: "30"
         run: node scripts/update-latest-results.js
 
-      - name: Commit updated latest results
+      - name: Check for result changes
+        id: changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
           if git diff --quiet latest-results.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No latest result changes found."
           else
-            git add latest-results.js
-            git commit -m "Update latest lottery results"
-            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Latest result changes found."
           fi
+
+      - name: Commit updated latest results
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest-results.js
+          git commit -m "Update latest lottery results"
+          git push
