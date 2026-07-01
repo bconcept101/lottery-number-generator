@@ -101,7 +101,7 @@ function validateMainNumbers(drawDate, numbers) {
 }
 
 function validatePowerballNumber(drawDate, number) {
-  if (!Number.isInteger(number) || number < 1 || number > 26) {
+  if (!Number.isInteger(number) || number < 1 || number > 42) {
     throw new Error(`Invalid Powerball extra number for ${drawDate}: ${number}`);
   }
 }
