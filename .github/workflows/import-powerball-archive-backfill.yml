@@ -1,0 +1,23 @@
+name: Import Powerball Archive Backfill to Supabase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  import-powerball-archive-backfill:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Import Powerball archive backfill to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/import-powerball-archive-backfill-to-supabase.js
