@@ -21,6 +21,13 @@ function requireEnv(name, value) {
   }
 }
 
+function cleanSupabaseUrl(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\/rest\/v1\/?$/i, "")
+    .replace(/\/+$/g, "");
+}
+
 function padDate(value) {
   if (!value) return null;
 
@@ -41,7 +48,11 @@ function padDate(value) {
 
 function getField(record, names) {
   for (const name of names) {
-    if (record[name] !== undefined && record[name] !== null && record[name] !== "") {
+    if (
+      record[name] !== undefined &&
+      record[name] !== null &&
+      record[name] !== ""
+    ) {
       return record[name];
     }
   }
@@ -51,14 +62,48 @@ function getField(record, names) {
 
 function parseNumbers(value) {
   if (Array.isArray(value)) {
-    return value.map(Number);
+    return value.map((number) => Number(number));
   }
 
   if (typeof value === "string") {
-    return value.match(/\d+/g)?.map(Number) || [];
+    return value.match(/\d+/g)?.map((number) => Number(number)) || [];
   }
 
   return [];
+}
+
+function parseInteger(value) {
+  if (value === undefined || value === null || value === "") {
+    return null;
+  }
+
+  const number = Number(value);
+
+  if (!Number.isInteger(number)) {
+    return null;
+  }
+
+  return number;
+}
+
+function validateMainNumbers(drawDate, numbers) {
+  if (!Array.isArray(numbers) || numbers.length !== 5) {
+    throw new Error(`Invalid Powerball main numbers count for ${drawDate}`);
+  }
+
+  numbers.forEach((number) => {
+    if (!Number.isInteger(number) || number < 1 || number > 69) {
+      throw new Error(
+        `Invalid Powerball main number ${number} for ${drawDate}`
+      );
+    }
+  });
+}
+
+function validatePowerballNumber(drawDate, number) {
+  if (!Number.isInteger(number) || number < 1 || number > 26) {
+    throw new Error(`Invalid Powerball extra number for ${drawDate}: ${number}`);
+  }
 }
 
 function normalizeRecord(record) {
@@ -72,6 +117,10 @@ function normalizeRecord(record) {
     ])
   );
 
+  if (!drawDate) {
+    throw new Error(`Missing draw date: ${JSON.stringify(record)}`);
+  }
+
   const mainNumbers = parseNumbers(
     getField(record, [
       "main_numbers",
@@ -83,8 +132,11 @@ function normalizeRecord(record) {
     ])
   );
 
-  const extraNumber = Number(
+  const extraNumber = parseInteger(
     getField(record, [
+      "special_ball",
+      "specialBall",
+      "special_ball_number",
       "extra_number",
       "extraNumber",
       "powerball",
@@ -94,23 +146,27 @@ function normalizeRecord(record) {
     ])
   );
 
-  if (!drawDate) {
-    throw new Error(`Missing draw date: ${JSON.stringify(record)}`);
-  }
+  validateMainNumbers(drawDate, mainNumbers);
+  validatePowerballNumber(drawDate, extraNumber);
 
-  if (mainNumbers.length !== 5) {
-    throw new Error(`Invalid Powerball numbers for ${drawDate}`);
-  }
-
-  if (!Number.isInteger(extraNumber)) {
-    throw new Error(`Invalid Powerball extra number for ${drawDate}`);
-  }
+  const multiplierValue = getField(record, [
+    "power_play",
+    "powerPlay",
+    "multiplier",
+    "Power Play"
+  ]);
 
   return {
     game_key: "powerball",
     game_name: "Powerball",
     draw_date: drawDate,
-    draw_day: getField(record, ["draw_day", "drawDay", "weekday", "day"]) || null,
+    draw_day:
+      getField(record, [
+        "draw_day",
+        "drawDay",
+        "weekday",
+        "day"
+      ]) || null,
 
     number_1: mainNumbers[0],
     number_2: mainNumbers[1],
@@ -119,36 +175,47 @@ function normalizeRecord(record) {
     number_5: mainNumbers[4],
 
     extra_number: extraNumber,
-    extra_label: "Powerball Number",
+    extra_label:
+      getField(record, [
+        "special_ball_label",
+        "extra_label",
+        "extraLabel"
+      ]) || "Powerball Number",
 
     multiplier:
-      getField(record, [
-        "multiplier",
-        "powerPlay",
-        "power_play",
-        "Power Play"
-      ]) || null,
+      multiplierValue !== null && multiplierValue !== undefined
+        ? String(multiplierValue)
+        : null,
 
     source_name:
-      getField(record, ["source_name", "sourceName", "source"]) ||
-      "Cleaned Powerball History",
+      getField(record, [
+        "source_name",
+        "sourceName",
+        "source",
+        "source_type"
+      ]) || "Cleaned Powerball History",
 
     source_url:
-      getField(record, ["source_url", "sourceUrl", "url"]) ||
-      null
+      getField(record, [
+        "source_url",
+        "sourceUrl",
+        "url"
+      ]) || null
   };
 }
 
 async function uploadBatch(records) {
+  const baseUrl = cleanSupabaseUrl(SUPABASE_URL);
+
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?on_conflict=game_key,draw_date`,
+    `${baseUrl}/rest/v1/${TABLE_NAME}?on_conflict=game_key,draw_date`,
     {
       method: "POST",
       headers: {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
         "Content-Type": "application/json",
-        Prefer: "resolution=merge-duplicates"
+        Prefer: "resolution=merge-duplicates,return=minimal"
       },
       body: JSON.stringify(records)
     }
@@ -182,7 +249,10 @@ async function main() {
   for (let i = 0; i < normalized.length; i += BATCH_SIZE) {
     const batch = normalized.slice(i, i + BATCH_SIZE);
     await uploadBatch(batch);
-    console.log(`Uploaded ${Math.min(i + BATCH_SIZE, normalized.length)} of ${normalized.length}`);
+
+    console.log(
+      `Uploaded ${Math.min(i + BATCH_SIZE, normalized.length)} of ${normalized.length}`
+    );
   }
 
   console.log("Powerball history import completed successfully.");
