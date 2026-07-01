@@ -12,27 +12,18 @@ const CONFIG = {
   fetchTimeoutMs: Number(process.env.RESULT_FETCH_TIMEOUT_MS || 30000),
   updateRounds: Number(process.env.RESULT_UPDATE_ROUNDS || 6),
   updateRoundDelayMs: Number(process.env.RESULT_UPDATE_ROUND_DELAY_MS || 300000),
-  resultDelayBufferMinutes: Number(process.env.RESULT_DELAY_BUFFER_MINUTES || 30)
+  resultDelayBufferMinutes: Number(process.env.RESULT_DELAY_BUFFER_MINUTES || 30),
+  publishedResultsUrl:
+    process.env.PUBLISHED_RESULTS_URL ||
+    "https://lottery-number-generator-6ey.pages.dev/latest-results.js"
 };
 
 const SOURCES = {
-  powerball: [
-    "https://www.lotteryusa.com/georgia/powerball/",
-    "https://www.lotteryusa.com/powerball/"
-  ],
-  mega: [
-    "https://www.lotteryusa.com/georgia/mega-millions/",
-    "https://www.lotteryusa.com/mega-millions/"
-  ],
-  georgiaFiveMidday: [
-    "https://www.lotteryusa.com/georgia/midday-georgia-five/"
-  ],
-  georgiaFiveEvening: [
-    "https://www.lotteryusa.com/georgia/georgia-five/"
-  ],
-  fantasyFive: [
-    "https://www.lotteryusa.com/georgia/fantasy-5/"
-  ]
+  wsb: "https://www.wsbtv.com/lottery/",
+  jackpocket: "https://lottery.jackpocket.com/en/lottery-results/georgia",
+  lotteryNetPick5Midday: "https://www.lottery.net/georgia/five-midday/numbers",
+  lotteryNetPick5Evening: "https://www.lottery.net/georgia/five-evening/numbers",
+  lotteryNetFantasy5: "https://www.lottery.net/georgia/fantasy-5/numbers"
 };
 
 const MONTHS = {
@@ -71,8 +62,61 @@ const WEEKDAYS = [
   "Saturday"
 ];
 
-const DATE_LINE_REGEX =
-  /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2}),?\s+(\d{4})$/i;
+const GAME_RULES = {
+  powerball: {
+    label: "Powerball",
+    mainCount: 5,
+    mainMin: 1,
+    mainMax: 69,
+    extraMin: 1,
+    extraMax: 26,
+    drawDays: ["Monday", "Wednesday", "Saturday"],
+    drawHour: 22,
+    drawMinute: 59
+  },
+  mega: {
+    label: "Mega Millions",
+    mainCount: 5,
+    mainMin: 1,
+    mainMax: 70,
+    extraMin: 1,
+    extraMax: 24,
+    drawDays: ["Tuesday", "Friday"],
+    drawHour: 23,
+    drawMinute: 0
+  },
+  pick5Midday: {
+    label: "Georgia FIVE Midday",
+    mainCount: 5,
+    mainMin: 0,
+    mainMax: 9,
+    drawHour: 12,
+    drawMinute: 29
+  },
+  pick5Evening: {
+    label: "Georgia FIVE Evening",
+    mainCount: 5,
+    mainMin: 0,
+    mainMax: 9,
+    drawHour: 18,
+    drawMinute: 59
+  },
+  fantasy5: {
+    label: "Fantasy 5",
+    mainCount: 5,
+    mainMin: 1,
+    mainMax: 42,
+    drawHour: 23,
+    drawMinute: 34
+  }
+};
+
+const DEFAULT_RESULTS = {
+  powerball: {},
+  mega: {},
+  pick5: {},
+  fantasy5: {}
+};
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -154,15 +198,15 @@ function expectedDailyDateKey(drawHour, drawMinute, nowParts = getEasternNowPart
     : addDays(nowParts.dateKey, -2);
 }
 
-function expectedWeeklyDateKey(drawDays, drawHour, drawMinute, nowParts = getEasternNowParts()) {
+function expectedWeeklyDateKey(rule, nowParts = getEasternNowParts()) {
   const readyMinute =
-    drawHour * 60 + drawMinute + CONFIG.resultDelayBufferMinutes;
+    rule.drawHour * 60 + rule.drawMinute + CONFIG.resultDelayBufferMinutes;
 
   for (let daysBack = 0; daysBack <= 7; daysBack += 1) {
     const candidate = addDays(nowParts.dateKey, -daysBack);
     const weekday = weekdayFromDateKey(candidate);
 
-    if (!drawDays.includes(weekday)) {
+    if (!rule.drawDays.includes(weekday)) {
       continue;
     }
 
@@ -180,18 +224,8 @@ function getExpectedKeys() {
   const nowParts = getEasternNowParts();
 
   return {
-    powerball: expectedWeeklyDateKey(
-      ["Monday", "Wednesday", "Saturday"],
-      22,
-      59,
-      nowParts
-    ),
-    mega: expectedWeeklyDateKey(
-      ["Tuesday", "Friday"],
-      23,
-      0,
-      nowParts
-    ),
+    powerball: expectedWeeklyDateKey(GAME_RULES.powerball, nowParts),
+    mega: expectedWeeklyDateKey(GAME_RULES.mega, nowParts),
     pick5Midday: expectedDailyDateKey(12, 29, nowParts),
     pick5Evening: expectedDailyDateKey(18, 59, nowParts),
     fantasy5: expectedDailyDateKey(23, 34, nowParts)
@@ -228,7 +262,8 @@ function decodeHtml(value) {
     .replace(/&#39;|&apos;/gi, "'")
     .replace(/&ndash;|&mdash;/gi, "-")
     .replace(/&rsquo;|&lsquo;/gi, "'")
-    .replace(/&rdquo;|&ldquo;/gi, '"');
+    .replace(/&rdquo;|&ldquo;/gi, '"')
+    .replace(/&reg;|®/gi, "");
 }
 
 function htmlToLines(html) {
@@ -237,7 +272,7 @@ function htmlToLines(html) {
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ")
     .replace(/<(br|hr)\s*\/?\s*>/gi, "\n")
-    .replace(/<\/\s*(p|div|section|article|header|footer|main|h1|h2|h3|h4|h5|h6|li|ul|ol|tr|td|th|table|span)>/gi, "\n")
+    .replace(/<\/\s*(p|div|section|article|header|footer|main|h1|h2|h3|h4|h5|h6|li|ul|ol|tr|td|th|table|span|sup)>/gi, "\n")
     .replace(/<li[^>]*>/gi, "\n")
     .replace(/<[^>]+>/g, " ")
     .split(/\n+/)
@@ -245,155 +280,182 @@ function htmlToLines(html) {
     .filter(Boolean);
 }
 
-function normalize(value) {
+function normalizeLabel(value) {
+  return String(value || "")
+    .replace(/^#+\s*/, "")
+    .replace(/[®™]/g, "")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function normalizeText(value) {
   return String(value || "")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
 }
 
-function dateKeyFromLine(line) {
-  const match = String(line || "")
+function isWeekdayLine(line) {
+  return /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)$/i.test(
+    String(line || "").trim()
+  );
+}
+
+function cleanDateText(value) {
+  return String(value || "")
+    .replace(/\^\{?(st|nd|rd|th)\}?/gi, "$1")
+    .replace(/\b(\d{1,2})\s+(st|nd|rd|th)\b/gi, "$1")
+    .replace(/\b(\d{1,2})(st|nd|rd|th)\b/gi, "$1")
+    .replace(/,/g, " ")
     .replace(/\s+/g, " ")
-    .trim()
-    .match(DATE_LINE_REGEX);
-
-  if (!match) {
-    throw new Error(`Unable to parse date line: ${line}`);
-  }
-
-  const month = MONTHS[match[2].toLowerCase().replace(/\.$/, "")];
-
-  return dateKeyFromParts(Number(match[4]), month, Number(match[3]));
+    .trim();
 }
 
-function findLatestSection(lines) {
-  const latestIndex = lines.findIndex(
-    (line) => normalize(line) === "latest numbers"
-  );
+function dateKeyFromText(value) {
+  const text = cleanDateText(value);
 
-  if (latestIndex === -1) {
-    throw new Error("Latest numbers section was not found");
-  }
-
-  for (let i = latestIndex + 1; i < Math.min(lines.length, latestIndex + 80); i += 1) {
-    const line = lines[i].replace(/\s+/g, " ").trim();
-
-    if (DATE_LINE_REGEX.test(line)) {
-      return {
-        dateIndex: i,
-        dateKey: dateKeyFromLine(line)
-      };
-    }
-  }
-
-  throw new Error("Latest draw date was not found");
-}
-
-function parseDailyGame(html, expectedCount) {
-  const lines = htmlToLines(html);
-  const latest = findLatestSection(lines);
-  const numbers = [];
-
-  for (let i = latest.dateIndex + 1; i < Math.min(lines.length, latest.dateIndex + 80); i += 1) {
-    const line = lines[i].replace(/\s+/g, " ").trim();
-
-    if (DATE_LINE_REGEX.test(line) || /see more numbers/i.test(line)) {
-      break;
-    }
-
-    if (/^\d{1,2}$/.test(line)) {
-      numbers.push(line);
-    }
-
-    if (numbers.length === expectedCount) {
-      break;
-    }
-  }
-
-  if (numbers.length !== expectedCount) {
-    throw new Error(`Expected ${expectedCount} numbers but found ${numbers.length}`);
-  }
-
-  return {
-    dateKey: latest.dateKey,
-    numbers
-  };
-}
-
-function parseBallGame(html, expectedMainCount, specialLabel) {
-  const lines = htmlToLines(html);
-  const latest = findLatestSection(lines);
-  const mainNumbers = [];
-  let extraNumber = null;
-  let multiplier = null;
-
-  const specialRegex = new RegExp(
-    `^${specialLabel}\\s*:?\\s*(\\d{1,2})$`,
-    "i"
-  );
-
-  for (let i = latest.dateIndex + 1; i < Math.min(lines.length, latest.dateIndex + 100); i += 1) {
-    const line = lines[i].replace(/\s+/g, " ").trim();
-
-    if (DATE_LINE_REGEX.test(line) || /see more numbers/i.test(line)) {
-      break;
-    }
-
-    const specialMatch = line.match(specialRegex);
-
-    if (specialMatch) {
-      extraNumber = specialMatch[1];
-      continue;
-    }
-
-    const powerPlayMatch = line.match(/^Power\s*Play\s*:?\s*(\d{1,2})$/i);
-
-    if (powerPlayMatch) {
-      multiplier = powerPlayMatch[1];
-      continue;
-    }
-
-    if (/^\d{1,2}$/.test(line) && mainNumbers.length < expectedMainCount) {
-      mainNumbers.push(line);
-    }
-  }
-
-  if (mainNumbers.length !== expectedMainCount) {
-    throw new Error(
-      `Expected ${expectedMainCount} main numbers but found ${mainNumbers.length}`
+  const slashMatch = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (slashMatch) {
+    return dateKeyFromParts(
+      Number(slashMatch[3]),
+      Number(slashMatch[1]),
+      Number(slashMatch[2])
     );
   }
 
-  if (!extraNumber) {
-    throw new Error(`${specialLabel} number was not found`);
+  const longMatch = text.match(
+    /^(?:(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\s+)?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2})\s+(\d{4})$/i
+  );
+
+  if (!longMatch) {
+    throw new Error(`Unable to parse date: ${value}`);
   }
 
-  return {
-    dateKey: latest.dateKey,
-    mainNumbers,
-    extraNumber,
-    multiplier
-  };
+  const month = MONTHS[longMatch[2].toLowerCase().replace(/\.$/, "")];
+
+  return dateKeyFromParts(
+    Number(longMatch[4]),
+    month,
+    Number(longMatch[3])
+  );
 }
 
-function validateNumbers(gameName, numbers, min, max, expectedCount) {
-  if (numbers.length !== expectedCount) {
-    throw new Error(`${gameName} expected ${expectedCount} numbers`);
+function numberArrayFromLine(line) {
+  const text = String(line || "").replace(/\s+/g, " ").trim();
+
+  if (!/^\d{1,2}(?:\s+\d{1,2})*$/.test(text)) {
+    return [];
+  }
+
+  return text.split(/\s+/).map(numberValue);
+}
+
+function singleNumberFromLine(line) {
+  const text = String(line || "").trim();
+
+  if (!/^\d{1,2}$/.test(text)) {
+    return null;
+  }
+
+  return numberValue(text);
+}
+
+function isStopLine(line) {
+  const text = normalizeText(line);
+
+  return (
+    text.includes("total payout") ||
+    text.includes("current jackpot") ||
+    text.includes("top prize") ||
+    text.includes("next draw") ||
+    text.includes("next top prize") ||
+    text.includes("georgia payout") ||
+    text.includes("national jackpot") ||
+    text.includes("live drawings") ||
+    text.includes("latest draw results") ||
+    text.includes("match 4/5") ||
+    text.includes("match 3/5") ||
+    text.includes("prize payout") ||
+    text.includes("show more results")
+  );
+}
+
+function validateCandidate(candidate) {
+  const rule = GAME_RULES[candidate.gameKey];
+
+  if (!rule) {
+    throw new Error(`No rule found for ${candidate.gameKey}`);
+  }
+
+  const numbers = candidate.mainNumbers || candidate.numbers || [];
+
+  if (numbers.length !== rule.mainCount) {
+    throw new Error(
+      `${candidate.sourceName} ${candidate.gameKey} expected ${rule.mainCount} numbers but found ${numbers.length}`
+    );
   }
 
   numbers.forEach((number) => {
     const value = numberValue(number);
 
-    if (!Number.isInteger(value) || value < min || value > max) {
-      throw new Error(`${gameName} invalid number: ${number}`);
+    if (!Number.isInteger(value) || value < rule.mainMin || value > rule.mainMax) {
+      throw new Error(
+        `${candidate.sourceName} ${candidate.gameKey} invalid number ${number}`
+      );
     }
   });
+
+  if (rule.extraMin !== undefined) {
+    const extra = numberValue(candidate.extraNumber);
+
+    if (!Number.isInteger(extra) || extra < rule.extraMin || extra > rule.extraMax) {
+      throw new Error(
+        `${candidate.sourceName} ${candidate.gameKey} invalid extra number ${candidate.extraNumber}`
+      );
+    }
+  }
+
+  return candidate;
+}
+
+function makeCandidate({
+  gameKey,
+  dateKey,
+  numbers,
+  mainNumbers,
+  extraNumber,
+  multiplier,
+  sourceName,
+  sourceUrl,
+  priority
+}) {
+  const candidate = {
+    gameKey,
+    dateKey,
+    numbers: numbers ? numbers.map(numberValue) : undefined,
+    mainNumbers: mainNumbers ? mainNumbers.map(numberValue) : undefined,
+    extraNumber: extraNumber !== undefined && extraNumber !== null ? numberValue(extraNumber) : undefined,
+    multiplier: multiplier ? String(multiplier).replace(/x$/i, "") : undefined,
+    sourceName,
+    sourceUrl,
+    priority
+  };
+
+  return validateCandidate(candidate);
+}
+
+function candidateKey(candidate) {
+  const numbers = candidate.mainNumbers || candidate.numbers || [];
+  const extra = candidate.extraNumber !== undefined ? `|${candidate.extraNumber}` : "";
+
+  return `${candidate.dateKey}|${numbers.join("-")}${extra}`;
 }
 
 function formatNumbers(numbers, leadingZero = true) {
   return numbers
-    .map((number) => leadingZero ? padTwo(number) : String(numberValue(number)))
+    .map((number) => (leadingZero ? padTwo(numberValue(number)) : String(numberValue(number))))
     .join(" - ");
 }
 
@@ -405,8 +467,10 @@ async function fetchWithTimeout(url) {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "LotteryNumberGeneratorBot/2.1 (+https://lottery-number-generator-6ey.pages.dev/)",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent":
+          "LotteryNumberGeneratorBot/3.0 (+https://lottery-number-generator-6ey.pages.dev/)",
+        "Accept":
+          "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
         "Cache-Control": "no-cache",
         "Pragma": "no-cache"
       }
@@ -422,171 +486,536 @@ async function fetchWithTimeout(url) {
   }
 }
 
-async function fetchSource(name, urls) {
+async function fetchSource(name, url) {
   let lastError = null;
 
-  for (const url of urls) {
-    for (let attempt = 1; attempt <= CONFIG.sourceAttempts; attempt += 1) {
-      try {
-        const html = await fetchWithTimeout(url);
+  for (let attempt = 1; attempt <= CONFIG.sourceAttempts; attempt += 1) {
+    try {
+      const html = await fetchWithTimeout(url);
 
-        if (!html || html.length < 500) {
-          throw new Error("Source returned too little content");
-        }
+      if (!html || html.length < 500) {
+        throw new Error("Source returned too little content");
+      }
 
-        console.log(`${name}: fetched ${url}`);
-        return { html, url };
-      } catch (error) {
-        lastError = error;
-        console.log(`${name}: ${url} attempt ${attempt} failed: ${error.message}`);
+      console.log(`${name}: fetched ${url}`);
+      return html;
+    } catch (error) {
+      lastError = error;
+      console.log(`${name}: attempt ${attempt} failed - ${error.message}`);
 
-        if (attempt < CONFIG.sourceAttempts) {
-          await sleep(CONFIG.sourceRetryDelayMs);
-        }
+      if (attempt < CONFIG.sourceAttempts) {
+        await sleep(CONFIG.sourceRetryDelayMs);
       }
     }
   }
 
-  throw lastError || new Error(`${name}: all sources failed`);
+  throw lastError || new Error(`${name}: failed`);
+}
+
+function readResultsFromJsText(fileContent) {
+  const sandbox = {};
+
+  vm.runInNewContext(`${fileContent}\nresult = latestResults;`, sandbox, {
+    timeout: 5000
+  });
+
+  return sandbox.result || { ...DEFAULT_RESULTS };
 }
 
 function readCurrentResults() {
   if (!fs.existsSync(OUTPUT_FILE)) {
-    return {
-      powerball: {},
-      mega: {},
-      pick5: {},
-      fantasy5: {}
-    };
+    return { ...DEFAULT_RESULTS };
   }
 
   try {
-    const fileContent = fs.readFileSync(OUTPUT_FILE, "utf8");
-    const sandbox = {};
-
-    vm.runInNewContext(`${fileContent}\nresult = latestResults;`, sandbox, {
-      timeout: 5000
-    });
-
-    return sandbox.result || {
-      powerball: {},
-      mega: {},
-      pick5: {},
-      fantasy5: {}
-    };
+    return readResultsFromJsText(fs.readFileSync(OUTPUT_FILE, "utf8"));
   } catch (error) {
     console.log(`Current latest-results.js could not be read: ${error.message}`);
-
-    return {
-      powerball: {},
-      mega: {},
-      pick5: {},
-      fantasy5: {}
-    };
+    return { ...DEFAULT_RESULTS };
   }
 }
 
-function currentDateKey(result) {
-  if (!result) {
-    return null;
-  }
+async function readPublishedWebsiteResults() {
+  try {
+    const fileContent = await fetchWithTimeout(CONFIG.publishedResultsUrl);
+    const results = readResultsFromJsText(fileContent);
 
-  if (result.drawDateKey) {
-    return result.drawDateKey;
-  }
-
-  if (result.meta && result.meta.drawDateKey) {
-    return result.meta.drawDateKey;
-  }
-
-  if (!result.drawDate) {
-    return null;
-  }
-
-  const match = String(result.drawDate).match(
-    /(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/i
-  );
-
-  if (!match) {
-    return null;
-  }
-
-  return dateKeyFromParts(
-    Number(match[4]),
-    MONTHS[match[2].toLowerCase()],
-    Number(match[3])
-  );
-}
-
-function keepNewer(current, candidate, label) {
-  const currentKey = currentDateKey(current);
-  const candidateKey = candidate.drawDateKey;
-
-  if (compareDateKeys(candidateKey, currentKey) < 0) {
     console.log(
-      `${label}: fetched older result ${candidateKey}; keeping current ${currentKey}`
+      `Published website self-check: Pick5 Midday ${results.pick5?.middayDateKey || results.pick5?.meta?.middayDateKey || "unknown"}, ` +
+      `Pick5 Evening ${results.pick5?.eveningDateKey || results.pick5?.meta?.eveningDateKey || "unknown"}, ` +
+      `Fantasy5 ${results.fantasy5?.drawDateKey || results.fantasy5?.meta?.drawDateKey || "unknown"}`
     );
-    return current;
-  }
 
-  return candidate;
+    return results;
+  } catch (error) {
+    console.log(`Published website self-check skipped: ${error.message}`);
+    return null;
+  }
 }
 
-function buildPowerball(parsed, lastUpdated, sourceUrl) {
-  validateNumbers("Powerball main numbers", parsed.mainNumbers, 1, 69, 5);
-  validateNumbers("Powerball number", [parsed.extraNumber], 1, 26, 1);
+function currentSingleDateKey(result) {
+  if (!result) return null;
+  if (result.drawDateKey) return result.drawDateKey;
+  if (result.meta && result.meta.drawDateKey) return result.meta.drawDateKey;
 
-  const result = {
-    gameName: "Powerball",
-    status: "Latest result reviewed daily",
-    drawDate: displayDateFromKey(parsed.dateKey),
-    drawDateKey: parsed.dateKey,
-    winningNumbers: formatNumbers(parsed.mainNumbers, true),
-    extraNumberLabel: "Powerball Number",
-    extraNumber: padTwo(parsed.extraNumber),
-    lastUpdated,
-    meta: {
-      source: "LotteryUSA",
-      sourceUrl,
-      drawDateKey: parsed.dateKey,
-      updatedAt: new Date().toISOString()
+  if (result.drawDate) {
+    try {
+      return dateKeyFromText(result.drawDate);
+    } catch {
+      return null;
     }
+  }
+
+  return null;
+}
+
+function currentPick5SubResult(currentPick5, type) {
+  if (!currentPick5) {
+    return null;
+  }
+
+  const dateKey =
+    type === "midday"
+      ? currentPick5.middayDateKey || currentPick5.meta?.middayDateKey
+      : currentPick5.eveningDateKey || currentPick5.meta?.eveningDateKey;
+
+  const regex =
+    type === "midday"
+      ? /Midday(?:\s*\([^)]+\))?\s*:\s*([0-9\s-]+)/i
+      : /Evening(?:\s*\([^)]+\))?\s*:\s*([0-9\s-]+)/i;
+
+  const match = String(currentPick5.winningNumbers || "").match(regex);
+  const numbers = match ? match[1].match(/\d+/g)?.map(numberValue) : null;
+
+  if (!dateKey || !numbers || numbers.length !== 5) {
+    return null;
+  }
+
+  return {
+    gameKey: type === "midday" ? "pick5Midday" : "pick5Evening",
+    dateKey,
+    numbers,
+    sourceName: "Current Website Data",
+    sourceUrl: CONFIG.publishedResultsUrl,
+    priority: 99
+  };
+}
+
+function parseWsbPage(html) {
+  const lines = htmlToLines(html);
+  const candidates = [];
+
+  const gameMap = [
+    { gameKey: "pick5Midday", label: "Georgia FIVE Midday", needed: 5 },
+    { gameKey: "pick5Evening", label: "Georgia FIVE Evening", needed: 5 },
+    { gameKey: "fantasy5", label: "Fantasy 5 Night", needed: 5 },
+    { gameKey: "mega", label: "Mega Millions", needed: 6 },
+    { gameKey: "powerball", label: "Powerball", needed: 6 }
+  ];
+
+  for (const game of gameMap) {
+    const index = lines.findIndex(
+      (line) => normalizeLabel(line) === normalizeLabel(game.label)
+    );
+
+    if (index === -1) {
+      console.log(`WSB-TV: ${game.label} block not found`);
+      continue;
+    }
+
+    let dateKey = null;
+
+    for (let i = Math.max(0, index - 5); i < index; i += 1) {
+      try {
+        dateKey = dateKeyFromText(lines[i]);
+      } catch {
+        continue;
+      }
+    }
+
+    if (!dateKey) {
+      console.log(`WSB-TV: ${game.label} date not found`);
+      continue;
+    }
+
+    let numberLine = [];
+    let multiplier = null;
+
+    for (let i = index + 1; i < Math.min(lines.length, index + 25); i += 1) {
+      const line = lines[i];
+
+      if (isStopLine(line)) {
+        break;
+      }
+
+      const powerPlayMatch = line.match(/Power\s*Play\s*:?\s*(\d{1,2})\s*x?/i);
+      if (powerPlayMatch) {
+        multiplier = powerPlayMatch[1];
+        continue;
+      }
+
+      const parsedNumbers = numberArrayFromLine(line);
+      if (parsedNumbers.length >= game.needed) {
+        numberLine = parsedNumbers.slice(0, game.needed);
+        break;
+      }
+    }
+
+    if (numberLine.length !== game.needed) {
+      console.log(`WSB-TV: ${game.label} numbers not found`);
+      continue;
+    }
+
+    if (game.gameKey === "powerball" || game.gameKey === "mega") {
+      candidates.push(
+        makeCandidate({
+          gameKey: game.gameKey,
+          dateKey,
+          mainNumbers: numberLine.slice(0, 5),
+          extraNumber: numberLine[5],
+          multiplier,
+          sourceName: "WSB-TV",
+          sourceUrl: SOURCES.wsb,
+          priority: 1
+        })
+      );
+    } else {
+      candidates.push(
+        makeCandidate({
+          gameKey: game.gameKey,
+          dateKey,
+          numbers: numberLine,
+          sourceName: "WSB-TV",
+          sourceUrl: SOURCES.wsb,
+          priority: 1
+        })
+      );
+    }
+  }
+
+  return candidates;
+}
+
+function parseJackpocketPage(html) {
+  const lines = htmlToLines(html);
+  const candidates = [];
+
+  const gameMap = [
+    { gameKey: "pick5Midday", label: "Georgia FIVE Midday", needed: 5 },
+    { gameKey: "pick5Evening", label: "Georgia FIVE Evening", needed: 5 },
+    { gameKey: "fantasy5", label: "Fantasy 5", needed: 5 },
+    { gameKey: "mega", label: "Mega Millions", needed: 6 },
+    { gameKey: "powerball", label: "Powerball", needed: 6 }
+  ];
+
+  for (const game of gameMap) {
+    const index = lines.findIndex(
+      (line) => normalizeLabel(line) === normalizeLabel(game.label)
+    );
+
+    if (index === -1) {
+      continue;
+    }
+
+    let dateKey = null;
+    let dateIndex = -1;
+
+    for (let i = index + 1; i < Math.min(lines.length, index + 8); i += 1) {
+      try {
+        dateKey = dateKeyFromText(lines[i]);
+        dateIndex = i;
+        break;
+      } catch {
+        continue;
+      }
+    }
+
+    if (!dateKey) {
+      continue;
+    }
+
+    const collectedNumbers = [];
+    let multiplier = null;
+
+    for (let i = dateIndex + 1; i < Math.min(lines.length, dateIndex + 30); i += 1) {
+      const line = lines[i];
+
+      if (isStopLine(line)) {
+        break;
+      }
+
+      const powerPlayMatch = line.match(/Power\s*Play\s*:?\s*(\d{1,2})\s*x?/i);
+      if (powerPlayMatch) {
+        multiplier = powerPlayMatch[1];
+        continue;
+      }
+
+      const single = singleNumberFromLine(line);
+      if (single !== null) {
+        collectedNumbers.push(single);
+      }
+
+      if (collectedNumbers.length === game.needed) {
+        continue;
+      }
+    }
+
+    if (collectedNumbers.length < game.needed) {
+      continue;
+    }
+
+    const numbers = collectedNumbers.slice(0, game.needed);
+
+    if (game.gameKey === "powerball" || game.gameKey === "mega") {
+      candidates.push(
+        makeCandidate({
+          gameKey: game.gameKey,
+          dateKey,
+          mainNumbers: numbers.slice(0, 5),
+          extraNumber: numbers[5],
+          multiplier,
+          sourceName: "Jackpocket",
+          sourceUrl: SOURCES.jackpocket,
+          priority: 2
+        })
+      );
+    } else {
+      candidates.push(
+        makeCandidate({
+          gameKey: game.gameKey,
+          dateKey,
+          numbers,
+          sourceName: "Jackpocket",
+          sourceUrl: SOURCES.jackpocket,
+          priority: 2
+        })
+      );
+    }
+  }
+
+  return candidates;
+}
+
+function parseLotteryNetGeorgiaPage(html, gameKey, sourceUrl) {
+  const lines = htmlToLines(html);
+
+  for (let i = 0; i < lines.length - 6; i += 1) {
+    if (!isWeekdayLine(lines[i])) {
+      continue;
+    }
+
+    let dateKey = null;
+
+    try {
+      dateKey = dateKeyFromText(`${lines[i]} ${lines[i + 1]}`);
+    } catch {
+      continue;
+    }
+
+    const numbers = [];
+
+    for (let j = i + 2; j < Math.min(lines.length, i + 20); j += 1) {
+      if (isWeekdayLine(lines[j]) || isStopLine(lines[j])) {
+        break;
+      }
+
+      const single = singleNumberFromLine(lines[j]);
+      if (single !== null) {
+        numbers.push(single);
+      }
+
+      if (numbers.length === GAME_RULES[gameKey].mainCount) {
+        break;
+      }
+    }
+
+    if (numbers.length === GAME_RULES[gameKey].mainCount) {
+      return makeCandidate({
+        gameKey,
+        dateKey,
+        numbers,
+        sourceName: "Lottery.net",
+        sourceUrl,
+        priority: 3
+      });
+    }
+  }
+
+  throw new Error(`Lottery.net ${gameKey} latest result not found`);
+}
+
+async function collectCandidates() {
+  const candidates = {
+    powerball: [],
+    mega: [],
+    pick5Midday: [],
+    pick5Evening: [],
+    fantasy5: []
   };
 
-  if (parsed.multiplier) {
-    result.multiplierLabel = "Power Play";
-    result.multiplier = `${parsed.multiplier}x`;
+  try {
+    const html = await fetchSource("WSB-TV", SOURCES.wsb);
+    const parsed = parseWsbPage(html);
+
+    parsed.forEach((candidate) => {
+      candidates[candidate.gameKey].push(candidate);
+    });
+
+    console.log(`WSB-TV: parsed ${parsed.length} candidate results`);
+  } catch (error) {
+    console.log(`WSB-TV: skipped - ${error.message}`);
   }
 
-  return result;
+  try {
+    const html = await fetchSource("Jackpocket", SOURCES.jackpocket);
+    const parsed = parseJackpocketPage(html);
+
+    parsed.forEach((candidate) => {
+      candidates[candidate.gameKey].push(candidate);
+    });
+
+    console.log(`Jackpocket: parsed ${parsed.length} candidate results`);
+  } catch (error) {
+    console.log(`Jackpocket: skipped - ${error.message}`);
+  }
+
+  const lotteryNetTasks = [
+    ["pick5Midday", SOURCES.lotteryNetPick5Midday],
+    ["pick5Evening", SOURCES.lotteryNetPick5Evening],
+    ["fantasy5", SOURCES.lotteryNetFantasy5]
+  ];
+
+  for (const [gameKey, url] of lotteryNetTasks) {
+    try {
+      const html = await fetchSource(`Lottery.net ${gameKey}`, url);
+      const candidate = parseLotteryNetGeorgiaPage(html, gameKey, url);
+      candidates[gameKey].push(candidate);
+      console.log(`Lottery.net: parsed ${gameKey}`);
+    } catch (error) {
+      console.log(`Lottery.net ${gameKey}: skipped - ${error.message}`);
+    }
+  }
+
+  return candidates;
 }
 
-function buildMega(parsed, lastUpdated, sourceUrl) {
-  validateNumbers("Mega Millions main numbers", parsed.mainNumbers, 1, 70, 5);
-  validateNumbers("Mega Ball number", [parsed.extraNumber], 1, 24, 1);
+function selectTrustedCandidate(gameKey, candidates, currentCandidate = null) {
+  const validCandidates = candidates
+    .filter(Boolean)
+    .sort((a, b) => {
+      const dateCompare = compareDateKeys(b.dateKey, a.dateKey);
+      if (dateCompare !== 0) return dateCompare;
+      return a.priority - b.priority;
+    });
 
+  if (validCandidates.length === 0) {
+    return currentCandidate;
+  }
+
+  const newestDate = validCandidates[0].dateKey;
+  const newestCandidates = validCandidates.filter(
+    (candidate) => candidate.dateKey === newestDate
+  );
+
+  const groups = new Map();
+
+  newestCandidates.forEach((candidate) => {
+    const key = candidateKey(candidate);
+
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+
+    groups.get(key).push(candidate);
+  });
+
+  const rankedGroups = Array.from(groups.values()).sort((a, b) => {
+    if (b.length !== a.length) {
+      return b.length - a.length;
+    }
+
+    const bestPriorityA = Math.min(...a.map((candidate) => candidate.priority));
+    const bestPriorityB = Math.min(...b.map((candidate) => candidate.priority));
+
+    return bestPriorityA - bestPriorityB;
+  });
+
+  const selectedGroup = rankedGroups[0].sort((a, b) => a.priority - b.priority);
+  const selected = {
+    ...selectedGroup[0],
+    sourceNames: selectedGroup.map((candidate) => candidate.sourceName),
+    sourceUrls: selectedGroup.map((candidate) => candidate.sourceUrl),
+    consensusCount: selectedGroup.length,
+    candidateCount: newestCandidates.length
+  };
+
+  if (currentCandidate && compareDateKeys(selected.dateKey, currentCandidate.dateKey) < 0) {
+    console.log(
+      `${gameKey}: selected result ${selected.dateKey} is older than current ${currentCandidate.dateKey}; preserving current`
+    );
+
+    return currentCandidate;
+  }
+
+  const disagreementCount = newestCandidates.length - selectedGroup.length;
+  if (disagreementCount > 0) {
+    console.log(
+      `${gameKey}: warning - ${disagreementCount} same-date source disagreement(s); using ${selected.sourceName}`
+    );
+  }
+
+  console.log(
+    `${gameKey}: trusted ${selected.dateKey} from ${selected.sourceNames.join(", ")}`
+  );
+
+  return selected;
+}
+
+function buildPowerball(candidate, lastUpdated) {
+  return {
+    gameName: "Powerball",
+    status: "Latest result reviewed daily",
+    drawDate: displayDateFromKey(candidate.dateKey),
+    drawDateKey: candidate.dateKey,
+    winningNumbers: formatNumbers(candidate.mainNumbers, true),
+    extraNumberLabel: "Powerball Number",
+    extraNumber: padTwo(candidate.extraNumber),
+    multiplierLabel: candidate.multiplier ? "Power Play" : undefined,
+    multiplier: candidate.multiplier ? `${candidate.multiplier}x` : undefined,
+    lastUpdated,
+    meta: cleanObject({
+      source: candidate.sourceName,
+      sourceNames: candidate.sourceNames || [candidate.sourceName],
+      sourceUrls: candidate.sourceUrls || [candidate.sourceUrl],
+      drawDateKey: candidate.dateKey,
+      consensusCount: candidate.consensusCount || 1,
+      candidateCount: candidate.candidateCount || 1
+    })
+  };
+}
+
+function buildMega(candidate, lastUpdated) {
   return {
     gameName: "Mega Millions",
     status: "Latest result reviewed daily",
-    drawDate: displayDateFromKey(parsed.dateKey),
-    drawDateKey: parsed.dateKey,
-    winningNumbers: formatNumbers(parsed.mainNumbers, true),
+    drawDate: displayDateFromKey(candidate.dateKey),
+    drawDateKey: candidate.dateKey,
+    winningNumbers: formatNumbers(candidate.mainNumbers, true),
     extraNumberLabel: "Mega Ball Number",
-    extraNumber: padTwo(parsed.extraNumber),
+    extraNumber: padTwo(candidate.extraNumber),
     lastUpdated,
     meta: {
-      source: "LotteryUSA",
-      sourceUrl,
-      drawDateKey: parsed.dateKey,
-      updatedAt: new Date().toISOString()
+      source: candidate.sourceName,
+      sourceNames: candidate.sourceNames || [candidate.sourceName],
+      sourceUrls: candidate.sourceUrls || [candidate.sourceUrl],
+      drawDateKey: candidate.dateKey,
+      consensusCount: candidate.consensusCount || 1,
+      candidateCount: candidate.candidateCount || 1
     }
   };
 }
 
-function buildPick5(midday, evening, lastUpdated, sourceUrls) {
-  validateNumbers("Georgia Five Midday numbers", midday.numbers, 0, 9, 5);
-  validateNumbers("Georgia Five Evening numbers", evening.numbers, 0, 9, 5);
-
+function buildPick5(midday, evening, lastUpdated) {
   const sameDate = midday.dateKey === evening.dateKey;
 
   return {
@@ -603,37 +1032,63 @@ function buildPick5(midday, evening, lastUpdated, sourceUrls) {
     drawType: "Midday and Evening",
     lastUpdated,
     meta: {
-      source: "LotteryUSA",
-      middaySourceUrl: sourceUrls.midday,
-      eveningSourceUrl: sourceUrls.evening,
+      source: "Multi-source validation",
+      middaySourceNames: midday.sourceNames || [midday.sourceName],
+      middaySourceUrls: midday.sourceUrls || [midday.sourceUrl],
+      eveningSourceNames: evening.sourceNames || [evening.sourceName],
+      eveningSourceUrls: evening.sourceUrls || [evening.sourceUrl],
       middayDateKey: midday.dateKey,
       eveningDateKey: evening.dateKey,
-      updatedAt: new Date().toISOString()
+      middayConsensusCount: midday.consensusCount || 1,
+      eveningConsensusCount: evening.consensusCount || 1
     }
   };
 }
 
-function buildFantasy5(parsed, lastUpdated, sourceUrl) {
-  validateNumbers("Fantasy 5 numbers", parsed.numbers, 1, 42, 5);
-
+function buildFantasy5(candidate, lastUpdated) {
   return {
     gameName: "Fantasy 5 / Georgia Fantasy 5",
     status: "Latest result reviewed daily",
-    drawDate: displayDateFromKey(parsed.dateKey),
-    drawDateKey: parsed.dateKey,
-    winningNumbers: formatNumbers(parsed.numbers, true),
+    drawDate: displayDateFromKey(candidate.dateKey),
+    drawDateKey: candidate.dateKey,
+    winningNumbers: formatNumbers(candidate.numbers, true),
     drawType: "Night draw",
     lastUpdated,
     meta: {
-      source: "LotteryUSA",
-      sourceUrl,
-      drawDateKey: parsed.dateKey,
-      updatedAt: new Date().toISOString()
+      source: candidate.sourceName,
+      sourceNames: candidate.sourceNames || [candidate.sourceName],
+      sourceUrls: candidate.sourceUrls || [candidate.sourceUrl],
+      drawDateKey: candidate.dateKey,
+      consensusCount: candidate.consensusCount || 1,
+      candidateCount: candidate.candidateCount || 1
     }
   };
 }
 
+function cleanObject(value) {
+  if (Array.isArray(value)) {
+    return value.map(cleanObject);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, entryValue]) => entryValue !== undefined)
+        .map(([key, entryValue]) => [key, cleanObject(entryValue)])
+    );
+  }
+
+  return value;
+}
+
 function dateReady(label, actualKey, expectedKey) {
+  if (!actualKey) {
+    return {
+      ready: false,
+      message: `${label}: no selected result`
+    };
+  }
+
   if (!expectedKey || compareDateKeys(actualKey, expectedKey) >= 0) {
     return {
       ready: true,
@@ -643,141 +1098,16 @@ function dateReady(label, actualKey, expectedKey) {
 
   return {
     ready: false,
-    message: `${label}: source has ${actualKey}; expected ${expectedKey}`
-  };
-}
-
-async function runRound(currentResults) {
-  const lastUpdated = todayEasternDisplayDate();
-  const expected = getExpectedKeys();
-  const nextResults = { ...currentResults };
-  const statuses = [];
-
-  try {
-    const source = await fetchSource("Powerball", SOURCES.powerball);
-    const parsed = parseBallGame(source.html, 5, "PB");
-    const candidate = buildPowerball(parsed, lastUpdated, source.url);
-
-    nextResults.powerball = keepNewer(
-      currentResults.powerball,
-      candidate,
-      "Powerball"
-    );
-
-    statuses.push(
-      dateReady("Powerball", candidate.drawDateKey, expected.powerball)
-    );
-
-    console.log(
-      `Powerball: ${candidate.drawDate} ${candidate.winningNumbers} PB ${candidate.extraNumber}`
-    );
-  } catch (error) {
-    statuses.push({
-      ready: false,
-      message: `Powerball: ${error.message}`
-    });
-
-    console.log(`Powerball: preserved current result - ${error.message}`);
-  }
-
-  try {
-    const source = await fetchSource("Mega Millions", SOURCES.mega);
-    const parsed = parseBallGame(source.html, 5, "MB");
-    const candidate = buildMega(parsed, lastUpdated, source.url);
-
-    nextResults.mega = keepNewer(
-      currentResults.mega,
-      candidate,
-      "Mega Millions"
-    );
-
-    statuses.push(
-      dateReady("Mega Millions", candidate.drawDateKey, expected.mega)
-    );
-
-    console.log(
-      `Mega Millions: ${candidate.drawDate} ${candidate.winningNumbers} MB ${candidate.extraNumber}`
-    );
-  } catch (error) {
-    statuses.push({
-      ready: false,
-      message: `Mega Millions: ${error.message}`
-    });
-
-    console.log(`Mega Millions: preserved current result - ${error.message}`);
-  }
-
-  try {
-    const [middaySource, eveningSource] = await Promise.all([
-      fetchSource("Georgia Five Midday", SOURCES.georgiaFiveMidday),
-      fetchSource("Georgia Five Evening", SOURCES.georgiaFiveEvening)
-    ]);
-
-    const midday = parseDailyGame(middaySource.html, 5);
-    const evening = parseDailyGame(eveningSource.html, 5);
-
-    const candidate = buildPick5(midday, evening, lastUpdated, {
-      midday: middaySource.url,
-      evening: eveningSource.url
-    });
-
-    nextResults.pick5 = candidate;
-
-    statuses.push(
-      dateReady("Georgia Five Midday", midday.dateKey, expected.pick5Midday)
-    );
-
-    statuses.push(
-      dateReady("Georgia Five Evening", evening.dateKey, expected.pick5Evening)
-    );
-
-    console.log(`Georgia Five: ${candidate.winningNumbers}`);
-  } catch (error) {
-    statuses.push({
-      ready: false,
-      message: `Georgia Five: ${error.message}`
-    });
-
-    console.log(`Georgia Five: preserved current result - ${error.message}`);
-  }
-
-  try {
-    const source = await fetchSource("Fantasy 5", SOURCES.fantasyFive);
-    const parsed = parseDailyGame(source.html, 5);
-    const candidate = buildFantasy5(parsed, lastUpdated, source.url);
-
-    nextResults.fantasy5 = keepNewer(
-      currentResults.fantasy5,
-      candidate,
-      "Fantasy 5"
-    );
-
-    statuses.push(
-      dateReady("Fantasy 5", candidate.drawDateKey, expected.fantasy5)
-    );
-
-    console.log(`Fantasy 5: ${candidate.drawDate} ${candidate.winningNumbers}`);
-  } catch (error) {
-    statuses.push({
-      ready: false,
-      message: `Fantasy 5: ${error.message}`
-    });
-
-    console.log(`Fantasy 5: preserved current result - ${error.message}`);
-  }
-
-  return {
-    nextResults,
-    statuses
+    message: `${label}: selected ${actualKey}; expected ${expectedKey}`
   };
 }
 
 function writeResults(latestResults) {
   const ordered = {
-    powerball: latestResults.powerball || {},
-    mega: latestResults.mega || {},
-    pick5: latestResults.pick5 || {},
-    fantasy5: latestResults.fantasy5 || {}
+    powerball: cleanObject(latestResults.powerball || {}),
+    mega: cleanObject(latestResults.mega || {}),
+    pick5: cleanObject(latestResults.pick5 || {}),
+    fantasy5: cleanObject(latestResults.fantasy5 || {})
   };
 
   fs.writeFileSync(
@@ -787,11 +1117,97 @@ function writeResults(latestResults) {
   );
 }
 
+function currentSingleCandidate(gameKey, currentResult) {
+  const dateKey = currentSingleDateKey(currentResult);
+
+  if (!dateKey) {
+    return null;
+  }
+
+  return {
+    gameKey,
+    dateKey,
+    sourceName: "Current Website Data",
+    sourceUrl: CONFIG.publishedResultsUrl,
+    priority: 99
+  };
+}
+
+async function runRound(currentResults) {
+  const lastUpdated = todayEasternDisplayDate();
+  const expected = getExpectedKeys();
+  const candidates = await collectCandidates();
+
+  const trustedPowerball = selectTrustedCandidate(
+    "powerball",
+    candidates.powerball,
+    currentSingleCandidate("powerball", currentResults.powerball)
+  );
+
+  const trustedMega = selectTrustedCandidate(
+    "mega",
+    candidates.mega,
+    currentSingleCandidate("mega", currentResults.mega)
+  );
+
+  const trustedPick5Midday = selectTrustedCandidate(
+    "pick5Midday",
+    candidates.pick5Midday,
+    currentPick5SubResult(currentResults.pick5, "midday")
+  );
+
+  const trustedPick5Evening = selectTrustedCandidate(
+    "pick5Evening",
+    candidates.pick5Evening,
+    currentPick5SubResult(currentResults.pick5, "evening")
+  );
+
+  const trustedFantasy5 = selectTrustedCandidate(
+    "fantasy5",
+    candidates.fantasy5,
+    currentSingleCandidate("fantasy5", currentResults.fantasy5)
+  );
+
+  const nextResults = { ...currentResults };
+
+  if (trustedPowerball && trustedPowerball.mainNumbers && trustedPowerball.extraNumber !== undefined) {
+    nextResults.powerball = buildPowerball(trustedPowerball, lastUpdated);
+  }
+
+  if (trustedMega && trustedMega.mainNumbers && trustedMega.extraNumber !== undefined) {
+    nextResults.mega = buildMega(trustedMega, lastUpdated);
+  }
+
+  if (trustedPick5Midday && trustedPick5Evening && trustedPick5Midday.numbers && trustedPick5Evening.numbers) {
+    nextResults.pick5 = buildPick5(trustedPick5Midday, trustedPick5Evening, lastUpdated);
+  }
+
+  if (trustedFantasy5 && trustedFantasy5.numbers) {
+    nextResults.fantasy5 = buildFantasy5(trustedFantasy5, lastUpdated);
+  }
+
+  const statuses = [
+    dateReady("Powerball", trustedPowerball?.dateKey, expected.powerball),
+    dateReady("Mega Millions", trustedMega?.dateKey, expected.mega),
+    dateReady("Georgia FIVE Midday", trustedPick5Midday?.dateKey, expected.pick5Midday),
+    dateReady("Georgia FIVE Evening", trustedPick5Evening?.dateKey, expected.pick5Evening),
+    dateReady("Fantasy 5", trustedFantasy5?.dateKey, expected.fantasy5)
+  ];
+
+  statuses.forEach((status) => console.log(status.message));
+
+  return {
+    nextResults,
+    statuses
+  };
+}
+
 async function main() {
   let currentResults = readCurrentResults();
   let finalStatuses = [];
 
   console.log(`Starting latest-results updater at ${new Date().toISOString()}`);
+  await readPublishedWebsiteResults();
 
   for (let round = 1; round <= CONFIG.updateRounds; round += 1) {
     console.log(`Starting latest-results update round ${round} of ${CONFIG.updateRounds}.`);
@@ -807,8 +1223,6 @@ async function main() {
       break;
     }
 
-    finalStatuses.forEach((status) => console.log(status.message));
-
     if (round < CONFIG.updateRounds) {
       console.log(
         `Waiting ${Math.round(CONFIG.updateRoundDelayMs / 1000)} seconds before retrying.`
@@ -821,7 +1235,6 @@ async function main() {
   writeResults(currentResults);
 
   console.log("latest-results.js update process completed.");
-
   finalStatuses.forEach((status) => {
     console.log(`- ${status.message}`);
   });
