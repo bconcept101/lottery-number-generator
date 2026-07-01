@@ -7,16 +7,14 @@ const latestResults = {
     "winningNumbers": "10 - 14 - 41 - 53 - 59",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "03",
-    "multiplierLabel": "Power Play",
-    "multiplier": "2x",
     "lastUpdated": "June 30, 2026",
     "meta": {
-      "source": "Jackpocket",
+      "source": "WSB-TV",
       "sourceNames": [
-        "Jackpocket"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://lottery.jackpocket.com/en/lottery-results/georgia"
+        "https://www.wsbtv.com/lottery/"
       ],
       "drawDateKey": "2026-06-29",
       "consensusCount": 1,
@@ -57,29 +55,46 @@ const latestResults = {
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
+        "WSB-TV",
         "Jackpocket"
       ],
       "middaySourceUrls": [
+        "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "eveningSourceNames": [
+        "WSB-TV",
         "Jackpocket"
       ],
       "eveningSourceUrls": [
+        "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "middayDateKey": "2026-06-30",
       "eveningDateKey": "2026-06-30",
-      "middayConsensusCount": 1,
-      "eveningConsensusCount": 1
+      "middayConsensusCount": 2,
+      "eveningConsensusCount": 2
     }
   },
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Sunday, June 28, 2026",
-    "winningNumbers": "18 - 25 - 40 - 41 - 42",
+    "drawDate": "Monday, June 29, 2026",
+    "drawDateKey": "2026-06-29",
+    "winningNumbers": "01 - 02 - 16 - 20 - 29",
     "drawType": "Night draw",
-    "lastUpdated": "June 29, 2026"
+    "lastUpdated": "June 30, 2026",
+    "meta": {
+      "source": "WSB-TV",
+      "sourceNames": [
+        "WSB-TV"
+      ],
+      "sourceUrls": [
+        "https://www.wsbtv.com/lottery/"
+      ],
+      "drawDateKey": "2026-06-29",
+      "consensusCount": 1,
+      "candidateCount": 1
+    }
   }
 };
