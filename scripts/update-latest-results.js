@@ -12,7 +12,40 @@ const CONFIG = {
   fetchTimeoutMs: Number(process.env.RESULT_FETCH_TIMEOUT_MS || 30000),
   updateRounds: Number(process.env.RESULT_UPDATE_ROUNDS || 6),
   updateRoundDelayMs: Number(process.env.RESULT_UPDATE_ROUND_DELAY_MS || 300000),
-  resultDelayBufferMinutes: Number(process.env.RESULT_DELAY_BUFFER_MINUTES || 30),
+
+  // Default result delay buffer. Individual games below can override this.
+  resultDelayBufferMinutes: Number(process.env.RESULT_DELAY_BUFFER_MINUTES || 45),
+
+  // Game-specific buffers keep the updater from expecting results before sources usually publish them.
+  // Fantasy 5 is intentionally delayed longer because the night draw often appears after midnight.
+  gameResultDelayBufferMinutes: {
+    powerball: Number(
+      process.env.POWERBALL_RESULT_DELAY_BUFFER_MINUTES ||
+      process.env.RESULT_DELAY_BUFFER_MINUTES ||
+      90
+    ),
+    mega: Number(
+      process.env.MEGA_RESULT_DELAY_BUFFER_MINUTES ||
+      process.env.RESULT_DELAY_BUFFER_MINUTES ||
+      90
+    ),
+    pick5Midday: Number(
+      process.env.PICK5_MIDDAY_RESULT_DELAY_BUFFER_MINUTES ||
+      process.env.RESULT_DELAY_BUFFER_MINUTES ||
+      60
+    ),
+    pick5Evening: Number(
+      process.env.PICK5_EVENING_RESULT_DELAY_BUFFER_MINUTES ||
+      process.env.RESULT_DELAY_BUFFER_MINUTES ||
+      60
+    ),
+    fantasy5: Number(
+      process.env.FANTASY5_RESULT_DELAY_BUFFER_MINUTES ||
+      process.env.RESULT_DELAY_BUFFER_MINUTES ||
+      180
+    )
+  },
+
   publishedResultsUrl:
     process.env.PUBLISHED_RESULTS_URL ||
     "https://lottery-number-generator-6ey.pages.dev/latest-results.js"
@@ -181,9 +214,22 @@ function getEasternNowParts(date = new Date()) {
   };
 }
 
-function expectedDailyDateKey(drawHour, drawMinute, nowParts = getEasternNowParts()) {
+function resultDelayBufferFor(gameKey) {
+  return (
+    CONFIG.gameResultDelayBufferMinutes?.[gameKey] ??
+    CONFIG.resultDelayBufferMinutes ??
+    45
+  );
+}
+
+function expectedDailyDateKey(
+  drawHour,
+  drawMinute,
+  nowParts = getEasternNowParts(),
+  delayBufferMinutes = CONFIG.resultDelayBufferMinutes
+) {
   const readyMinute =
-    drawHour * 60 + drawMinute + CONFIG.resultDelayBufferMinutes;
+    drawHour * 60 + drawMinute + delayBufferMinutes;
 
   if (readyMinute < 1440) {
     return nowParts.minuteOfDay >= readyMinute
@@ -198,9 +244,13 @@ function expectedDailyDateKey(drawHour, drawMinute, nowParts = getEasternNowPart
     : addDays(nowParts.dateKey, -2);
 }
 
-function expectedWeeklyDateKey(rule, nowParts = getEasternNowParts()) {
+function expectedWeeklyDateKey(
+  rule,
+  nowParts = getEasternNowParts(),
+  delayBufferMinutes = CONFIG.resultDelayBufferMinutes
+) {
   const readyMinute =
-    rule.drawHour * 60 + rule.drawMinute + CONFIG.resultDelayBufferMinutes;
+    rule.drawHour * 60 + rule.drawMinute + delayBufferMinutes;
 
   for (let daysBack = 0; daysBack <= 7; daysBack += 1) {
     const candidate = addDays(nowParts.dateKey, -daysBack);
@@ -224,11 +274,34 @@ function getExpectedKeys() {
   const nowParts = getEasternNowParts();
 
   return {
-    powerball: expectedWeeklyDateKey(GAME_RULES.powerball, nowParts),
-    mega: expectedWeeklyDateKey(GAME_RULES.mega, nowParts),
-    pick5Midday: expectedDailyDateKey(12, 29, nowParts),
-    pick5Evening: expectedDailyDateKey(18, 59, nowParts),
-    fantasy5: expectedDailyDateKey(23, 34, nowParts)
+    powerball: expectedWeeklyDateKey(
+      GAME_RULES.powerball,
+      nowParts,
+      resultDelayBufferFor("powerball")
+    ),
+    mega: expectedWeeklyDateKey(
+      GAME_RULES.mega,
+      nowParts,
+      resultDelayBufferFor("mega")
+    ),
+    pick5Midday: expectedDailyDateKey(
+      GAME_RULES.pick5Midday.drawHour,
+      GAME_RULES.pick5Midday.drawMinute,
+      nowParts,
+      resultDelayBufferFor("pick5Midday")
+    ),
+    pick5Evening: expectedDailyDateKey(
+      GAME_RULES.pick5Evening.drawHour,
+      GAME_RULES.pick5Evening.drawMinute,
+      nowParts,
+      resultDelayBufferFor("pick5Evening")
+    ),
+    fantasy5: expectedDailyDateKey(
+      GAME_RULES.fantasy5.drawHour,
+      GAME_RULES.fantasy5.drawMinute,
+      nowParts,
+      resultDelayBufferFor("fantasy5")
+    )
   };
 }
 
@@ -1143,6 +1216,16 @@ function currentSingleCandidate(gameKey, currentResult) {
 async function runRound(currentResults) {
   const lastUpdated = todayEasternDisplayDate();
   const expected = getExpectedKeys();
+
+  console.log(
+    "Expected result dates after delay buffers: " +
+      `Powerball ${expected.powerball || "none"}, ` +
+      `Mega Millions ${expected.mega || "none"}, ` +
+      `Georgia FIVE Midday ${expected.pick5Midday || "none"}, ` +
+      `Georgia FIVE Evening ${expected.pick5Evening || "none"}, ` +
+      `Fantasy 5 ${expected.fantasy5 || "none"}`
+  );
+
   const candidates = await collectCandidates();
 
   const trustedPowerball = selectTrustedCandidate(
