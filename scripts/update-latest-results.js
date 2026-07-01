@@ -343,13 +343,15 @@ function dateKeyFromText(value) {
 }
 
 function numberArrayFromLine(line) {
-  const text = String(line || "").replace(/\s+/g, " ").trim();
+  const cleanLine = String(line || "")
+    .replace(/Power\s*Play\s*:?\s*\d{1,2}\s*x?/gi, " ")
+    .replace(/\b(Current Jackpot|Total Payout|Georgia Payout|National Jackpot Winners|Live Drawings|Match 4\/5|Match 3\/5)\b[\s\S]*$/i, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
-  if (!/^\d{1,2}(?:\s+\d{1,2})*$/.test(text)) {
-    return [];
-  }
-
-  return text.split(/\s+/).map(numberValue);
+  return Array.from(cleanLine.matchAll(/\b\d{1,2}\b/g)).map((match) =>
+    numberValue(match[0])
+  );
 }
 
 function singleNumberFromLine(line) {
@@ -468,7 +470,7 @@ async function fetchWithTimeout(url) {
       signal: controller.signal,
       headers: {
         "User-Agent":
-          "LotteryNumberGeneratorBot/3.0 (+https://lottery-number-generator-6ey.pages.dev/)",
+          "LotteryNumberGeneratorBot/3.1 (+https://lottery-number-generator-6ey.pages.dev/)",
         "Accept":
           "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
         "Cache-Control": "no-cache",
@@ -641,7 +643,7 @@ function parseWsbPage(html) {
     let numberLine = [];
     let multiplier = null;
 
-    for (let i = index + 1; i < Math.min(lines.length, index + 25); i += 1) {
+    for (let i = index + 1; i < Math.min(lines.length, index + 30); i += 1) {
       const line = lines[i];
 
       if (isStopLine(line)) {
@@ -655,8 +657,13 @@ function parseWsbPage(html) {
       }
 
       const parsedNumbers = numberArrayFromLine(line);
-      if (parsedNumbers.length >= game.needed) {
-        numberLine = parsedNumbers.slice(0, game.needed);
+
+      if (parsedNumbers.length > 0) {
+        numberLine.push(...parsedNumbers);
+      }
+
+      if (numberLine.length >= game.needed) {
+        numberLine = numberLine.slice(0, game.needed);
         break;
       }
     }
