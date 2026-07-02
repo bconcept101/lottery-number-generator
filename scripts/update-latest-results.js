@@ -13,11 +13,8 @@ const CONFIG = {
   updateRounds: Number(process.env.RESULT_UPDATE_ROUNDS || 6),
   updateRoundDelayMs: Number(process.env.RESULT_UPDATE_ROUND_DELAY_MS || 300000),
 
-  // Default result delay buffer. Individual games below can override this.
   resultDelayBufferMinutes: Number(process.env.RESULT_DELAY_BUFFER_MINUTES || 45),
 
-  // Game-specific buffers keep the updater from expecting results before sources usually publish them.
-  // Fantasy 5 is intentionally delayed longer because the night draw often appears after midnight.
   gameResultDelayBufferMinutes: {
     powerball: Number(
       process.env.POWERBALL_RESULT_DELAY_BUFFER_MINUTES ||
@@ -327,6 +324,16 @@ function todayEasternDisplayDate() {
   }).format(new Date());
 }
 
+function formatDrawTime(hour, minute) {
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const displayHour = hour % 12 || 12;
+  return `${displayHour}:${padTwo(minute)} ${suffix} ET`;
+}
+
+function drawDateTimeFromKey(dateKey, rule) {
+  return `${displayDateFromKey(dateKey)}, ${formatDrawTime(rule.drawHour, rule.drawMinute)}`;
+}
+
 function decodeHtml(value) {
   return String(value || "")
     .replace(/&nbsp;|&#160;/gi, " ")
@@ -543,7 +550,7 @@ async function fetchWithTimeout(url) {
       signal: controller.signal,
       headers: {
         "User-Agent":
-          "LotteryNumberGeneratorBot/3.1 (+https://lottery-number-generator-6ey.pages.dev/)",
+          "LotteryNumberGeneratorBot/3.2 (+https://lottery-number-generator-6ey.pages.dev/)",
         "Accept":
           "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
         "Cache-Control": "no-cache",
@@ -1096,29 +1103,78 @@ function buildMega(candidate, lastUpdated) {
 }
 
 function buildPick5(midday, evening, lastUpdated) {
-  const sameDate = midday.dateKey === evening.dateKey;
+  const middayNumbers = formatNumbers(midday.numbers, false);
+  const eveningNumbers = formatNumbers(evening.numbers, false);
+
+  const middayDrawDate = displayDateFromKey(midday.dateKey);
+  const eveningDrawDate = displayDateFromKey(evening.dateKey);
+
+  const middayDrawTime = formatDrawTime(
+    GAME_RULES.pick5Midday.drawHour,
+    GAME_RULES.pick5Midday.drawMinute
+  );
+
+  const eveningDrawTime = formatDrawTime(
+    GAME_RULES.pick5Evening.drawHour,
+    GAME_RULES.pick5Evening.drawMinute
+  );
+
+  const middayDrawDateTime = drawDateTimeFromKey(
+    midday.dateKey,
+    GAME_RULES.pick5Midday
+  );
+
+  const eveningDrawDateTime = drawDateTimeFromKey(
+    evening.dateKey,
+    GAME_RULES.pick5Evening
+  );
 
   return {
     gameName: "Pick 5 / Georgia Five",
     status: "Latest result reviewed daily",
-    drawDate: sameDate
-      ? displayDateFromKey(midday.dateKey)
-      : `Midday: ${displayDateFromKey(midday.dateKey)}; Evening: ${displayDateFromKey(evening.dateKey)}`,
+
+    drawDate:
+      `Midday: ${middayDrawDateTime}; Evening: ${eveningDrawDateTime}`,
+
     middayDateKey: midday.dateKey,
     eveningDateKey: evening.dateKey,
-    winningNumbers: sameDate
-      ? `Midday: ${formatNumbers(midday.numbers, false)} | Evening: ${formatNumbers(evening.numbers, false)}`
-      : `Midday (${displayDateFromKey(midday.dateKey, false)}): ${formatNumbers(midday.numbers, false)} | Evening (${displayDateFromKey(evening.dateKey, false)}): ${formatNumbers(evening.numbers, false)}`,
-    drawType: "Midday and Evening",
+
+    middayDrawDate,
+    eveningDrawDate,
+    middayDrawTime,
+    eveningDrawTime,
+    middayDrawDateTime,
+    eveningDrawDateTime,
+
+    middayWinningNumbers: middayNumbers,
+    eveningWinningNumbers: eveningNumbers,
+
+    winningNumbers:
+      `Midday: ${middayNumbers} | Evening: ${eveningNumbers}`,
+
+    drawType:
+      `Midday draw: ${middayDrawTime}; Evening draw: ${eveningDrawTime}`,
+
     lastUpdated,
+
     meta: {
       source: "Multi-source validation",
+
       middaySourceNames: midday.sourceNames || [midday.sourceName],
       middaySourceUrls: midday.sourceUrls || [midday.sourceUrl],
       eveningSourceNames: evening.sourceNames || [evening.sourceName],
       eveningSourceUrls: evening.sourceUrls || [evening.sourceUrl],
+
       middayDateKey: midday.dateKey,
       eveningDateKey: evening.dateKey,
+
+      middayDrawDate,
+      eveningDrawDate,
+      middayDrawTime,
+      eveningDrawTime,
+      middayDrawDateTime,
+      eveningDrawDateTime,
+
       middayConsensusCount: midday.consensusCount || 1,
       eveningConsensusCount: evening.consensusCount || 1
     }
