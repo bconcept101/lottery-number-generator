@@ -1,0 +1,32 @@
+name: Combine Mega Millions History
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  combine-mega-millions-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Combine Mega Millions history
+        run: node scripts/combine-mega-millions-history.js
+
+      - name: Commit complete Mega Millions history
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/cleaned/mega-millions-history-complete.json
+          git add MEGA-MILLIONS-COMPLETE-HISTORY-REVIEW.md
+          git diff --cached --quiet || git commit -m "Combine Mega Millions complete history"
+          git push
