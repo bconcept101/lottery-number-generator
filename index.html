@@ -57,38 +57,44 @@
     </section>
 
     <section class="card">
-   
-  <h2>How It Works</h2>
-  <p>
-    Choose the lottery game you want to use, then select how many number sets you would like to generate.
-    The tool creates random number combinations using the correct number format for the game you selected.
-  </p>
-  <p>
-    Before the final numbers are shown, each generated set is checked against the available past winning draw history
-    for the game you selected. The tool compares the new random combination with recorded past results to help avoid
-    giving you a number set that already appeared as a winning draw.
-  </p>
-  <p>
-    This helps provide fresh number ideas based on the history currently available for that game. The final results
-    are still randomly generated, so they should be used for education, entertainment, and number exploration only,
-    not as predictions or guaranteed winning numbers.
-  </p>
-</section>
+      <h2>How It Works</h2>
+      <p>
+        Choose the lottery game you want to use, then select how many number sets you would like to generate.
+        The tool creates random number combinations using the correct number format for the game you selected.
+      </p>
+      <p>
+        Before the final numbers are shown, each generated set is checked against the available past winning draw history
+        for the game you selected. The tool compares the new random combination with recorded past results to help avoid
+        giving you a number set that already appeared as a winning draw.
+      </p>
+      <p>
+        This helps provide fresh number ideas based on the history currently available for that game. The final results
+        are still randomly generated, so they should be used for education, entertainment, and number exploration only,
+        not as predictions or guaranteed winning numbers.
+      </p>
+    </section>
 
-<section class="card">
-  <h2>Historical Repeat Notice</h2>
-  <p>
-    Historical winning numbers can repeat. For example, the Powerball combination
-    <strong>15 - 22 - 24 - 32 - 39</strong> with Powerball <strong>18</strong>
-    appeared on <strong>April 3, 1993</strong> and again on <strong>December 27, 2000</strong>,
-    based on official lottery result records.
-  </p>
-  <p>
-    This generator checks new random number sets against available historical winning draw records.
-    If an exact past winning combination is found, the tool can avoid showing that same historical combination.
-    This does not predict future results, prevent future repeats, or guarantee that generated numbers will win.
-  </p>
-</section>
+    <section class="card">
+      <h2>Historical Repeat Notice</h2>
+      <p>
+        Historical winning numbers can repeat. For example, the Powerball combination
+        <strong>15 - 22 - 24 - 32 - 39</strong> with Powerball <strong>18</strong>
+        appeared on <strong>April 3, 1993</strong> and again on <strong>December 27, 2000</strong>,
+        based on official lottery result records.
+      </p>
+      <p>
+        This generator checks new random number sets against available historical winning draw records.
+        If an exact past winning combination is found, the tool can avoid showing that same historical combination.
+        This does not predict future results, prevent future repeats, or guarantee that generated numbers will win.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Supported Game Schedules</h2>
+      <p class="section-note">
+        Review the regular draw schedule for each supported game. Draw schedules may change because of holidays,
+        official schedule updates, maintenance, or other lottery-related changes.
+      </p>
 
       <div class="home-info-grid">
         <article class="home-info-card">
@@ -121,7 +127,6 @@
       </div>
 
       <p class="section-note-small">
-        Draw schedules may change because of holidays, official schedule updates, maintenance, or other lottery-related changes.
         Always confirm final draw times with the official lottery source.
       </p>
     </section>
@@ -130,14 +135,14 @@
       <h2>Latest Winning Results</h2>
       <p>
         Use this section to review the most recent winning results for each supported game in one clear place.
-        Each game card shows the latest draw date, winning numbers, and last update date.
-        Powerball and Mega Millions also include their required Powerball or Mega Ball number.
-        Results are reviewed daily when official information is available, but update times may vary because of
-        source availability, maintenance, or verification needs.
+        Powerball and Mega Millions include their required Powerball or Mega Ball number. Pick 5 / Georgia Five
+        shows the Midday and Evening draw details separately so each result has its own draw date, draw time,
+        and winning numbers. Results are reviewed daily when official information is available, but update times
+        may vary because of source availability, maintenance, or verification needs.
       </p>
 
-      <div class="home-info-grid">
-        <article class="home-info-card">
+      <div class="latest-results-grid">
+        <article class="home-info-card latest-result-item">
           <h3>Powerball</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="powerballDrawDate">Result date is being reviewed</span></p>
@@ -146,7 +151,7 @@
           <p><span class="info-label">Last Updated:</span> <span id="powerballLastUpdated">Update time is being reviewed</span></p>
         </article>
 
-        <article class="home-info-card">
+        <article class="home-info-card latest-result-item">
           <h3>Mega Millions</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="megaDrawDate">Result date is being reviewed</span></p>
@@ -155,22 +160,53 @@
           <p><span class="info-label">Last Updated:</span> <span id="megaLastUpdated">Update time is being reviewed</span></p>
         </article>
 
-        <article class="home-info-card">
-          <h3>Pick 5 / Georgia Five</h3>
-          <p class="result-status">Latest result reviewed daily</p>
-          <p><span class="info-label">Draw Date:</span> <span id="pick5DrawDate">Result date is being reviewed</span></p>
-          <p><span class="info-label">Winning Numbers:</span> <span id="pick5WinningNumbers">Winning numbers are being reviewed</span></p>
-          <p><span class="info-label">Draw Type:</span> <span id="pick5DrawType">Draw type is being reviewed</span></p>
-          <p><span class="info-label">Last Updated:</span> <span id="pick5LastUpdated">Update time is being reviewed</span></p>
-        </article>
-
-        <article class="home-info-card">
+        <article class="home-info-card latest-result-item">
           <h3>Fantasy 5 / Georgia Fantasy 5</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="fantasy5DrawDate">Result date is being reviewed</span></p>
           <p><span class="info-label">Winning Numbers:</span> <span id="fantasy5WinningNumbers">Winning numbers are being reviewed</span></p>
           <p><span class="info-label">Draw Type:</span> <span id="fantasy5DrawType">Draw type is being reviewed</span></p>
           <p><span class="info-label">Last Updated:</span> <span id="fantasy5LastUpdated">Update time is being reviewed</span></p>
+        </article>
+
+        <article class="home-info-card latest-result-item pick5-latest-card">
+          <div class="pick5-card-header">
+            <div>
+              <h3>Pick 5 / Georgia Five</h3>
+              <p class="pick5-card-note">
+                Midday and Evening results are listed separately to avoid confusion.
+              </p>
+            </div>
+            <p class="result-status">Latest result reviewed daily</p>
+          </div>
+
+          <div class="pick5-result-layout">
+            <section class="pick5-result-box">
+              <h4>Draw Date &amp; Time</h4>
+              <div id="pick5DrawDate" class="pick5-result-value">
+                Result dates are being reviewed
+              </div>
+            </section>
+
+            <section class="pick5-result-box">
+              <h4>Winning Numbers</h4>
+              <div id="pick5WinningNumbers" class="pick5-result-value">
+                Winning numbers are being reviewed
+              </div>
+            </section>
+
+            <section class="pick5-result-box">
+              <h4>Draw Type</h4>
+              <div id="pick5DrawType" class="pick5-result-value">
+                Draw type is being reviewed
+              </div>
+            </section>
+          </div>
+
+          <p class="pick5-last-updated">
+            <span class="info-label">Last Updated:</span>
+            <span id="pick5LastUpdated">Update time is being reviewed</span>
+          </p>
         </article>
       </div>
 
@@ -221,10 +257,10 @@
 
   </main>
 
- <script src="database.js"></script>
-<script src="latest-results.js"></script>
-<script src="latest-results-display.js"></script>
-<script src="supabase-public-config.js"></script>
-<script src="script.js"></script>
+  <script src="database.js"></script>
+  <script src="latest-results.js"></script>
+  <script src="latest-results-display.js"></script>
+  <script src="supabase-public-config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
