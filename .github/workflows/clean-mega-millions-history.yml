@@ -1,0 +1,32 @@
+name: Clean Mega Millions History
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clean-mega-millions-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Clean Mega Millions history
+        run: node scripts/clean-mega-millions-history.js
+
+      - name: Commit cleaned Mega Millions history
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/cleaned/mega-millions-history-cleaned.json
+          git add MEGA-MILLIONS-DUPLICATE-REVIEW.md
+          git diff --cached --quiet || git commit -m "Clean Mega Millions history data"
+          git push
