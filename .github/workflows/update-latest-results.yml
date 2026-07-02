@@ -4,10 +4,29 @@ on:
   workflow_dispatch:
 
   schedule:
+    # Morning update runs for Fantasy 5, Powerball, and Mega Millions.
+    # GitHub cron uses UTC.
+    # During Eastern Daylight Time, these run around:
+    # 3:10 AM ET, 4:10 AM ET, 5:10 AM ET, and 5:55 AM ET.
+    - cron: "10 7 * * *"
+    - cron: "10 8 * * *"
     - cron: "10 9 * * *"
     - cron: "55 9 * * *"
+
+    # Afternoon update runs for Georgia FIVE Midday.
+    # During Eastern Daylight Time, these run around:
+    # 1:35 PM ET, 2:10 PM ET, 2:55 PM ET, and 3:40 PM ET.
+    - cron: "35 17 * * *"
     - cron: "10 18 * * *"
     - cron: "55 18 * * *"
+    - cron: "40 19 * * *"
+
+    # Evening update runs for Georgia FIVE Evening.
+    # During Eastern Daylight Time, these run around:
+    # 8:10 PM ET, 8:55 PM ET, and 9:40 PM ET.
+    - cron: "10 0 * * *"
+    - cron: "55 0 * * *"
+    - cron: "40 1 * * *"
 
 permissions:
   contents: write
