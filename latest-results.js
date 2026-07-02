@@ -48,10 +48,10 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, June 30, 2026",
-    "middayDateKey": "2026-06-30",
-    "eveningDateKey": "2026-06-30",
-    "winningNumbers": "Midday: 9 - 7 - 2 - 6 - 0 | Evening: 1 - 7 - 8 - 2 - 0",
+    "drawDate": "Wednesday, July 1, 2026",
+    "middayDateKey": "2026-07-01",
+    "eveningDateKey": "2026-07-01",
+    "winningNumbers": "Midday: 5 - 1 - 8 - 4 - 5 | Evening: 3 - 1 - 5 - 8 - 8",
     "drawType": "Midday and Evening",
     "lastUpdated": "July 1, 2026",
     "meta": {
@@ -72,8 +72,8 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
-      "middayDateKey": "2026-06-30",
-      "eveningDateKey": "2026-06-30",
+      "middayDateKey": "2026-07-01",
+      "eveningDateKey": "2026-07-01",
       "middayConsensusCount": 2,
       "eveningConsensusCount": 2
     }
