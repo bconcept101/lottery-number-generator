@@ -1,5 +1,5 @@
 function formatLatestResultValue(value, fallbackText) {
-  if (value && value.trim() !== "") {
+  if (value && String(value).trim() !== "") {
     return value;
   }
 
@@ -12,6 +12,18 @@ function clearElement(element) {
   }
 }
 
+function appendLine(element, text, addSpacing = false) {
+  const line = document.createElement("span");
+  line.textContent = text;
+  line.style.display = "block";
+
+  if (addSpacing) {
+    line.style.marginTop = "4px";
+  }
+
+  element.appendChild(line);
+}
+
 function displayValue(element, value, fallbackText) {
   if (!element) {
     return;
@@ -20,7 +32,7 @@ function displayValue(element, value, fallbackText) {
   element.textContent = formatLatestResultValue(value, fallbackText);
 }
 
-function displayWinningNumbers(element, value, fallbackText) {
+function displayMultiLineValue(element, value, fallbackText) {
   if (!element) {
     return;
   }
@@ -29,25 +41,78 @@ function displayWinningNumbers(element, value, fallbackText) {
 
   clearElement(element);
 
+  let parts = [finalValue];
+
   if (finalValue.includes(" | ")) {
-    const parts = finalValue.split(" | ");
+    parts = finalValue.split(" | ");
+  } else if (finalValue.includes("; ")) {
+    parts = finalValue.split("; ");
+  }
 
-    parts.forEach((part, index) => {
-      const line = document.createElement("span");
-      line.textContent = part;
-      line.style.display = "block";
+  parts.forEach((part, index) => {
+    appendLine(element, part, index > 0);
+  });
+}
 
-      if (index > 0) {
-        line.style.marginTop = "4px";
-      }
-
-      element.appendChild(line);
-    });
-
+function displayPick5DrawDate(element, result) {
+  if (!element) {
     return;
   }
 
-  element.textContent = finalValue;
+  clearElement(element);
+
+  if (result.middayDrawDateTime && result.eveningDrawDateTime) {
+    appendLine(element, `Midday: ${result.middayDrawDateTime}`);
+    appendLine(element, `Evening: ${result.eveningDrawDateTime}`, true);
+    return;
+  }
+
+  displayMultiLineValue(
+    element,
+    result.drawDate,
+    "Pick 5 draw dates are being reviewed"
+  );
+}
+
+function displayPick5WinningNumbers(element, result) {
+  if (!element) {
+    return;
+  }
+
+  clearElement(element);
+
+  if (result.middayWinningNumbers && result.eveningWinningNumbers) {
+    appendLine(element, `Midday: ${result.middayWinningNumbers}`);
+    appendLine(element, `Evening: ${result.eveningWinningNumbers}`, true);
+    return;
+  }
+
+  displayMultiLineValue(
+    element,
+    result.winningNumbers,
+    "Pick 5 winning numbers are being reviewed"
+  );
+}
+
+function displayPick5DrawType(element, result) {
+  if (!element) {
+    return;
+  }
+
+  if (result.middayDrawTime && result.eveningDrawTime) {
+    displayMultiLineValue(
+      element,
+      `Midday draw: ${result.middayDrawTime}; Evening draw: ${result.eveningDrawTime}`,
+      "Draw type is being reviewed"
+    );
+    return;
+  }
+
+  displayMultiLineValue(
+    element,
+    result.drawType,
+    "Draw type is being reviewed"
+  );
 }
 
 function displayLatestResults() {
@@ -99,10 +164,18 @@ function displayLatestResults() {
     const drawTypeElement = document.getElementById(card.drawTypeId);
     const lastUpdatedElement = document.getElementById(card.lastUpdatedId);
 
+    if (card.key === "pick5") {
+      displayPick5DrawDate(drawDateElement, result);
+      displayPick5WinningNumbers(winningNumbersElement, result);
+      displayPick5DrawType(drawTypeElement, result);
+      displayValue(lastUpdatedElement, result.lastUpdated, "Update time is being reviewed");
+      return;
+    }
+
     displayValue(drawDateElement, result.drawDate, "Result date is being reviewed");
-    displayWinningNumbers(winningNumbersElement, result.winningNumbers, "Winning numbers are being reviewed");
+    displayMultiLineValue(winningNumbersElement, result.winningNumbers, "Winning numbers are being reviewed");
     displayValue(extraNumberElement, result.extraNumber, "Extra game number is being reviewed");
-    displayValue(drawTypeElement, result.drawType, "Draw type is being reviewed");
+    displayMultiLineValue(drawTypeElement, result.drawType, "Draw type is being reviewed");
     displayValue(lastUpdatedElement, result.lastUpdated, "Update time is being reviewed");
   });
 }
