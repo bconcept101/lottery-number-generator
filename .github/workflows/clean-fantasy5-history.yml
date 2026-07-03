@@ -1,0 +1,36 @@
+name: Clean Fantasy 5 History
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/raw/fantasy5-history.csv"
+      - "scripts/clean-fantasy5-history.js"
+      - ".github/workflows/clean-fantasy5-history.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  clean-fantasy5-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Fantasy 5 cleaning script
+        run: node scripts/clean-fantasy5-history.js
+
+      - name: Commit cleaned Fantasy 5 history files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update cleaned Fantasy 5 history data
+          file_pattern: |
+            data/cleaned/fantasy5-history-cleaned.json
+            FANTASY5-DUPLICATE-REVIEW.md
