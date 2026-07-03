@@ -39,14 +39,12 @@
 
     .admin-shell {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     .admin-header {
       background: linear-gradient(135deg, var(--navy), var(--blue));
       color: white;
-      padding: 22px;
+      padding: 18px 22px;
     }
 
     .admin-header-inner {
@@ -111,30 +109,43 @@
       padding: 22px;
     }
 
+    .login-wrap {
+      min-height: calc(100vh - 96px);
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
     .login-card,
     .dashboard-section,
-    .metric-card {
+    .metric-card,
+    .download-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
       box-shadow: var(--shadow);
     }
 
-    .login-wrap {
-      min-height: calc(100vh - 110px);
-      display: grid;
-      place-items: center;
-      padding: 22px;
-    }
-
     .login-card {
       width: 100%;
-      max-width: 460px;
+      max-width: 420px;
       padding: 26px;
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: var(--light-blue);
+      display: grid;
+      place-items: center;
+      font-size: 34px;
     }
 
     .login-card h2 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       font-size: 24px;
     }
 
@@ -142,12 +153,14 @@
       margin: 0 0 20px;
       color: var(--muted);
       line-height: 1.5;
+      font-size: 14px;
     }
 
     label {
       display: block;
       font-weight: 700;
       margin-bottom: 8px;
+      text-align: left;
     }
 
     input {
@@ -237,7 +250,7 @@
       justify-content: space-between;
       gap: 14px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .dashboard-top h2 {
@@ -249,6 +262,39 @@
       margin: 5px 0 0;
       color: var(--muted);
       font-size: 14px;
+    }
+
+    .tab-nav {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .tab-button {
+      background: transparent;
+      color: var(--navy);
+      border-radius: 12px;
+      min-height: 38px;
+      padding: 10px 12px;
+    }
+
+    .tab-button.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
     }
 
     .metrics-grid {
@@ -281,14 +327,9 @@
       margin-top: 10px;
     }
 
-    .section-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
     .dashboard-section {
       overflow: hidden;
+      margin-bottom: 18px;
     }
 
     .section-header {
@@ -316,6 +357,11 @@
       overflow-x: auto;
     }
 
+    .table-scroll {
+      max-height: 520px;
+      overflow: auto;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -337,6 +383,9 @@
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.03em;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     tr:last-child td {
@@ -359,26 +408,38 @@
     }
 
     .details-json {
-      max-width: 360px;
+      max-width: 420px;
       white-space: pre-wrap;
       word-break: break-word;
       font-size: 12px;
       color: var(--muted);
     }
 
-    .install-note {
-      margin-top: 18px;
-      background: #fff8e6;
-      border: 1px solid #ffe1a6;
-      border-radius: 16px;
-      padding: 14px;
-      color: #7a4b00;
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .download-card {
+      padding: 18px;
+    }
+
+    .download-card h3 {
+      margin: 0 0 8px;
+      color: var(--navy);
+    }
+
+    .download-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
     @media (max-width: 900px) {
-      .metrics-grid {
+      .metrics-grid,
+      .download-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -393,7 +454,8 @@
         font-size: 20px;
       }
 
-      .metrics-grid {
+      .metrics-grid,
+      .download-grid {
         grid-template-columns: 1fr;
       }
 
@@ -401,7 +463,8 @@
         font-size: 28px;
       }
 
-      .button-row {
+      .button-row,
+      .header-actions {
         flex-direction: column;
         align-items: stretch;
       }
@@ -409,6 +472,11 @@
       button,
       .button-link {
         width: 100%;
+      }
+
+      .tab-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
@@ -422,7 +490,7 @@
           <div class="brand-icon" aria-hidden="true">📊</div>
           <div>
             <h1>Lottery Analytics Admin</h1>
-            <p>Private website activity dashboard</p>
+            <p>Private dashboard</p>
           </div>
         </div>
 
@@ -436,34 +504,28 @@
     <main class="admin-main">
       <section class="login-wrap" id="loginWrap">
         <div class="login-card">
-          <h2>Enter Admin Passkey</h2>
-          <p>
-            This private page shows website activity, page visits, game selections,
-            generate clicks, and support clicks.
-          </p>
+          <div class="login-logo" aria-hidden="true">📊</div>
+          <h2>Admin Analytics</h2>
+          <p>Enter your private passkey to continue.</p>
 
           <form id="loginForm" autocomplete="off">
-            <label for="passkeyInput">Admin Passkey</label>
+            <label for="passkeyInput">Passkey</label>
             <input
               id="passkeyInput"
               name="passkey"
               type="password"
-              placeholder="Enter your private passkey"
+              placeholder="Enter passkey"
               autocomplete="off"
               required
             />
 
             <div class="button-row">
               <button type="submit" id="loginButton">Open Dashboard</button>
+              <a class="button-link secondary" href="index.html">Back to Website</a>
             </div>
 
             <div class="message" id="loginMessage"></div>
           </form>
-
-          <div class="install-note">
-            After this page is working, save it to your phone home screen or desktop
-            as a private analytics shortcut.
-          </div>
         </div>
       </section>
 
@@ -480,49 +542,109 @@
           </div>
         </div>
 
-        <div class="metrics-grid" id="metricsGrid"></div>
+        <nav class="tab-nav" aria-label="Analytics dashboard sections">
+          <button type="button" class="tab-button active" data-tab="overview">Overview</button>
+          <button type="button" class="tab-button" data-tab="pages">Pages</button>
+          <button type="button" class="tab-button" data-tab="games">Games</button>
+          <button type="button" class="tab-button" data-tab="clicks">Click Details</button>
+          <button type="button" class="tab-button" data-tab="recent">Recent Events</button>
+          <button type="button" class="tab-button" data-tab="daily">Daily Activity</button>
+          <button type="button" class="tab-button" data-tab="downloads">Downloads</button>
+        </nav>
 
-        <div class="section-grid">
+        <section class="tab-panel active" id="tab-overview">
+          <div class="metrics-grid" id="metricsGrid"></div>
+        </section>
+
+        <section class="tab-panel" id="tab-pages">
           <section class="dashboard-section">
             <div class="section-header">
               <h3>Top Pages</h3>
               <span>Last 24 hours</span>
             </div>
-            <div class="table-wrap" id="topPagesTable"></div>
+            <div class="table-wrap table-scroll" id="topPagesTable"></div>
           </section>
+        </section>
 
+        <section class="tab-panel" id="tab-games">
           <section class="dashboard-section">
             <div class="section-header">
               <h3>Top Games</h3>
               <span>Game selections and generate clicks</span>
             </div>
-            <div class="table-wrap" id="topGamesTable"></div>
+            <div class="table-wrap table-scroll" id="topGamesTable"></div>
           </section>
+        </section>
 
+        <section class="tab-panel" id="tab-clicks">
           <section class="dashboard-section">
             <div class="section-header">
               <h3>Click Details</h3>
               <span>Navigation, support, and generator actions</span>
             </div>
-            <div class="table-wrap" id="clickDetailsTable"></div>
+            <div class="table-wrap table-scroll" id="clickDetailsTable"></div>
           </section>
+        </section>
 
-          <section class="dashboard-section">
-            <div class="section-header">
-              <h3>Daily Activity</h3>
-              <span>Last 14 days</span>
-            </div>
-            <div class="table-wrap" id="dailyTable"></div>
-          </section>
-
+        <section class="tab-panel" id="tab-recent">
           <section class="dashboard-section">
             <div class="section-header">
               <h3>Recent Events</h3>
               <span>Latest 100 events</span>
             </div>
-            <div class="table-wrap" id="recentEventsTable"></div>
+            <div class="table-wrap table-scroll" id="recentEventsTable"></div>
           </section>
-        </div>
+        </section>
+
+        <section class="tab-panel" id="tab-daily">
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Daily Activity</h3>
+              <span>Last 14 days</span>
+            </div>
+            <div class="table-wrap table-scroll" id="dailyTable"></div>
+          </section>
+        </section>
+
+        <section class="tab-panel" id="tab-downloads">
+          <div class="download-grid">
+            <article class="download-card">
+              <h3>Overview Data</h3>
+              <p>Download the 24-hour overview and active visitor numbers.</p>
+              <button type="button" data-download="overview">Download CSV</button>
+            </article>
+
+            <article class="download-card">
+              <h3>Top Pages</h3>
+              <p>Download page views, visitors, sessions, and latest page activity.</p>
+              <button type="button" data-download="pages">Download CSV</button>
+            </article>
+
+            <article class="download-card">
+              <h3>Top Games</h3>
+              <p>Download game selections, generate clicks, and generated results.</p>
+              <button type="button" data-download="games">Download CSV</button>
+            </article>
+
+            <article class="download-card">
+              <h3>Click Details</h3>
+              <p>Download navigation, support, game, and generator click details.</p>
+              <button type="button" data-download="clicks">Download CSV</button>
+            </article>
+
+            <article class="download-card">
+              <h3>Recent Events</h3>
+              <p>Download the latest raw event rows shown in the dashboard.</p>
+              <button type="button" data-download="recent">Download CSV</button>
+            </article>
+
+            <article class="download-card">
+              <h3>Daily Activity</h3>
+              <p>Download daily totals for the last 14 days.</p>
+              <button type="button" data-download="daily">Download CSV</button>
+            </article>
+          </div>
+        </section>
       </section>
     </main>
   </div>
@@ -533,6 +655,8 @@
 
       const API_ENDPOINT = "/api/admin-analytics";
       const SESSION_KEY = "lottery_admin_analytics_passkey";
+
+      let currentReports = null;
 
       const loginWrap = document.getElementById("loginWrap");
       const dashboard = document.getElementById("dashboard");
@@ -562,6 +686,15 @@
         }
 
         return date.toLocaleString();
+      }
+
+      function escapeHtml(value) {
+        return String(value === undefined || value === null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
       }
 
       function showMessage(element, type, text) {
@@ -641,46 +774,14 @@
         const active = reports.active_sessions_now || {};
 
         const cards = [
-          {
-            label: "Page Views",
-            value: overview.page_views,
-            note: "Last 24 hours"
-          },
-          {
-            label: "Unique Visitors",
-            value: overview.unique_visitors,
-            note: "Last 24 hours"
-          },
-          {
-            label: "Active Visitors",
-            value: active.active_visitors_last_30_minutes,
-            note: "Last 30 minutes"
-          },
-          {
-            label: "Active Sessions",
-            value: active.active_sessions_last_30_minutes,
-            note: "Last 30 minutes"
-          },
-          {
-            label: "Generate Clicks",
-            value: overview.generate_clicks,
-            note: "Last 24 hours"
-          },
-          {
-            label: "Numbers Generated",
-            value: overview.numbers_generated,
-            note: "Last 24 hours"
-          },
-          {
-            label: "Game Selections",
-            value: overview.game_selections,
-            note: "Last 24 hours"
-          },
-          {
-            label: "Support Clicks",
-            value: overview.support_clicks,
-            note: "Last 24 hours"
-          }
+          { label: "Page Views", value: overview.page_views, note: "Last 24 hours" },
+          { label: "Unique Visitors", value: overview.unique_visitors, note: "Last 24 hours" },
+          { label: "Active Visitors", value: active.active_visitors_last_30_minutes, note: "Last 30 minutes" },
+          { label: "Active Sessions", value: active.active_sessions_last_30_minutes, note: "Last 30 minutes" },
+          { label: "Generate Clicks", value: overview.generate_clicks, note: "Last 24 hours" },
+          { label: "Numbers Generated", value: overview.numbers_generated, note: "Last 24 hours" },
+          { label: "Game Selections", value: overview.game_selections, note: "Last 24 hours" },
+          { label: "Support Clicks", value: overview.support_clicks, note: "Last 24 hours" }
         ];
 
         document.getElementById("metricsGrid").innerHTML = cards
@@ -694,15 +795,6 @@
             `
           )
           .join("");
-      }
-
-      function escapeHtml(value) {
-        return String(value === undefined || value === null ? "" : value)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
       }
 
       function renderTable(targetId, rows, columns) {
@@ -763,6 +855,8 @@
       }
 
       function renderReports(reports) {
+        currentReports = reports;
+
         generatedAt.textContent = `Last refreshed: ${formatDateTime(
           reports.generated_at
         )}`;
@@ -826,6 +920,16 @@
         ]);
       }
 
+      function activateTab(tabName) {
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === tabName);
+        });
+
+        document.querySelectorAll(".tab-panel").forEach((panel) => {
+          panel.classList.toggle("active", panel.id === `tab-${tabName}`);
+        });
+      }
+
       async function openDashboard(passkey) {
         loginButton.disabled = true;
         refreshButton.disabled = true;
@@ -838,7 +942,7 @@
           savePasskey(passkey);
           setLoggedInState();
           renderReports(reports);
-          showMessage(loginMessage, "success", "Dashboard loaded.");
+          activateTab("overview");
         } catch (error) {
           setLoggedOutState();
           showMessage(loginMessage, "error", "Access denied or reports unavailable.");
@@ -846,6 +950,104 @@
           loginButton.disabled = false;
           refreshButton.disabled = false;
         }
+      }
+
+      function rowsToCsv(rows) {
+        if (!rows || rows.length === 0) {
+          return "";
+        }
+
+        const columns = Array.from(
+          rows.reduce((set, row) => {
+            Object.keys(row || {}).forEach((key) => set.add(key));
+            return set;
+          }, new Set())
+        );
+
+        const escapeCsvValue = function (value) {
+          if (value === undefined || value === null) {
+            return "";
+          }
+
+          const text =
+            typeof value === "object"
+              ? JSON.stringify(value)
+              : String(value);
+
+          return `"${text.replace(/"/g, '""')}"`;
+        };
+
+        const header = columns.map(escapeCsvValue).join(",");
+        const body = rows
+          .map((row) => columns.map((column) => escapeCsvValue(row[column])).join(","))
+          .join("\n");
+
+        return `${header}\n${body}`;
+      }
+
+      function downloadCsv(filename, rows) {
+        const csv = rowsToCsv(rows);
+
+        if (!csv) {
+          alert("No data available to download yet.");
+          return;
+        }
+
+        const blob = new Blob([csv], {
+          type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      function getDownloadRows(type) {
+        if (!currentReports) {
+          return [];
+        }
+
+        if (type === "overview") {
+          return [
+            {
+              report: "overview_24h",
+              ...(currentReports.overview_24h || {})
+            },
+            {
+              report: "active_sessions_now",
+              ...(currentReports.active_sessions_now || {})
+            }
+          ];
+        }
+
+        if (type === "pages") {
+          return currentReports.top_pages_24h || [];
+        }
+
+        if (type === "games") {
+          return currentReports.top_games_24h || [];
+        }
+
+        if (type === "clicks") {
+          return currentReports.click_details_24h || [];
+        }
+
+        if (type === "recent") {
+          return currentReports.recent_events_24h || [];
+        }
+
+        if (type === "daily") {
+          return currentReports.daily_14d || [];
+        }
+
+        return [];
       }
 
       loginForm.addEventListener("submit", function (event) {
@@ -877,6 +1079,22 @@
         passkeyInput.value = "";
         setLoggedOutState();
         clearMessage(loginMessage);
+      });
+
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.addEventListener("click", function () {
+          activateTab(button.dataset.tab);
+        });
+      });
+
+      document.querySelectorAll("[data-download]").forEach((button) => {
+        button.addEventListener("click", function () {
+          const type = button.dataset.download;
+          const rows = getDownloadRows(type);
+          const date = new Date().toISOString().slice(0, 10);
+
+          downloadCsv(`lottery-analytics-${type}-${date}.csv`, rows);
+        });
       });
 
       const savedPasskey = getSavedPasskey();
