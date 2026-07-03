@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>Admin Analytics | Lottery Number Generator</title>
+
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b2f5b'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' fill='white'%3E📊%3C/text%3E%3C/svg%3E"
+  />
+
+  <style>
+    :root {
+      --navy: #0b2f5b;
+      --blue: #165fbd;
+      --light-blue: #eaf3ff;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #102033;
+      --muted: #667085;
+      --border: #d9e2ef;
+      --danger: #b42318;
+      --success: #027a48;
+      --shadow: 0 12px 30px rgba(16, 32, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .admin-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-header {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: white;
+      padding: 22px;
+    }
+
+    .admin-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .admin-main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .login-card,
+    .dashboard-section,
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .login-wrap {
+      min-height: calc(100vh - 110px);
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 26px;
+    }
+
+    .login-card h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .login-card p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(22, 95, 189, 0.12);
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .button-link {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+    }
+
+    button.secondary,
+    .button-link.secondary {
+      background: var(--light-blue);
+      color: var(--navy);
+    }
+
+    button.danger {
+      background: #fee4e2;
+      color: var(--danger);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .message.error {
+      display: block;
+      background: #fee4e2;
+      color: var(--danger);
+      border: 1px solid #fecdca;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfae6;
+      color: var(--success);
+      border: 1px solid #abefc6;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .dashboard-top h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .dashboard-top p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      padding: 18px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .dashboard-section {
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .section-header span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fbff;
+      color: var(--navy);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .empty-state {
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--light-blue);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .details-json {
+      max-width: 360px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .install-note {
+      margin-top: 18px;
+      background: #fff8e6;
+      border: 1px solid #ffe1a6;
+      border-radius: 16px;
+      padding: 14px;
+      color: #7a4b00;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .admin-header,
+      .admin-main {
+        padding: 16px;
+      }
+
+      .brand h1 {
+        font-size: 20px;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-value {
+        font-size: 28px;
+      }
+
+      .button-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      button,
+      .button-link {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-shell">
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">📊</div>
+          <div>
+            <h1>Lottery Analytics Admin</h1>
+            <p>Private website activity dashboard</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <span class="status-pill" id="connectionStatus">Locked</span>
+          <a class="button-link secondary" href="index.html">Back to Website</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="login-wrap" id="loginWrap">
+        <div class="login-card">
+          <h2>Enter Admin Passkey</h2>
+          <p>
+            This private page shows website activity, page visits, game selections,
+            generate clicks, and support clicks.
+          </p>
+
+          <form id="loginForm" autocomplete="off">
+            <label for="passkeyInput">Admin Passkey</label>
+            <input
+              id="passkeyInput"
+              name="passkey"
+              type="password"
+              placeholder="Enter your private passkey"
+              autocomplete="off"
+              required
+            />
+
+            <div class="button-row">
+              <button type="submit" id="loginButton">Open Dashboard</button>
+            </div>
+
+            <div class="message" id="loginMessage"></div>
+          </form>
+
+          <div class="install-note">
+            After this page is working, save it to your phone home screen or desktop
+            as a private analytics shortcut.
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard" id="dashboard">
+        <div class="dashboard-top">
+          <div>
+            <h2>Website Tracking Reports</h2>
+            <p id="generatedAt">Waiting for report data...</p>
+          </div>
+
+          <div class="button-row">
+            <button type="button" id="refreshButton">Refresh</button>
+            <button type="button" class="danger" id="logoutButton">Log Out</button>
+          </div>
+        </div>
+
+        <div class="metrics-grid" id="metricsGrid"></div>
+
+        <div class="section-grid">
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Top Pages</h3>
+              <span>Last 24 hours</span>
+            </div>
+            <div class="table-wrap" id="topPagesTable"></div>
+          </section>
+
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Top Games</h3>
+              <span>Game selections and generate clicks</span>
+            </div>
+            <div class="table-wrap" id="topGamesTable"></div>
+          </section>
+
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Click Details</h3>
+              <span>Navigation, support, and generator actions</span>
+            </div>
+            <div class="table-wrap" id="clickDetailsTable"></div>
+          </section>
+
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Daily Activity</h3>
+              <span>Last 14 days</span>
+            </div>
+            <div class="table-wrap" id="dailyTable"></div>
+          </section>
+
+          <section class="dashboard-section">
+            <div class="section-header">
+              <h3>Recent Events</h3>
+              <span>Latest 100 events</span>
+            </div>
+            <div class="table-wrap" id="recentEventsTable"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const API_ENDPOINT = "/api/admin-analytics";
+      const SESSION_KEY = "lottery_admin_analytics_passkey";
+
+      const loginWrap = document.getElementById("loginWrap");
+      const dashboard = document.getElementById("dashboard");
+      const loginForm = document.getElementById("loginForm");
+      const passkeyInput = document.getElementById("passkeyInput");
+      const loginButton = document.getElementById("loginButton");
+      const loginMessage = document.getElementById("loginMessage");
+      const connectionStatus = document.getElementById("connectionStatus");
+      const generatedAt = document.getElementById("generatedAt");
+      const refreshButton = document.getElementById("refreshButton");
+      const logoutButton = document.getElementById("logoutButton");
+
+      function formatNumber(value) {
+        const number = Number(value || 0);
+        return number.toLocaleString();
+      }
+
+      function formatDateTime(value) {
+        if (!value) {
+          return "None";
+        }
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return String(value);
+        }
+
+        return date.toLocaleString();
+      }
+
+      function showMessage(element, type, text) {
+        element.className = `message ${type}`;
+        element.textContent = text;
+      }
+
+      function clearMessage(element) {
+        element.className = "message";
+        element.textContent = "";
+      }
+
+      function getSavedPasskey() {
+        try {
+          return sessionStorage.getItem(SESSION_KEY) || "";
+        } catch (error) {
+          return "";
+        }
+      }
+
+      function savePasskey(passkey) {
+        try {
+          sessionStorage.setItem(SESSION_KEY, passkey);
+        } catch (error) {
+          return null;
+        }
+
+        return passkey;
+      }
+
+      function clearSavedPasskey() {
+        try {
+          sessionStorage.removeItem(SESSION_KEY);
+        } catch (error) {
+          return null;
+        }
+
+        return null;
+      }
+
+      async function loadReports(passkey) {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Analytics-Passkey": passkey
+          },
+          body: JSON.stringify({
+            passkey
+          }),
+          cache: "no-store"
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || "Unable to load analytics.");
+        }
+
+        return data.reports;
+      }
+
+      function setLoggedInState() {
+        loginWrap.style.display = "none";
+        dashboard.style.display = "block";
+        connectionStatus.textContent = "Unlocked";
+      }
+
+      function setLoggedOutState() {
+        dashboard.style.display = "none";
+        loginWrap.style.display = "grid";
+        connectionStatus.textContent = "Locked";
+      }
+
+      function renderMetricCards(reports) {
+        const overview = reports.overview_24h || {};
+        const active = reports.active_sessions_now || {};
+
+        const cards = [
+          {
+            label: "Page Views",
+            value: overview.page_views,
+            note: "Last 24 hours"
+          },
+          {
+            label: "Unique Visitors",
+            value: overview.unique_visitors,
+            note: "Last 24 hours"
+          },
+          {
+            label: "Active Visitors",
+            value: active.active_visitors_last_30_minutes,
+            note: "Last 30 minutes"
+          },
+          {
+            label: "Active Sessions",
+            value: active.active_sessions_last_30_minutes,
+            note: "Last 30 minutes"
+          },
+          {
+            label: "Generate Clicks",
+            value: overview.generate_clicks,
+            note: "Last 24 hours"
+          },
+          {
+            label: "Numbers Generated",
+            value: overview.numbers_generated,
+            note: "Last 24 hours"
+          },
+          {
+            label: "Game Selections",
+            value: overview.game_selections,
+            note: "Last 24 hours"
+          },
+          {
+            label: "Support Clicks",
+            value: overview.support_clicks,
+            note: "Last 24 hours"
+          }
+        ];
+
+        document.getElementById("metricsGrid").innerHTML = cards
+          .map(
+            (card) => `
+              <article class="metric-card">
+                <div class="metric-label">${escapeHtml(card.label)}</div>
+                <div class="metric-value">${formatNumber(card.value)}</div>
+                <div class="metric-note">${escapeHtml(card.note)}</div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function escapeHtml(value) {
+        return String(value === undefined || value === null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function renderTable(targetId, rows, columns) {
+        const target = document.getElementById(targetId);
+
+        if (!rows || rows.length === 0) {
+          target.innerHTML = `<div class="empty-state">No data available yet.</div>`;
+          return;
+        }
+
+        const headerHtml = columns
+          .map((column) => `<th>${escapeHtml(column.label)}</th>`)
+          .join("");
+
+        const bodyHtml = rows
+          .map((row) => {
+            const cells = columns
+              .map((column) => {
+                let value =
+                  typeof column.value === "function"
+                    ? column.value(row)
+                    : row[column.key];
+
+                if (column.type === "datetime") {
+                  value = formatDateTime(value);
+                }
+
+                if (column.type === "number") {
+                  value = formatNumber(value);
+                }
+
+                if (column.type === "tag") {
+                  return `<td><span class="tag">${escapeHtml(value || "unknown")}</span></td>`;
+                }
+
+                if (column.type === "json") {
+                  return `<td><div class="details-json">${escapeHtml(
+                    JSON.stringify(value || {}, null, 2)
+                  )}</div></td>`;
+                }
+
+                return `<td>${escapeHtml(value || "")}</td>`;
+              })
+              .join("");
+
+            return `<tr>${cells}</tr>`;
+          })
+          .join("");
+
+        target.innerHTML = `
+          <table>
+            <thead>
+              <tr>${headerHtml}</tr>
+            </thead>
+            <tbody>${bodyHtml}</tbody>
+          </table>
+        `;
+      }
+
+      function renderReports(reports) {
+        generatedAt.textContent = `Last refreshed: ${formatDateTime(
+          reports.generated_at
+        )}`;
+
+        renderMetricCards(reports);
+
+        renderTable("topPagesTable", reports.top_pages_24h || [], [
+          { label: "Page", key: "page_path" },
+          { label: "Page Views", key: "page_views", type: "number" },
+          { label: "Visitors", key: "unique_visitors", type: "number" },
+          { label: "Sessions", key: "unique_sessions", type: "number" },
+          { label: "Latest Event", key: "latest_event", type: "datetime" }
+        ]);
+
+        renderTable("topGamesTable", reports.top_games_24h || [], [
+          { label: "Game", key: "game_key", type: "tag" },
+          { label: "Selected", key: "selected_count", type: "number" },
+          { label: "Generate Clicks", key: "generate_clicks", type: "number" },
+          { label: "Numbers Generated", key: "numbers_generated", type: "number" },
+          { label: "Latest Event", key: "latest_event", type: "datetime" }
+        ]);
+
+        renderTable("clickDetailsTable", reports.click_details_24h || [], [
+          { label: "Time", key: "created_at", type: "datetime" },
+          { label: "Event", key: "event_name", type: "tag" },
+          { label: "Page", key: "page_path" },
+          { label: "Game", key: "game_key" },
+          {
+            label: "Details",
+            value: function (row) {
+              return [
+                row.link_text ? `Link: ${row.link_text}` : "",
+                row.game_name ? `Game: ${row.game_name}` : "",
+                row.number_count ? `Requested: ${row.number_count}` : "",
+                row.displayed_sets ? `Displayed: ${row.displayed_sets}` : ""
+              ]
+                .filter(Boolean)
+                .join(" | ");
+            }
+          },
+          { label: "Country", key: "country" }
+        ]);
+
+        renderTable("dailyTable", reports.daily_14d || [], [
+          { label: "Date", key: "event_date" },
+          { label: "Events", key: "total_events", type: "number" },
+          { label: "Page Views", key: "page_views", type: "number" },
+          { label: "Visitors", key: "unique_visitors", type: "number" },
+          { label: "Sessions", key: "unique_sessions", type: "number" },
+          { label: "Generate Clicks", key: "generate_clicks", type: "number" },
+          { label: "Support Clicks", key: "support_clicks", type: "number" }
+        ]);
+
+        renderTable("recentEventsTable", reports.recent_events_24h || [], [
+          { label: "Time", key: "created_at", type: "datetime" },
+          { label: "Event", key: "event_name", type: "tag" },
+          { label: "Page", key: "page_path" },
+          { label: "Game", key: "game_key" },
+          { label: "Details", key: "details", type: "json" },
+          { label: "Country", key: "country" }
+        ]);
+      }
+
+      async function openDashboard(passkey) {
+        loginButton.disabled = true;
+        refreshButton.disabled = true;
+        clearMessage(loginMessage);
+        connectionStatus.textContent = "Loading...";
+
+        try {
+          const reports = await loadReports(passkey);
+
+          savePasskey(passkey);
+          setLoggedInState();
+          renderReports(reports);
+          showMessage(loginMessage, "success", "Dashboard loaded.");
+        } catch (error) {
+          setLoggedOutState();
+          showMessage(loginMessage, "error", "Access denied or reports unavailable.");
+        } finally {
+          loginButton.disabled = false;
+          refreshButton.disabled = false;
+        }
+      }
+
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const passkey = passkeyInput.value.trim();
+
+        if (!passkey) {
+          showMessage(loginMessage, "error", "Enter your admin passkey.");
+          return;
+        }
+
+        openDashboard(passkey);
+      });
+
+      refreshButton.addEventListener("click", function () {
+        const passkey = getSavedPasskey();
+
+        if (!passkey) {
+          setLoggedOutState();
+          return;
+        }
+
+        openDashboard(passkey);
+      });
+
+      logoutButton.addEventListener("click", function () {
+        clearSavedPasskey();
+        passkeyInput.value = "";
+        setLoggedOutState();
+        clearMessage(loginMessage);
+      });
+
+      const savedPasskey = getSavedPasskey();
+
+      if (savedPasskey) {
+        openDashboard(savedPasskey);
+      } else {
+        setLoggedOutState();
+      }
+    })();
+  </script>
+</body>
+</html>
