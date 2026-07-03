@@ -65,11 +65,18 @@ function cleanSupabaseUrl(value) {
 }
 
 function requireEnv(env, name) {
-  if (!env[name]) {
-    throw new Error(`Missing Cloudflare environment variable: ${name}`);
+  const value = env[name];
+
+  if (!value) {
+    const error = new Error(`Missing Cloudflare environment variable: ${name}`);
+    error.publicCode = "MISSING_ENVIRONMENT_VARIABLE";
+    error.publicDetails = {
+      missing_variable: name
+    };
+    throw error;
   }
 
-  return env[name];
+  return String(value).trim();
 }
 
 async function insertAnalyticsEvent(env, record) {
@@ -88,13 +95,25 @@ async function insertAnalyticsEvent(env, record) {
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Supabase analytics insert failed: ${response.status} ${text}`);
+    const responseText = await response.text();
+
+    const error = new Error(
+      `Supabase analytics insert failed: ${response.status}`
+    );
+
+    error.publicCode = "SUPABASE_INSERT_FAILED";
+    error.publicDetails = {
+      status: response.status,
+      response: cleanText(responseText, 500)
+    };
+
+    throw error;
   }
 }
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  let payload = null;
 
   try {
     const contentType = request.headers.get("content-type") || "";
@@ -109,7 +128,7 @@ export async function onRequestPost(context) {
       );
     }
 
-    const payload = await request.json();
+    payload = await request.json();
 
     const eventName = cleanText(payload.event_name, 80);
 
@@ -145,10 +164,17 @@ export async function onRequestPost(context) {
   } catch (error) {
     console.error(error);
 
+    const debugMode =
+      payload &&
+      payload.details &&
+      (payload.details.test === true || payload.details.debug === true);
+
     return jsonResponse(
       {
         success: false,
-        error: "Tracking failed."
+        error: "Tracking failed.",
+        code: error.publicCode || "TRACKING_FAILED",
+        details: debugMode ? error.publicDetails || null : null
       },
       500
     );
