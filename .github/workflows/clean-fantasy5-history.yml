@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -27,10 +29,19 @@ jobs:
       - name: Run Fantasy 5 cleaning script
         run: node scripts/clean-fantasy5-history.js
 
+      - name: Show generated files
+        run: |
+          ls -la
+          ls -la data
+          ls -la data/cleaned || true
+          test -f data/cleaned/fantasy5-history-cleaned.json
+          test -f FANTASY5-DUPLICATE-REVIEW.md
+
       - name: Commit cleaned Fantasy 5 history files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update cleaned Fantasy 5 history data
-          file_pattern: |
-            data/cleaned/fantasy5-history-cleaned.json
-            FANTASY5-DUPLICATE-REVIEW.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cleaned/fantasy5-history-cleaned.json FANTASY5-DUPLICATE-REVIEW.md
+          git status
+          git commit -m "Update cleaned Fantasy 5 history data" || echo "No Fantasy 5 cleaned changes to commit"
+          git push
