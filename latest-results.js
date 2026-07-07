@@ -2,23 +2,25 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Saturday, July 4, 2026",
-    "drawDateKey": "2026-07-04",
-    "winningNumbers": "17 - 38 - 46 - 50 - 69",
+    "drawDate": "Monday, July 6, 2026",
+    "drawDateKey": "2026-07-06",
+    "winningNumbers": "17 - 44 - 63 - 66 - 67",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "20",
-    "lastUpdated": "July 6, 2026",
+    "extraNumber": "04",
+    "lastUpdated": "July 7, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV"
+        "WSB-TV",
+        "Jackpocket"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.wsbtv.com/lottery/",
+        "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
-      "drawDateKey": "2026-07-04",
-      "consensusCount": 1,
-      "candidateCount": 1
+      "drawDateKey": "2026-07-06",
+      "consensusCount": 2,
+      "candidateCount": 2
     }
   },
   "mega": {
@@ -29,7 +31,7 @@ const latestResults = {
     "winningNumbers": "05 - 09 - 29 - 47 - 57",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "16",
-    "lastUpdated": "July 6, 2026",
+    "lastUpdated": "July 7, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -59,7 +61,7 @@ const latestResults = {
     "eveningWinningNumbers": "7 - 8 - 2 - 6 - 3",
     "winningNumbers": "Midday: 0 - 0 - 7 - 1 - 3 | Evening: 7 - 8 - 2 - 6 - 3",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "July 6, 2026",
+    "lastUpdated": "July 7, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -93,11 +95,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Sunday, July 5, 2026",
-    "drawDateKey": "2026-07-05",
-    "winningNumbers": "12 - 20 - 21 - 37 - 38",
+    "drawDate": "Monday, July 6, 2026",
+    "drawDateKey": "2026-07-06",
+    "winningNumbers": "11 - 14 - 31 - 41 - 42",
     "drawType": "Night draw",
-    "lastUpdated": "July 6, 2026",
+    "lastUpdated": "July 7, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -106,7 +108,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-05",
+      "drawDateKey": "2026-07-06",
       "consensusCount": 1,
       "candidateCount": 1
     }
