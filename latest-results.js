@@ -7,20 +7,18 @@ const latestResults = {
     "winningNumbers": "12 - 29 - 37 - 43 - 55",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "18",
-    "lastUpdated": "July 9, 2026",
+    "lastUpdated": "July 10, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Jackpocket"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://lottery.jackpocket.com/en/lottery-results/georgia"
+        "https://www.wsbtv.com/lottery/"
       ],
       "drawDateKey": "2026-07-08",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   },
   "mega": {
@@ -31,7 +29,7 @@ const latestResults = {
     "winningNumbers": "02 - 31 - 35 - 36 - 63",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "12",
-    "lastUpdated": "July 9, 2026",
+    "lastUpdated": "July 10, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -61,7 +59,7 @@ const latestResults = {
     "eveningWinningNumbers": "8 - 4 - 7 - 1 - 5",
     "winningNumbers": "Midday: 5 - 1 - 7 - 4 - 3 | Evening: 8 - 4 - 7 - 1 - 5",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "July 9, 2026",
+    "lastUpdated": "July 10, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -95,11 +93,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Wednesday, July 8, 2026",
-    "drawDateKey": "2026-07-08",
-    "winningNumbers": "01 - 04 - 06 - 09 - 17",
+    "drawDate": "Thursday, July 9, 2026",
+    "drawDateKey": "2026-07-09",
+    "winningNumbers": "05 - 10 - 21 - 34 - 38",
     "drawType": "Night draw",
-    "lastUpdated": "July 9, 2026",
+    "lastUpdated": "July 10, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -108,7 +106,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-08",
+      "drawDateKey": "2026-07-09",
       "consensusCount": 1,
       "candidateCount": 1
     }
