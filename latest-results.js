@@ -2,34 +2,12 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Wednesday, July 8, 2026",
-    "drawDateKey": "2026-07-08",
-    "winningNumbers": "12 - 29 - 37 - 43 - 55",
+    "drawDate": "Saturday, July 11, 2026",
+    "drawDateKey": "2026-07-11",
+    "winningNumbers": "08 - 10 - 14 - 45 - 59",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "18",
-    "lastUpdated": "July 11, 2026",
-    "meta": {
-      "source": "WSB-TV",
-      "sourceNames": [
-        "WSB-TV"
-      ],
-      "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
-      ],
-      "drawDateKey": "2026-07-08",
-      "consensusCount": 1,
-      "candidateCount": 1
-    }
-  },
-  "mega": {
-    "gameName": "Mega Millions",
-    "status": "Latest result reviewed daily",
-    "drawDate": "Friday, July 10, 2026",
-    "drawDateKey": "2026-07-10",
-    "winningNumbers": "02 - 39 - 44 - 46 - 56",
-    "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "23",
-    "lastUpdated": "July 11, 2026",
+    "extraNumber": "05",
+    "lastUpdated": "July 12, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -40,28 +18,50 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
-      "drawDateKey": "2026-07-10",
+      "drawDateKey": "2026-07-11",
       "consensusCount": 2,
       "candidateCount": 2
+    }
+  },
+  "mega": {
+    "gameName": "Mega Millions",
+    "status": "Latest result reviewed daily",
+    "drawDate": "Friday, July 10, 2026",
+    "drawDateKey": "2026-07-10",
+    "winningNumbers": "02 - 39 - 44 - 46 - 56",
+    "extraNumberLabel": "Mega Ball Number",
+    "extraNumber": "23",
+    "lastUpdated": "July 12, 2026",
+    "meta": {
+      "source": "WSB-TV",
+      "sourceNames": [
+        "WSB-TV"
+      ],
+      "sourceUrls": [
+        "https://www.wsbtv.com/lottery/"
+      ],
+      "drawDateKey": "2026-07-10",
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   },
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Saturday, July 11, 2026, 12:29 PM ET; Evening: Friday, July 10, 2026, 6:59 PM ET",
+    "drawDate": "Midday: Saturday, July 11, 2026, 12:29 PM ET; Evening: Saturday, July 11, 2026, 6:59 PM ET",
     "middayDateKey": "2026-07-11",
-    "eveningDateKey": "2026-07-10",
+    "eveningDateKey": "2026-07-11",
     "middayDrawDate": "Saturday, July 11, 2026",
-    "eveningDrawDate": "Friday, July 10, 2026",
+    "eveningDrawDate": "Saturday, July 11, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
     "middayDrawDateTime": "Saturday, July 11, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Friday, July 10, 2026, 6:59 PM ET",
+    "eveningDrawDateTime": "Saturday, July 11, 2026, 6:59 PM ET",
     "middayWinningNumbers": "6 - 5 - 2 - 9 - 1",
-    "eveningWinningNumbers": "4 - 4 - 5 - 0 - 0",
-    "winningNumbers": "Midday: 6 - 5 - 2 - 9 - 1 | Evening: 4 - 4 - 5 - 0 - 0",
+    "eveningWinningNumbers": "5 - 1 - 5 - 2 - 4",
+    "winningNumbers": "Midday: 6 - 5 - 2 - 9 - 1 | Evening: 5 - 1 - 5 - 2 - 4",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "July 11, 2026",
+    "lastUpdated": "July 12, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -81,13 +81,13 @@ const latestResults = {
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "middayDateKey": "2026-07-11",
-      "eveningDateKey": "2026-07-10",
+      "eveningDateKey": "2026-07-11",
       "middayDrawDate": "Saturday, July 11, 2026",
-      "eveningDrawDate": "Friday, July 10, 2026",
+      "eveningDrawDate": "Saturday, July 11, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Saturday, July 11, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Friday, July 10, 2026, 6:59 PM ET",
+      "eveningDrawDateTime": "Saturday, July 11, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
       "eveningConsensusCount": 2
     }
@@ -95,11 +95,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Friday, July 10, 2026",
-    "drawDateKey": "2026-07-10",
-    "winningNumbers": "10 - 19 - 29 - 38 - 41",
+    "drawDate": "Saturday, July 11, 2026",
+    "drawDateKey": "2026-07-11",
+    "winningNumbers": "01 - 18 - 30 - 35 - 36",
     "drawType": "Night draw",
-    "lastUpdated": "July 11, 2026",
+    "lastUpdated": "July 12, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -108,7 +108,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-10",
+      "drawDateKey": "2026-07-11",
       "consensusCount": 1,
       "candidateCount": 1
     }
