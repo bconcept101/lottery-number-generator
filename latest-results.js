@@ -46,28 +46,26 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Sunday, July 12, 2026, 12:29 PM ET; Evening: Sunday, July 12, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-07-12",
+    "drawDate": "Midday: Monday, July 13, 2026, 12:29 PM ET; Evening: Sunday, July 12, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-07-13",
     "eveningDateKey": "2026-07-12",
-    "middayDrawDate": "Sunday, July 12, 2026",
+    "middayDrawDate": "Monday, July 13, 2026",
     "eveningDrawDate": "Sunday, July 12, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Sunday, July 12, 2026, 12:29 PM ET",
+    "middayDrawDateTime": "Monday, July 13, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Sunday, July 12, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "4 - 8 - 6 - 0 - 9",
+    "middayWinningNumbers": "2 - 6 - 7 - 2 - 6",
     "eveningWinningNumbers": "6 - 2 - 2 - 8 - 8",
-    "winningNumbers": "Midday: 4 - 8 - 6 - 0 - 9 | Evening: 6 - 2 - 2 - 8 - 8",
+    "winningNumbers": "Midday: 2 - 6 - 7 - 2 - 6 | Evening: 6 - 2 - 2 - 8 - 8",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "July 13, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
         "Jackpocket"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "eveningSourceNames": [
@@ -78,15 +76,15 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
-      "middayDateKey": "2026-07-12",
+      "middayDateKey": "2026-07-13",
       "eveningDateKey": "2026-07-12",
-      "middayDrawDate": "Sunday, July 12, 2026",
+      "middayDrawDate": "Monday, July 13, 2026",
       "eveningDrawDate": "Sunday, July 12, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Sunday, July 12, 2026, 12:29 PM ET",
+      "middayDrawDateTime": "Monday, July 13, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Sunday, July 12, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 2
     }
   },
