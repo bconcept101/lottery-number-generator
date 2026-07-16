@@ -12,7 +12,7 @@ Cloudflare Pages hosts the live website.
 
 Website:
 
-https://lottery-number-generator-6ey.pages.dev/
+https://pilotnumber.com/
 
 ---
 
