@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>About | Pilot Number Facelift Preview</title>
+
+  <style>
+    :root {
+      --bg-main: #080918;
+      --panel: rgba(19, 24, 58, 0.88);
+      --panel-soft: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.16);
+      --text: #ffffff;
+      --muted: #c8d0ef;
+      --gold: #ffd36a;
+      --orange: #ff9f3f;
+      --pink: #ff4fa3;
+      --blue: #5fc7ff;
+      --green: #4dffae;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      --soft-shadow: 0 18px 45px rgba(0, 0, 0, 0.30);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(95, 199, 255, 0.24), transparent 30%),
+        radial-gradient(circle at 80% 8%, rgba(255, 79, 163, 0.18), transparent 26%),
+        radial-gradient(circle at 50% 90%, rgba(255, 211, 106, 0.08), transparent 35%),
+        linear-gradient(135deg, #070716 0%, #101638 52%, #1b1233 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity: 0.42;
+    }
+
+    .app {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: rgba(8, 10, 27, 0.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+      min-width: 240px;
+    }
+
+    .brand-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #111827;
+      background: linear-gradient(145deg, var(--gold), var(--orange));
+      box-shadow: 0 14px 30px rgba(255, 177, 62, 0.35);
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 1.05rem;
+      line-height: 1.1;
+    }
+
+    .brand span:last-child {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255,255,255,0.16);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-card,
+    .side-card,
+    .section {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel), rgba(10, 14, 36, 0.92));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .hero-card {
+      min-height: 360px;
+      padding: 38px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 85% 12%, rgba(255, 79, 163, 0.24), transparent 34%),
+        linear-gradient(145deg, rgba(23, 34, 83, 0.96), rgba(15, 18, 50, 0.94));
+    }
+
+    .side-card {
+      padding: 26px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(95, 199, 255, 0.22), transparent 28%),
+        linear-gradient(155deg, rgba(31, 44, 100, 0.95), rgba(18, 16, 48, 0.96));
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--gold);
+      font-size: clamp(50px, 7vw, 86px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      text-shadow: 0 18px 45px rgba(255, 211, 106, 0.22);
+    }
+
+    .hero-lead,
+    p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .hero-lead {
+      max-width: 680px;
+      margin: 22px 0 0;
+      font-size: 1.15rem;
+    }
+
+    .side-card h2,
+    .section h2 {
+      margin: 0 0 12px;
+      color: white;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .section {
+      margin-bottom: 26px;
+      padding: 30px;
+      border-radius: 34px;
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+    }
+
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .tile,
+    .game-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at top right, rgba(95,199,255,0.13), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.045));
+      box-shadow: var(--soft-shadow), inset 0 1px 0 rgba(255,255,255,0.10);
+    }
+
+    h3 {
+      margin-top: 0;
+      color: white;
+    }
+
+    .info-label {
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .mission-list {
+      margin: 16px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .mission-list li {
+      margin-bottom: 10px;
+    }
+
+    .notice-card {
+      border-color: rgba(255, 211, 106, 0.22);
+      background:
+        radial-gradient(circle at top right, rgba(255,211,106,0.11), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.04));
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,0.14);
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), #ff7d45);
+      box-shadow: 0 18px 32px rgba(255, 79, 163, 0.28);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .tile-grid,
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        padding: 14px;
+      }
+
+      .nav {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .hero-card,
+      .side-card,
+      .section {
+        border-radius: 26px;
+      }
+
+      .hero-card,
+      .section {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <nav class="nav">
+      <a class="brand" href="facelift-preview.html">
+        <span class="brand-badge">PN</span>
+        <span>
+          <strong>Pilot Number</strong>
+          <span>Lottery Number Generator</span>
+        </span>
+      </a>
+
+      <div class="nav-links">
+        <a href="facelift-preview.html">Home</a>
+        <a class="active" href="facelift-about.html">About</a>
+        <a href="facelift-disclaimer.html">Disclaimer</a>
+        <a href="facelift-support.html">Support</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <section class="hero-card">
+        <p class="eyebrow">About Pilot Number</p>
+        <h1>About This Website</h1>
+        <p class="hero-lead">
+          A simple educational and entertainment tool for generating random lottery-style numbers,
+          reviewing draw schedules, and checking recent winning result information.
+        </p>
+      </section>
+
+      <aside class="side-card">
+        <p class="eyebrow">Purpose</p>
+        <h2>Clean, Simple, Helpful</h2>
+        <p>
+          Pilot Number is designed to keep number generation clear, organized, and easy to understand.
+        </p>
+      </aside>
+    </header>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="eyebrow">What This Website Does</p>
+        <h2>Generate Lottery-Style Number Ideas</h2>
+      </div>
+
+      <p>
+        The Lottery Number Generator Website helps you create random number sets for Powerball,
+        Mega Millions, Pick 5 / Georgia Five, and Fantasy 5 / Georgia Fantasy 5. Each game follows
+        its own number format, so the generator creates numbers based on the rules for the game you select.
+      </p>
+
+      <p>
+        You can choose a game, select how many number sets you want, and generate random number ideas instantly.
+        The website is designed to be simple, clean, and easy to use, so you can quickly explore number
+        combinations without confusion.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="eyebrow">Why It Was Created</p>
+        <h2>One Clear Place for Number Exploration</h2>
+      </div>
+
+      <p>
+        This website was created to give you a helpful place to generate lottery-style numbers,
+        review supported game information, and compare number ideas with available past winning draw history.
+      </p>
+
+      <p>
+        The goal is to keep the experience easy to understand while giving you more useful information in one place.
+        You can generate numbers, review regular draw schedules, and see recent winning results for supported games
+        when updated information is available.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="eyebrow">Games Supported</p>
+        <h2>Supported Game Formats</h2>
+      </div>
+
+      <div class="game-grid">
+        <article class="game-card">
+          <h3>Powerball</h3>
+          <p>Generates five main numbers from 1 to 69 and one Powerball number from 1 to 26.</p>
+        </article>
+
+        <article class="game-card">
+          <h3>Mega Millions</h3>
+          <p>Generates five main numbers from 1 to 70 and one Mega Ball number from 1 to 24.</p>
+        </article>
+
+        <article class="game-card">
+          <h3>Pick 5 / Georgia Five</h3>
+          <p>Generates five random digits from 0 to 9. Digits may repeat.</p>
+        </article>
+
+        <article class="game-card">
+          <h3>Fantasy 5 / Georgia Fantasy 5</h3>
+          <p>Generates five main numbers from 1 to 42.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section notice-card">
+      <div class="section-header">
+        <p class="eyebrow">Number History and Results</p>
+        <h2>History Awareness</h2>
+      </div>
+
+      <p>
+        Before the final numbers are shown, each generated set is checked against available historical winning draw
+        records for the game you selected. The tool compares the new random combination with recorded past results
+        to help avoid giving you a number set that already appeared as a winning draw.
+      </p>
+
+      <p>
+        Historical winning numbers can repeat. For example, the Powerball combination
+        <strong>15 - 22 - 24 - 32 - 39</strong> with Powerball <strong>18</strong> appeared on
+        <strong>April 3, 1993</strong> and again on <strong>December 27, 2000</strong>, based on official
+        lottery result records.
+      </p>
+
+      <p>
+        The history check is informational only. It does not predict future results, prevent future repeats,
+        improve winning chances, or guarantee that generated numbers will win.
+      </p>
+
+      <p>
+        The website may also display recent winning results and regular draw schedule information for supported games.
+        Results may be reviewed and updated daily when official information becomes available, but update times may vary
+        because of source availability, maintenance, or verification needs.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="eyebrow">Important Note</p>
+        <h2>Educational and Entertainment Use Only</h2>
+      </div>
+
+      <p>
+        This website is for educational and entertainment purposes only. It does not predict lottery results,
+        guarantee winning numbers, or provide gambling advice. The numbers created by this tool should be viewed
+        as random number ideas only.
+      </p>
+
+      <p>
+        You should always confirm official winning numbers, prize information, drawing schedules, and game rules
+        through the official lottery source before making any decisions.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <p class="eyebrow">Support Our Mission</p>
+        <h2>Support Continued Development</h2>
+      </div>
+
+      <p>
+        Your support helps with the continued development, updates, and maintenance of this educational number
+        generator website. Contributions can help improve the website, support future features, and keep the
+        experience simple, organized, and helpful.
+      </p>
+
+      <a class="btn btn-primary" href="https://www.paypal.com/donate/?hosted_button_id=RD35Y3ZGP22KS" target="_blank" rel="noopener noreferrer">
+        Support This Project
+      </a>
+    </section>
+
+    <footer class="footer">
+      <p>Pilot Number · Lottery Number Generator</p>
+    </footer>
+
+  </main>
+
+  <script src="analytics-tracker.js"></script>
+</body>
+</html>
