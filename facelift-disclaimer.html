@@ -8,10 +8,7 @@
 
   <style>
     :root {
-      --bg-main: #080918;
       --panel: rgba(19, 24, 58, 0.88);
-      --panel-deep: rgba(10, 14, 36, 0.94);
-      --panel-soft: rgba(255, 255, 255, 0.08);
       --border: rgba(255, 255, 255, 0.16);
       --border-soft: rgba(255, 255, 255, 0.10);
       --text: #ffffff;
@@ -19,7 +16,6 @@
       --gold: #ffd36a;
       --orange: #ff9f3f;
       --pink: #ff4fa3;
-      --blue: #5fc7ff;
       --green: #4dffae;
       --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
       --soft-shadow: 0 18px 45px rgba(0, 0, 0, 0.30);
@@ -142,18 +138,17 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 430px;
-      gap: 28px;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 26px;
       align-items: stretch;
-      margin-bottom: 28px;
-      perspective: 1200px;
+      margin-bottom: 26px;
     }
 
     .hero-card {
       position: relative;
       overflow: hidden;
-      min-height: 430px;
-      padding: 38px;
+      min-height: 340px;
+      padding: 34px;
       border: 1px solid var(--border);
       border-radius: 38px;
       background:
@@ -166,11 +161,11 @@
       content: "";
       position: absolute;
       right: -100px;
-      bottom: -120px;
-      width: 320px;
-      height: 320px;
+      bottom: -130px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 211, 106, 0.20), transparent 68%);
+      background: radial-gradient(circle, rgba(255, 211, 106, 0.18), transparent 68%);
       pointer-events: none;
     }
 
@@ -187,7 +182,7 @@
       margin: 0;
       max-width: 760px;
       color: var(--gold);
-      font-size: clamp(52px, 7vw, 92px);
+      font-size: clamp(52px, 7vw, 88px);
       line-height: 0.95;
       letter-spacing: -0.08em;
       text-shadow: 0 18px 45px rgba(255, 211, 106, 0.22);
@@ -195,10 +190,10 @@
 
     .hero-lead {
       max-width: 700px;
-      margin: 22px 0 0;
+      margin: 20px 0 0;
       color: var(--muted);
-      font-size: 1.18rem;
-      line-height: 1.65;
+      font-size: 1.14rem;
+      line-height: 1.58;
       position: relative;
       z-index: 2;
     }
@@ -207,7 +202,7 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 28px;
+      margin-top: 24px;
       position: relative;
       z-index: 2;
     }
@@ -237,7 +232,7 @@
     .disclaimer-side {
       position: relative;
       overflow: hidden;
-      min-height: 430px;
+      min-height: 340px;
       padding: 28px;
       border: 1px solid var(--border);
       border-radius: 38px;
@@ -248,45 +243,53 @@
     }
 
     .disclaimer-side h2 {
-      margin: 0 0 14px;
-      font-size: 2.25rem;
+      margin: 0 0 12px;
+      font-size: 2.1rem;
       line-height: 1.05;
       letter-spacing: -0.05em;
     }
 
     .disclaimer-side p {
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .shield-line {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 18px;
     }
 
     .shield-orb {
-      width: 112px;
-      height: 112px;
-      margin: 22px auto;
+      width: 78px;
+      height: 78px;
       border-radius: 50%;
       display: grid;
       place-items: center;
       color: #101827;
-      font-size: 2.6rem;
+      font-size: 2.2rem;
       font-weight: 900;
       background: radial-gradient(circle at 35% 28%, #fff7c7, #ffbd38 42%, #c56900 100%);
-      box-shadow: 0 20px 35px rgba(0,0,0,0.38), inset -7px -9px 14px rgba(0,0,0,0.22);
+      box-shadow: 0 18px 28px rgba(0,0,0,0.34), inset -7px -9px 14px rgba(0,0,0,0.22);
     }
 
     .quick-points {
       display: grid;
       gap: 10px;
-      margin-top: 20px;
     }
 
     .quick-point {
-      padding: 13px 14px;
+      padding: 12px 14px;
       border: 1px solid var(--border-soft);
-      border-radius: 18px;
+      border-radius: 16px;
       background: rgba(255, 255, 255, 0.075);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
       color: var(--muted);
       font-weight: 700;
+      font-size: 0.94rem;
     }
 
     .section {
@@ -349,17 +352,6 @@
       font-weight: 900;
     }
 
-    .mini-list {
-      margin: 14px 0 0;
-      padding-left: 20px;
-      color: var(--muted);
-    }
-
-    .mini-list li {
-      margin-bottom: 9px;
-      line-height: 1.5;
-    }
-
     .notice-section {
       background:
         radial-gradient(circle at top right, rgba(95,199,255,0.09), transparent 32%),
@@ -384,6 +376,11 @@
       .content-grid {
         grid-template-columns: 1fr;
       }
+
+      .hero-card,
+      .disclaimer-side {
+        min-height: auto;
+      }
     }
 
     @media (max-width: 720px) {
@@ -392,28 +389,50 @@
       }
 
       .nav {
+        position: relative;
+        top: auto;
         align-items: stretch;
         flex-direction: column;
+        margin-bottom: 18px;
+        border-radius: 24px;
       }
 
       .nav-links {
         justify-content: flex-start;
       }
 
+      .nav-links a {
+        padding: 9px 12px;
+        font-size: 0.92rem;
+      }
+
+      .hero {
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
       .hero-card,
       .disclaimer-side,
       .section {
         border-radius: 26px;
-      }
-
-      .hero-card,
-      .disclaimer-side,
-      .section {
         padding: 24px;
       }
 
       h1 {
-        font-size: 52px;
+        font-size: 50px;
+      }
+
+      .hero-lead {
+        font-size: 1rem;
+      }
+
+      .shield-line {
+        grid-template-columns: 1fr;
+      }
+
+      .shield-orb {
+        width: 76px;
+        height: 76px;
       }
     }
   </style>
@@ -446,8 +465,8 @@
         <p class="eyebrow">Important Notice</p>
         <h1>Disclaimer</h1>
         <p class="hero-lead">
-          Please read this page before using the Lottery Number Generator Website.
-          Pilot Number is built for educational number exploration and entertainment only.
+          Please read this page before using Pilot Number. This website is built for educational number exploration
+          and entertainment only.
         </p>
 
         <div class="hero-actions">
@@ -464,13 +483,13 @@
           or guaranteed lottery results.
         </p>
 
-        <div class="shield-orb">!</div>
-
-        <div class="quick-points">
-          <div class="quick-point">No winning guarantee</div>
-          <div class="quick-point">No official lottery connection</div>
-          <div class="quick-point">No gambling or financial advice</div>
-          <div class="quick-point">Confirm details with official sources</div>
+        <div class="shield-line">
+          <div class="shield-orb">!</div>
+          <div class="quick-points">
+            <div class="quick-point">No winning guarantee</div>
+            <div class="quick-point">No official lottery connection</div>
+            <div class="quick-point">No gambling or financial advice</div>
+          </div>
         </div>
       </aside>
     </header>
