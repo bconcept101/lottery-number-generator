@@ -3,146 +3,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lottery Number Generator</title>
+
+  <title>Pilot Number | Lottery Number Generator</title>
+  <meta
+    name="description"
+    content="Pilot Number is an educational lottery-style number generator for Powerball, Mega Millions, Pick 5 / Georgia Five, and Fantasy 5 / Georgia Fantasy 5."
+  />
+  <link rel="canonical" href="https://pilotnumber.com/" />
+  <meta property="og:title" content="Pilot Number | Lottery Number Generator" />
+  <meta property="og:description" content="Generate lottery-style number ideas for education, exploration, and entertainment." />
+  <meta property="og:url" content="https://pilotnumber.com/" />
+  <meta property="og:site_name" content="Pilot Number" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main class="container">
 
-    <nav class="top-nav">
-      <div class="nav-brand">Lottery Number Generator</div>
-      <div class="nav-links">
+<body>
+  <main class="container app-shell">
+
+    <nav class="top-nav app-nav">
+      <a class="nav-brand app-brand" href="index.html" aria-label="Pilot Number Home">
+        <span class="brand-mark">PN</span>
+        <span>
+          <strong>Pilot Number</strong>
+          <small>Lottery Number Generator</small>
+        </span>
+      </a>
+
+      <div class="nav-links app-nav-links">
         <a href="index.html">Home</a>
+        <a href="#generator">Generator</a>
+        <a href="#latest-results">Results</a>
         <a href="about.html">About</a>
         <a href="disclaimer.html">Disclaimer</a>
         <a href="support.html">Support</a>
       </div>
     </nav>
 
-    <header class="hero">
-      <h1>Lottery Number Generator</h1>
-      <p>
-        Generate random lottery-style numbers for Powerball, Mega Millions, Pick 5 / Georgia Five,
-        and Fantasy 5 / Georgia Fantasy 5. This tool is made for number ideas, simple exploration,
-        education, and entertainment.
-      </p>
+    <header class="hero app-hero">
+      <div class="hero-content">
+        <p class="eyebrow">Educational Number Tool</p>
+        <h1>Pilot Number</h1>
+        <p class="hero-lead">
+          Generate clean lottery-style number ideas for Powerball, Mega Millions,
+          Pick 5 / Georgia Five, and Fantasy 5 / Georgia Fantasy 5.
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-button" href="#generator">Start Generator</a>
+          <a class="hero-link" href="#latest-results">View Latest Results</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel">
+        <p class="panel-label">Supported Games</p>
+        <div class="game-chip-grid">
+          <span>Powerball</span>
+          <span>Mega Millions</span>
+          <span>Pick 5</span>
+          <span>Fantasy 5</span>
+        </div>
+        <p class="panel-note">
+          Built for education, simple exploration, and entertainment only.
+        </p>
+      </aside>
     </header>
 
-    <section class="card generator-card">
-      <h2>Choose a Game</h2>
-      <p class="section-note">
-        Select the lottery game you want to use, choose how many number sets you would like,
-        then click the generate button. The tool will create random number sets based on the
-        correct number format for the game you selected.
-      </p>
+    <section id="generator" class="card generator-card app-card feature-card">
+      <div class="section-heading">
+        <p class="eyebrow">Number Generator</p>
+        <h2>Choose a Game</h2>
+        <p class="section-note compact-note">
+          Select a game, choose how many sets you want, then generate number ideas using the correct format.
+        </p>
+      </div>
 
-      <label for="gameSelect">Game</label>
-      <select id="gameSelect">
-        <option value="powerball">Powerball</option>
-        <option value="mega">Mega Millions</option>
-        <option value="pick5">Pick 5 / Georgia Five</option>
-        <option value="fantasy5">Fantasy 5 / Georgia Fantasy 5</option>
-      </select>
+      <div class="generator-controls">
+        <div class="control-box">
+          <label for="gameSelect">Game</label>
+          <select id="gameSelect">
+            <option value="powerball">Powerball</option>
+            <option value="mega">Mega Millions</option>
+            <option value="pick5">Pick 5 / Georgia Five</option>
+            <option value="fantasy5">Fantasy 5 / Georgia Fantasy 5</option>
+          </select>
+        </div>
 
-      <label for="numberCount">How many sets?</label>
-      <select id="numberCount">
-        <option value="10">10 Number Sets</option>
-        <option value="15">15 Number Sets</option>
-        <option value="20">20 Number Sets</option>
-      </select>
+        <div class="control-box">
+          <label for="numberCount">How many sets?</label>
+          <select id="numberCount">
+            <option value="10">10 Number Sets</option>
+            <option value="15">15 Number Sets</option>
+            <option value="20">20 Number Sets</option>
+          </select>
+        </div>
+      </div>
 
-      <button onclick="generateNumbers()">Generate Numbers</button>
+      <button class="generate-button" onclick="generateNumbers()">Generate Numbers</button>
 
-      <div id="result" class="result-list"></div>
+      <div id="result" class="result-list app-results"></div>
     </section>
 
-    <section class="card">
-      <h2>How It Works</h2>
-      <p>
-        Choose the lottery game you want to use, then select how many number sets you would like to generate.
-        The tool creates random number combinations using the correct number format for the game you selected.
-      </p>
-      <p>
-        Before the final numbers are shown, each generated set is checked against the available past winning draw history
-        for the game you selected. The tool compares the new random combination with recorded past results to help avoid
-        giving you a number set that already appeared as a winning draw.
-      </p>
-      <p>
-        This helps provide fresh number ideas based on the history currently available for that game. The final results
-        are still randomly generated, so they should be used for education, entertainment, and number exploration only,
-        not as predictions or guaranteed winning numbers.
-      </p>
-    </section>
+    <section class="card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">How It Works</p>
+        <h2>Fresh Number Ideas</h2>
+      </div>
 
-    <section class="card">
-      <h2>Historical Repeat Notice</h2>
-      <p>
-        Historical winning numbers can repeat. For example, the Powerball combination
-        <strong>15 - 22 - 24 - 32 - 39</strong> with Powerball <strong>18</strong>
-        appeared on <strong>April 3, 1993</strong> and again on <strong>December 27, 2000</strong>,
-        based on official lottery result records.
-      </p>
-      <p>
-        This generator checks new random number sets against available historical winning draw records.
-        If an exact past winning combination is found, the tool can avoid showing that same historical combination.
-        This does not predict future results, prevent future repeats, or guarantee that generated numbers will win.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Supported Game Schedules</h2>
-      <p class="section-note">
-        Review the regular draw schedule for each supported game. Draw schedules may change because of holidays,
-        official schedule updates, maintenance, or other lottery-related changes.
-      </p>
-
-      <div class="home-info-grid">
-        <article class="home-info-card">
-          <h3>Powerball</h3>
-          <p><span class="info-label">Draw Days:</span> Monday, Wednesday, and Saturday</p>
-          <p><span class="info-label">Draw Time:</span> 10:59 PM ET</p>
-          <p><span class="info-label">Game Type:</span> Multi-state jackpot game</p>
+      <div class="info-grid">
+        <article class="home-info-card app-tile">
+          <h3>1. Choose a Game</h3>
+          <p>Select Powerball, Mega Millions, Pick 5, or Fantasy 5.</p>
         </article>
 
-        <article class="home-info-card">
-          <h3>Mega Millions</h3>
-          <p><span class="info-label">Draw Days:</span> Tuesday and Friday</p>
-          <p><span class="info-label">Draw Time:</span> 11:00 PM ET</p>
-          <p><span class="info-label">Game Type:</span> Multi-state jackpot game</p>
+        <article class="home-info-card app-tile">
+          <h3>2. Generate Sets</h3>
+          <p>The generator creates random number ideas using the correct format.</p>
         </article>
 
-        <article class="home-info-card">
-          <h3>Pick 5 / Georgia Five</h3>
-          <p><span class="info-label">Draw Days:</span> Daily</p>
-          <p><span class="info-label">Midday Draw:</span> 12:29 PM ET</p>
-          <p><span class="info-label">Evening Draw:</span> 6:59 PM ET</p>
-        </article>
-
-        <article class="home-info-card">
-          <h3>Fantasy 5 / Georgia Fantasy 5</h3>
-          <p><span class="info-label">Draw Days:</span> Daily</p>
-          <p><span class="info-label">Draw Time:</span> 11:34 PM ET</p>
-          <p><span class="info-label">Game Type:</span> Georgia daily jackpot game</p>
+        <article class="home-info-card app-tile">
+          <h3>3. History Check</h3>
+          <p>Generated sets are checked against available past winning draw records.</p>
         </article>
       </div>
 
       <p class="section-note-small">
-        Always confirm final draw times with the official lottery source.
+        Results are still random and should not be treated as predictions or guaranteed winning numbers.
       </p>
     </section>
 
-    <section class="card">
-      <h2>Latest Winning Results</h2>
+    <section class="card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">History Notice</p>
+        <h2>Past Results Can Repeat</h2>
+      </div>
+
       <p>
-        Use this section to review the most recent winning results for each supported game in one clear place.
-        Powerball and Mega Millions include their required Powerball or Mega Ball number. Pick 5 / Georgia Five
-        shows the Midday and Evening draw details separately so each result has its own draw date, draw time,
-        and winning numbers. Results are reviewed daily when official information is available, but update times
-        may vary because of source availability, maintenance, or verification needs.
+        Historical winning numbers can repeat. This tool checks generated sets against available recorded history
+        to help avoid showing an exact past winning combination when that history is available.
       </p>
+      <p>
+        This does not predict future results, prevent future repeats, or guarantee that generated numbers will win.
+      </p>
+    </section>
+
+    <section class="card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">Game Schedule</p>
+        <h2>Supported Game Schedules</h2>
+        <p class="section-note compact-note">
+          Draw schedules may change. Always confirm final times with the official lottery source.
+        </p>
+      </div>
+
+      <div class="home-info-grid schedule-dashboard">
+        <article class="home-info-card schedule-item app-tile">
+          <h3>Powerball</h3>
+          <p><span class="info-label">Draw Days:</span> Monday, Wednesday, and Saturday</p>
+          <p><span class="info-label">Draw Time:</span> 10:59 PM ET</p>
+          <p><span class="info-label">Type:</span> Multi-state jackpot game</p>
+        </article>
+
+        <article class="home-info-card schedule-item app-tile">
+          <h3>Mega Millions</h3>
+          <p><span class="info-label">Draw Days:</span> Tuesday and Friday</p>
+          <p><span class="info-label">Draw Time:</span> 11:00 PM ET</p>
+          <p><span class="info-label">Type:</span> Multi-state jackpot game</p>
+        </article>
+
+        <article class="home-info-card schedule-item app-tile">
+          <h3>Pick 5 / Georgia Five</h3>
+          <p><span class="info-label">Draw Days:</span> Daily</p>
+          <p><span class="info-label">Midday:</span> 12:29 PM ET</p>
+          <p><span class="info-label">Evening:</span> 6:59 PM ET</p>
+        </article>
+
+        <article class="home-info-card schedule-item app-tile">
+          <h3>Fantasy 5 / Georgia Fantasy 5</h3>
+          <p><span class="info-label">Draw Days:</span> Daily</p>
+          <p><span class="info-label">Draw Time:</span> 11:34 PM ET</p>
+          <p><span class="info-label">Type:</span> Georgia daily jackpot game</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="latest-results" class="card app-card latest-section">
+      <div class="section-heading">
+        <p class="eyebrow">Latest Results</p>
+        <h2>Latest Winning Results</h2>
+        <p class="section-note compact-note">
+          Recent results are shown in one place when reviewed data is available.
+        </p>
+      </div>
 
       <div class="latest-results-grid">
-        <article class="home-info-card latest-result-item">
+        <article class="home-info-card latest-result-item app-tile">
           <h3>Powerball</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="powerballDrawDate">Result date is being reviewed</span></p>
@@ -151,7 +206,7 @@
           <p><span class="info-label">Last Updated:</span> <span id="powerballLastUpdated">Update time is being reviewed</span></p>
         </article>
 
-        <article class="home-info-card latest-result-item">
+        <article class="home-info-card latest-result-item app-tile">
           <h3>Mega Millions</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="megaDrawDate">Result date is being reviewed</span></p>
@@ -160,7 +215,7 @@
           <p><span class="info-label">Last Updated:</span> <span id="megaLastUpdated">Update time is being reviewed</span></p>
         </article>
 
-        <article class="home-info-card latest-result-item">
+        <article class="home-info-card latest-result-item app-tile">
           <h3>Fantasy 5 / Georgia Fantasy 5</h3>
           <p class="result-status">Latest result reviewed daily</p>
           <p><span class="info-label">Draw Date:</span> <span id="fantasy5DrawDate">Result date is being reviewed</span></p>
@@ -169,13 +224,11 @@
           <p><span class="info-label">Last Updated:</span> <span id="fantasy5LastUpdated">Update time is being reviewed</span></p>
         </article>
 
-        <article class="home-info-card latest-result-item pick5-latest-card">
+        <article class="home-info-card latest-result-item pick5-latest-card app-tile">
           <div class="pick5-card-header">
             <div>
               <h3>Pick 5 / Georgia Five</h3>
-              <p class="pick5-card-note">
-               Review the latest Midday and Evening draw details below.
-              </p>
+              <p class="pick5-card-note">Midday and Evening draw details are shown separately.</p>
             </div>
             <p class="result-status">Latest result reviewed daily</p>
           </div>
@@ -183,23 +236,17 @@
           <div class="pick5-result-layout">
             <section class="pick5-result-box">
               <h4>Draw Date &amp; Time</h4>
-              <div id="pick5DrawDate" class="pick5-result-value">
-                Result dates are being reviewed
-              </div>
+              <div id="pick5DrawDate" class="pick5-result-value">Result dates are being reviewed</div>
             </section>
 
             <section class="pick5-result-box">
               <h4>Winning Numbers</h4>
-              <div id="pick5WinningNumbers" class="pick5-result-value">
-                Winning numbers are being reviewed
-              </div>
+              <div id="pick5WinningNumbers" class="pick5-result-value">Winning numbers are being reviewed</div>
             </section>
 
             <section class="pick5-result-box">
               <h4>Draw Type</h4>
-              <div id="pick5DrawType" class="pick5-result-value">
-                Draw type is being reviewed
-              </div>
+              <div id="pick5DrawType" class="pick5-result-value">Draw type is being reviewed</div>
             </section>
           </div>
 
@@ -211,48 +258,50 @@
       </div>
 
       <p class="section-note-small">
-        Latest results may be reviewed and updated daily when official results become available. Update timing may vary
-        because of result availability, source delays, maintenance, or verification needs.
+        Latest results may be reviewed and updated daily when official results become available.
       </p>
     </section>
 
-    <section class="card">
-      <h2>Database Updates</h2>
+    <section class="card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">Database</p>
+        <h2>Database Updates</h2>
+      </div>
       <p>
-        Past winning number history may be reviewed and updated daily around 12:00 noon when results are available.
-        Update times are not guaranteed and may vary because of official result availability, source delays,
-        maintenance, or data verification. Every effort is made to keep the information clear, useful,
-        and easy for you to understand.
+        Past winning number history may be reviewed and updated when results are available.
+        Update times may vary because of source availability, maintenance, or verification needs.
       </p>
     </section>
 
-    <section class="card disclaimer-card">
-      <h2>Disclaimer</h2>
+    <section class="card disclaimer-card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">Important Notice</p>
+        <h2>Disclaimer</h2>
+      </div>
       <p>
-        This website is for educational and entertainment purposes only. The number generator does not guarantee
-        winning numbers, predict future lottery results, or provide gambling advice. The numbers created by this
-        tool should be viewed as random number ideas only.
+        This website is for educational and entertainment purposes only. It does not guarantee winning numbers,
+        predict future lottery results, or provide gambling advice.
       </p>
       <p>
-        You should always confirm official winning numbers, prize information, drawing schedules, and game rules
-        through the official lottery source before making any decisions.
+        Always confirm official winning numbers, prize information, drawing schedules, and game rules through the official lottery source.
       </p>
     </section>
 
-    <section class="card support-mission-card">
-      <h2>Support Our Mission</h2>
+    <section class="card support-mission-card app-card">
+      <div class="section-heading">
+        <p class="eyebrow">Support</p>
+        <h2>Support Our Mission</h2>
+      </div>
       <p>
-        Your support helps with the continued development, updates, and maintenance of this educational number
-        generator website. Contributions can help improve the website, support future features, and keep the
-        experience simple, organized, and helpful.
+        Your support helps with continued development, updates, and maintenance of Pilot Number.
       </p>
       <a class="support-button" href="https://www.paypal.com/donate/?hosted_button_id=RD35Y3ZGP22KS" target="_blank" rel="noopener noreferrer">
         Support This Project
       </a>
     </section>
 
-    <footer class="footer">
-      <p>Lottery Number Generator Website</p>
+    <footer class="footer app-footer">
+      <p>Pilot Number · Lottery Number Generator</p>
     </footer>
 
   </main>
