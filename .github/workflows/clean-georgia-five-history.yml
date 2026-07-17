@@ -1,0 +1,39 @@
+name: Clean Georgia FIVE History
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/raw/georgia-five-midday-history.csv"
+      - "data/raw/georgia-five-evening-history.csv"
+      - "scripts/clean-georgia-five-history.js"
+      - ".github/workflows/clean-georgia-five-history.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  clean-georgia-five-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Georgia FIVE cleaning script
+        run: node scripts/clean-georgia-five-history.js
+
+      - name: Commit cleaned Georgia FIVE history files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cleaned/georgia-five-history-cleaned.json GEORGIA-FIVE-DUPLICATE-REVIEW.md
+          git commit -m "Update cleaned Georgia FIVE history data" || echo "No Georgia FIVE cleaned changes to commit"
+          git push
