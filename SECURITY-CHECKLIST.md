@@ -94,7 +94,7 @@ Project name:
 
 Main domain:
 
-`lottery-number-generator-6ey.pages.dev`
+`pilotnumber.com`
 
 ---
 
