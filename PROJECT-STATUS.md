@@ -21,4 +21,4 @@ The website is live on Cloudflare Pages.
 Live URL:
 
 ```text
-https://lottery-number-generator-6ey.pages.dev/
+https://pilotnumber.com/
