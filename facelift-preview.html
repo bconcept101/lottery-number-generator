@@ -459,6 +459,13 @@
       display: block;
     }
 
+    .support-preview-card {
+      border-color: rgba(255, 211, 106, 0.30);
+      background:
+        radial-gradient(circle at top right, rgba(255, 211, 106, 0.16), transparent 34%),
+        linear-gradient(180deg, var(--panel), rgba(10, 14, 36, 0.92));
+    }
+
     .footer {
       text-align: center;
       color: var(--muted);
@@ -521,7 +528,7 @@
   <main class="app">
 
     <nav class="nav">
-      <a class="brand" href="index.html">
+      <a class="brand" href="facelift-preview.html">
         <span class="brand-badge">PN</span>
         <span>
           <strong>Pilot Number</strong>
@@ -530,12 +537,12 @@
       </a>
 
       <div class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="facelift-preview.html">Home</a>
         <a href="#generator">Generator</a>
         <a href="#latest-results">Results</a>
-        <a href="about.html">About</a>
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="support.html">Support</a>
+        <a href="#about-preview">About</a>
+        <a href="#disclaimer-preview">Disclaimer</a>
+        <a href="#support-preview">Support</a>
       </div>
     </nav>
 
@@ -555,7 +562,7 @@
       </section>
 
       <aside class="number-stage">
-        <p class="stage-title">Number Chamber Preview</p>
+        <p class="stage-title">Number Preview</p>
         <div class="ball big">23</div>
         <div class="lottery-orbit"></div>
         <div class="ball b1">7</div>
@@ -615,6 +622,19 @@
           <p>Generated sets can be checked against available past winning records.</p>
         </article>
       </div>
+    </section>
+
+    <section id="about-preview" class="section">
+      <div class="section-header">
+        <p class="eyebrow">About Pilot Number</p>
+        <h2>Built for Clean Number Ideas</h2>
+      </div>
+
+      <p>
+        Pilot Number is a modern educational number generator created for simple number exploration,
+        lottery-style formatting, and entertainment. It supports Powerball, Mega Millions,
+        Pick 5 / Georgia Five, and Fantasy 5 / Georgia Fantasy 5.
+      </p>
     </section>
 
     <section class="section">
@@ -714,15 +734,31 @@
       </div>
     </section>
 
-    <section class="section">
+    <section id="disclaimer-preview" class="section">
       <div class="section-header">
         <p class="eyebrow">Important Notice</p>
         <h2>Educational Use Only</h2>
       </div>
+
       <p>
         Pilot Number is for educational and entertainment purposes only. It does not guarantee winning numbers,
         predict future lottery results, or provide gambling advice.
       </p>
+    </section>
+
+    <section id="support-preview" class="section support-preview-card">
+      <div class="section-header">
+        <p class="eyebrow">Support</p>
+        <h2>Support This Project</h2>
+      </div>
+
+      <p>
+        Your support helps with continued updates, maintenance, and future improvements for Pilot Number.
+      </p>
+
+      <a class="btn btn-primary" href="https://www.paypal.com/donate/?hosted_button_id=RD35Y3ZGP22KS" target="_blank" rel="noopener noreferrer">
+        Support This Project
+      </a>
     </section>
 
     <footer class="footer">
