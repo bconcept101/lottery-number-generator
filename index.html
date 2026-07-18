@@ -6,6 +6,15 @@
 
   <title>Pilot Number | Lottery Number Generator</title>
 
+  <!-- Pilot Number PWA install support -->
+  <meta name="description" content="Pilot Number is an educational lottery-style number generator for Powerball, Mega Millions, Pick 5 / Georgia Five, and Fantasy 5." />
+  <meta name="theme-color" content="#080918" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Pilot Number" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <style>
     :root {
       --bg-main: #080918;
@@ -803,6 +812,23 @@
       </aside>
     </header>
 
+    <section class="section notice-section">
+      <div class="section-header">
+        <p class="eyebrow">Powerball Day Ready</p>
+        <h2>Share, Open, and Generate Quickly</h2>
+      </div>
+
+      <p>
+        Pilot Number is ready to use on desktop and mobile. Visitors can open the website, generate Powerball number
+        ideas quickly, review the latest results section, and add Pilot Number to their phone home screen as an app.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#generator">Generate Powerball Ideas</a>
+        <a class="btn btn-secondary" href="#latest-results">Review Latest Results</a>
+      </div>
+    </section>
+
     <section id="generator" class="section">
       <div class="section-header">
         <p class="eyebrow">Generator Control Panel</p>
@@ -1045,5 +1071,15 @@
   <script src="supabase-public-config.js"></script>
   <script src="script.js"></script>
   <script src="analytics-tracker.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js").catch(function (error) {
+          console.warn("Pilot Number service worker registration failed:", error);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
