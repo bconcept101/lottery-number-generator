@@ -6,6 +6,15 @@
 
   <title>About | Pilot Number</title>
 
+  <!-- Pilot Number PWA install support -->
+  <meta name="description" content="Pilot Number is an educational lottery-style number generator for Powerball, Mega Millions, Pick 5 / Georgia Five, and Fantasy 5." />
+  <meta name="theme-color" content="#080918" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Pilot Number" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <style>
     :root {
       --panel: rgba(19, 24, 58, 0.88);
@@ -780,5 +789,15 @@
   </script>
 
   <script src="analytics-tracker.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js").catch(function (error) {
+          console.warn("Pilot Number service worker registration failed:", error);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
