@@ -787,7 +787,7 @@
 
       function formatActivityDetails(row) {
         const details = row.details || {};
-        const gameName = details.game_name || formatGameName(row.game_key);
+        const gameName = formatGameName(row.game_key);
         const pageName = formatPageName(row.page_path);
 
         if (row.event_name === "page_view") {
