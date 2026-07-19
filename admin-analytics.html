@@ -734,6 +734,99 @@
           .replace(/'/g, "&#039;");
       }
 
+      function formatEventName(value) {
+        const labels = {
+          page_view: "Page Viewed",
+          game_selected: "Game Selected",
+          generate_clicked: "Generate Button Used",
+          numbers_generated: "Numbers Generated",
+          support_clicked: "Support Link Opened",
+          navigation_clicked: "Website Link Opened"
+        };
+
+        return labels[value] || "Website Activity";
+      }
+
+      function formatPageName(value) {
+        const pagePath = String(value || "").split("?")[0].replace(/\/+$/, "");
+        const labels = {
+          "": "Home",
+          "/index.html": "Home",
+          "/about.html": "About",
+          "/support.html": "Support",
+          "/disclaimer.html": "Disclaimer",
+          "/admin-analytics.html": "Analytics Office"
+        };
+
+        return labels[pagePath] || "Website Page";
+      }
+
+      function formatGameName(value) {
+        const labels = {
+          powerball: "Powerball",
+          mega: "Mega Millions",
+          mega_millions: "Mega Millions",
+          pick5: "Pick 5 / Georgia FIVE",
+          georgia_five: "Pick 5 / Georgia FIVE",
+          fantasy5: "Fantasy 5",
+          fantasy_5: "Fantasy 5"
+        };
+
+        return labels[value] || (value ? String(value) : "Not applicable");
+      }
+
+      function formatCountryName(value) {
+        const labels = {
+          US: "United States",
+          CA: "Canada",
+          GB: "United Kingdom"
+        };
+
+        return labels[value] || value || "Not available";
+      }
+
+      function formatActivityDetails(row) {
+        const details = row.details || {};
+        const gameName = details.game_name || formatGameName(row.game_key);
+        const pageName = formatPageName(row.page_path);
+
+        if (row.event_name === "page_view") {
+          return `Opened the ${pageName} page`;
+        }
+
+        if (row.event_name === "game_selected") {
+          return `Selected ${gameName}`;
+        }
+
+        if (row.event_name === "generate_clicked") {
+          const count = details.number_count || details.requested_sets;
+          return count
+            ? `Requested ${formatNumber(count)} number set${Number(count) === 1 ? "" : "s"} for ${gameName}`
+            : `Used the generator for ${gameName}`;
+        }
+
+        if (row.event_name === "numbers_generated") {
+          const count = details.displayed_sets || details.requested_sets;
+          return count
+            ? `Generated ${formatNumber(count)} number set${Number(count) === 1 ? "" : "s"} for ${gameName}`
+            : `Generated numbers for ${gameName}`;
+        }
+
+        if (row.event_name === "support_clicked") {
+          return details.link_text
+            ? `Opened ${details.link_text}`
+            : "Opened the support link";
+        }
+
+        if (row.event_name === "navigation_clicked") {
+          return details.link_text
+            ? `Selected ${details.link_text}`
+            : "Opened another website page";
+        }
+
+        return "Website activity recorded";
+      }
+
       function showMessage(element, type, text) {
         element.className = `message ${type}`;
         element.textContent = text;
@@ -901,21 +994,19 @@
         renderMetricCards(reports);
 
         renderTable("overviewTopPagesTable", (reports.top_pages_24h || []).slice(0, 5), [
-          { label: "Page", key: "page_path" },
+          { label: "Page", value: function (row) { return formatPageName(row.page_path); } },
           { label: "Views", key: "page_views", type: "number" },
-          { label: "Visitors", key: "unique_visitors", type: "number" },
-          { label: "Latest", key: "latest_event", type: "datetime" }
+          { label: "Visitors", key: "unique_visitors", type: "number" }
         ]);
 
         renderTable("overviewTopGamesTable", (reports.top_games_24h || []).slice(0, 5), [
-          { label: "Game", key: "game_key", type: "tag" },
+          { label: "Game", value: function (row) { return formatGameName(row.game_key); }, type: "tag" },
           { label: "Selected", key: "selected_count", type: "number" },
-          { label: "Generated", key: "numbers_generated", type: "number" },
-          { label: "Latest", key: "latest_event", type: "datetime" }
+          { label: "Generated", key: "numbers_generated", type: "number" }
         ]);
 
         renderTable("topPagesTable", reports.top_pages_24h || [], [
-          { label: "Page", key: "page_path" },
+          { label: "Page", value: function (row) { return formatPageName(row.page_path); } },
           { label: "Page Views", key: "page_views", type: "number" },
           { label: "Visitors", key: "unique_visitors", type: "number" },
           { label: "Sessions", key: "unique_sessions", type: "number" },
@@ -923,7 +1014,7 @@
         ]);
 
         renderTable("topGamesTable", reports.top_games_24h || [], [
-          { label: "Game", key: "game_key", type: "tag" },
+          { label: "Game", value: function (row) { return formatGameName(row.game_key); }, type: "tag" },
           { label: "Selected", key: "selected_count", type: "number" },
           { label: "Generate Clicks", key: "generate_clicks", type: "number" },
           { label: "Numbers Generated", key: "numbers_generated", type: "number" },
@@ -932,23 +1023,14 @@
 
         renderTable("clickDetailsTable", reports.click_details_24h || [], [
           { label: "Time", key: "created_at", type: "datetime" },
-          { label: "Event", key: "event_name", type: "tag" },
-          { label: "Page", key: "page_path" },
-          { label: "Game", key: "game_key" },
+          { label: "Activity", value: function (row) { return formatEventName(row.event_name); }, type: "tag" },
+          { label: "Page", value: function (row) { return formatPageName(row.page_path); } },
+          { label: "Game", value: function (row) { return formatGameName(row.game_key); } },
           {
-            label: "Details",
-            value: function (row) {
-              return [
-                row.link_text ? `Link: ${row.link_text}` : "",
-                row.game_name ? `Game: ${row.game_name}` : "",
-                row.number_count ? `Requested: ${row.number_count}` : "",
-                row.displayed_sets ? `Displayed: ${row.displayed_sets}` : ""
-              ]
-                .filter(Boolean)
-                .join(" | ");
-            }
+            label: "Activity Details",
+            value: function (row) { return formatActivityDetails(row); }
           },
-          { label: "Country", key: "country" }
+          { label: "Country", value: function (row) { return formatCountryName(row.country); } }
         ]);
 
         renderTable("dailyTable", reports.daily_14d || [], [
@@ -963,11 +1045,11 @@
 
         renderTable("recentEventsTable", reports.recent_events_24h || [], [
           { label: "Time", key: "created_at", type: "datetime" },
-          { label: "Event", key: "event_name", type: "tag" },
-          { label: "Page", key: "page_path" },
-          { label: "Game", key: "game_key" },
-          { label: "Details", key: "details", type: "json" },
-          { label: "Country", key: "country" }
+          { label: "Activity", value: function (row) { return formatEventName(row.event_name); }, type: "tag" },
+          { label: "Page", value: function (row) { return formatPageName(row.page_path); } },
+          { label: "Game", value: function (row) { return formatGameName(row.game_key); } },
+          { label: "Activity Details", value: function (row) { return formatActivityDetails(row); } },
+          { label: "Country", value: function (row) { return formatCountryName(row.country); } }
         ]);
       }
 
