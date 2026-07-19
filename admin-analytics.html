@@ -689,8 +689,11 @@
 
       const API_ENDPOINT = "/api/admin-analytics";
       const SESSION_KEY = "lottery_admin_analytics_passkey";
+      const AUTO_REFRESH_INTERVAL_MS = 10000;
 
       let currentReports = null;
+      let autoRefreshTimer = null;
+      let refreshInFlight = false;
 
       const loginWrap = document.getElementById("loginWrap");
       const dashboard = document.getElementById("dashboard");
@@ -978,11 +981,42 @@
         });
       }
 
-      async function openDashboard(passkey) {
+      function stopAutoRefresh() {
+        if (autoRefreshTimer) {
+          window.clearTimeout(autoRefreshTimer);
+          autoRefreshTimer = null;
+        }
+      }
+
+      function scheduleAutoRefresh(passkey) {
+        stopAutoRefresh();
+
+        if (!passkey || document.hidden) {
+          return;
+        }
+
+        autoRefreshTimer = window.setTimeout(function () {
+          openDashboard(passkey, {
+            background: true
+          });
+        }, AUTO_REFRESH_INTERVAL_MS);
+      }
+
+      async function openDashboard(passkey, options) {
+        const isBackgroundRefresh = Boolean(options && options.background);
+
+        if (refreshInFlight) {
+          return;
+        }
+
+        refreshInFlight = true;
+        stopAutoRefresh();
         loginButton.disabled = true;
         refreshButton.disabled = true;
         clearMessage(loginMessage);
-        connectionStatus.textContent = "Loading...";
+        connectionStatus.textContent = isBackgroundRefresh
+          ? "Refreshing..."
+          : "Loading...";
 
         try {
           const reports = await loadReports(passkey);
@@ -990,13 +1024,28 @@
           savePasskey(passkey);
           setLoggedInState();
           renderReports(reports);
-          activateTab("overview");
+
+          if (!isBackgroundRefresh) {
+            activateTab("overview");
+          }
+
+          connectionStatus.textContent = "Live - updates every 10 seconds";
         } catch (error) {
-          setLoggedOutState();
-          showMessage(loginMessage, "error", "Access denied or reports unavailable.");
+          if (isBackgroundRefresh && currentReports) {
+            connectionStatus.textContent = "Live update delayed - retrying";
+          } else {
+            stopAutoRefresh();
+            setLoggedOutState();
+            showMessage(loginMessage, "error", "Access denied or reports unavailable.");
+          }
         } finally {
+          refreshInFlight = false;
           loginButton.disabled = false;
           refreshButton.disabled = false;
+
+          if (getSavedPasskey() && dashboard.style.display !== "none") {
+            scheduleAutoRefresh(passkey);
+          }
         }
       }
 
@@ -1115,18 +1164,37 @@
         const passkey = getSavedPasskey();
 
         if (!passkey) {
+          stopAutoRefresh();
           setLoggedOutState();
           return;
         }
 
-        openDashboard(passkey);
+        openDashboard(passkey, {
+          background: true
+        });
       });
 
       logoutButton.addEventListener("click", function () {
+        stopAutoRefresh();
         clearSavedPasskey();
         passkeyInput.value = "";
         setLoggedOutState();
         clearMessage(loginMessage);
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        const passkey = getSavedPasskey();
+
+        if (document.hidden) {
+          stopAutoRefresh();
+          return;
+        }
+
+        if (passkey && dashboard.style.display !== "none") {
+          openDashboard(passkey, {
+            background: true
+          });
+        }
       });
 
       document.querySelectorAll(".tab-button").forEach((button) => {
