@@ -48,18 +48,18 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Wednesday, July 22, 2026, 12:29 PM ET; Evening: Tuesday, July 21, 2026, 6:59 PM ET",
+    "drawDate": "Midday: Wednesday, July 22, 2026, 12:29 PM ET; Evening: Wednesday, July 22, 2026, 6:59 PM ET",
     "middayDateKey": "2026-07-22",
-    "eveningDateKey": "2026-07-21",
+    "eveningDateKey": "2026-07-22",
     "middayDrawDate": "Wednesday, July 22, 2026",
-    "eveningDrawDate": "Tuesday, July 21, 2026",
+    "eveningDrawDate": "Wednesday, July 22, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
     "middayDrawDateTime": "Wednesday, July 22, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Tuesday, July 21, 2026, 6:59 PM ET",
+    "eveningDrawDateTime": "Wednesday, July 22, 2026, 6:59 PM ET",
     "middayWinningNumbers": "5 - 6 - 0 - 0 - 8",
-    "eveningWinningNumbers": "3 - 1 - 6 - 4 - 4",
-    "winningNumbers": "Midday: 5 - 6 - 0 - 0 - 8 | Evening: 3 - 1 - 6 - 4 - 4",
+    "eveningWinningNumbers": "4 - 6 - 1 - 2 - 7",
+    "winningNumbers": "Midday: 5 - 6 - 0 - 0 - 8 | Evening: 4 - 6 - 1 - 2 - 7",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "July 22, 2026",
     "meta": {
@@ -73,23 +73,21 @@ const latestResults = {
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "eveningSourceNames": [
-        "WSB-TV",
         "Jackpocket"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "middayDateKey": "2026-07-22",
-      "eveningDateKey": "2026-07-21",
+      "eveningDateKey": "2026-07-22",
       "middayDrawDate": "Wednesday, July 22, 2026",
-      "eveningDrawDate": "Tuesday, July 21, 2026",
+      "eveningDrawDate": "Wednesday, July 22, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Wednesday, July 22, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Tuesday, July 21, 2026, 6:59 PM ET",
+      "eveningDrawDateTime": "Wednesday, July 22, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
-      "eveningConsensusCount": 2
+      "eveningConsensusCount": 1
     }
   },
   "fantasy5": {
