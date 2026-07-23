@@ -10,23 +10,9 @@ on:
         type: boolean
 
   schedule:
-    # Morning update runs for Fantasy 5, Powerball, and Mega Millions.
-    # GitHub cron uses UTC.
-    - cron: "10 7 * * *"
-    - cron: "10 8 * * *"
-    - cron: "10 9 * * *"
-    - cron: "55 9 * * *"
-
-    # Afternoon update runs for Georgia FIVE Midday.
-    - cron: "35 17 * * *"
-    - cron: "10 18 * * *"
-    - cron: "55 18 * * *"
-    - cron: "40 19 * * *"
-
-    # Evening update runs for Georgia FIVE Evening.
-    - cron: "10 0 * * *"
-    - cron: "55 0 * * *"
-    - cron: "40 1 * * *"
+    # Run automatically every two hours (12 checks per day).
+    # GitHub cron uses UTC; the two-hour interval remains constant year-round.
+    - cron: "17 */2 * * *"
 
 permissions:
   contents: write
