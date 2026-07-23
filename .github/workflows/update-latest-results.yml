@@ -2,28 +2,28 @@ name: Update Latest Lottery Results
 
 on:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate current results without changing GitHub or Supabase"
+        required: true
+        default: true
+        type: boolean
 
   schedule:
     # Morning update runs for Fantasy 5, Powerball, and Mega Millions.
     # GitHub cron uses UTC.
-    # During Eastern Daylight Time, these run around:
-    # 3:10 AM ET, 4:10 AM ET, 5:10 AM ET, and 5:55 AM ET.
     - cron: "10 7 * * *"
     - cron: "10 8 * * *"
     - cron: "10 9 * * *"
     - cron: "55 9 * * *"
 
     # Afternoon update runs for Georgia FIVE Midday.
-    # During Eastern Daylight Time, these run around:
-    # 1:35 PM ET, 2:10 PM ET, 2:55 PM ET, and 3:40 PM ET.
     - cron: "35 17 * * *"
     - cron: "10 18 * * *"
     - cron: "55 18 * * *"
     - cron: "40 19 * * *"
 
     # Evening update runs for Georgia FIVE Evening.
-    # During Eastern Daylight Time, these run around:
-    # 8:10 PM ET, 8:55 PM ET, and 9:40 PM ET.
     - cron: "10 0 * * *"
     - cron: "55 0 * * *"
     - cron: "40 1 * * *"
@@ -45,9 +45,11 @@ jobs:
           node-version: 20
 
       - name: Update latest-results.js
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
         run: node scripts/update-latest-results.js
 
       - name: Commit latest-results.js
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -55,7 +57,14 @@ jobs:
           git diff --cached --quiet || git commit -m "Update latest lottery results"
           git push
 
+      - name: Validate latest results without database writes
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == true }}
+        env:
+          SYNC_DRY_RUN: "true"
+        run: node scripts/sync-latest-results-to-supabase.js
+
       - name: Sync latest results to Supabase
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
