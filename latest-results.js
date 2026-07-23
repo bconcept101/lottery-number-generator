@@ -73,9 +73,11 @@ const latestResults = {
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "eveningSourceNames": [
+        "WSB-TV",
         "Jackpocket"
       ],
       "eveningSourceUrls": [
+        "https://www.wsbtv.com/lottery/",
         "https://lottery.jackpocket.com/en/lottery-results/georgia"
       ],
       "middayDateKey": "2026-07-22",
@@ -87,7 +89,7 @@ const latestResults = {
       "middayDrawDateTime": "Wednesday, July 22, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Wednesday, July 22, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
-      "eveningConsensusCount": 1
+      "eveningConsensusCount": 2
     }
   },
   "fantasy5": {
