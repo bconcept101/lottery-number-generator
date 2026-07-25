@@ -1,5 +1,5 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "July 24, 2026 at 7:46 PM EDT",
+  "updatedAt": "July 25, 2026 at 3:35 AM EDT",
   "games": {
     "powerball": {
       "amount": "$600 Million",
@@ -8,15 +8,15 @@ window.PILOT_JACKPOTS = {
       "status": "Estimated Jackpot"
     },
     "mega": {
-      "amount": "$743 Million",
-      "cashValue": "$323.4 Million",
-      "nextDrawing": "Friday, July 24, 2026 · 11:00 PM ET",
+      "amount": "$800 Million",
+      "cashValue": "$344.2 Million",
+      "nextDrawing": "Tuesday, July 28, 2026 · 11:00 PM ET",
       "status": "Estimated Jackpot"
     },
     "fantasy5": {
-      "amount": "$125,000",
+      "amount": "$150,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Friday, July 24, 2026 · 11:34 PM ET",
+      "nextDrawing": "Saturday, July 25, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
