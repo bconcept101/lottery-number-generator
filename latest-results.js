@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "03 - 04 - 24 - 36 - 47",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "17",
-    "lastUpdated": "July 26, 2026",
+    "lastUpdated": "July 27, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "02 - 05 - 42 - 44 - 60",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "01",
-    "lastUpdated": "July 26, 2026",
+    "lastUpdated": "July 27, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -46,20 +46,20 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Saturday, July 25, 2026, 12:29 PM ET; Evening: Saturday, July 25, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-07-25",
-    "eveningDateKey": "2026-07-25",
-    "middayDrawDate": "Saturday, July 25, 2026",
-    "eveningDrawDate": "Saturday, July 25, 2026",
+    "drawDate": "Midday: Sunday, July 26, 2026, 12:29 PM ET; Evening: Sunday, July 26, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-07-26",
+    "eveningDateKey": "2026-07-26",
+    "middayDrawDate": "Sunday, July 26, 2026",
+    "eveningDrawDate": "Sunday, July 26, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Saturday, July 25, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Saturday, July 25, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "8 - 4 - 2 - 2 - 1",
-    "eveningWinningNumbers": "4 - 9 - 9 - 9 - 4",
-    "winningNumbers": "Midday: 8 - 4 - 2 - 2 - 1 | Evening: 4 - 9 - 9 - 9 - 4",
+    "middayDrawDateTime": "Sunday, July 26, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Sunday, July 26, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "5 - 8 - 5 - 0 - 9",
+    "eveningWinningNumbers": "6 - 7 - 5 - 4 - 0",
+    "winningNumbers": "Midday: 5 - 8 - 5 - 0 - 9 | Evening: 6 - 7 - 5 - 4 - 0",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "July 26, 2026",
+    "lastUpdated": "July 27, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -74,14 +74,14 @@ const latestResults = {
       "eveningSourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "middayDateKey": "2026-07-25",
-      "eveningDateKey": "2026-07-25",
-      "middayDrawDate": "Saturday, July 25, 2026",
-      "eveningDrawDate": "Saturday, July 25, 2026",
+      "middayDateKey": "2026-07-26",
+      "eveningDateKey": "2026-07-26",
+      "middayDrawDate": "Sunday, July 26, 2026",
+      "eveningDrawDate": "Sunday, July 26, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Saturday, July 25, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Saturday, July 25, 2026, 6:59 PM ET",
+      "middayDrawDateTime": "Sunday, July 26, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Sunday, July 26, 2026, 6:59 PM ET",
       "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Saturday, July 25, 2026",
-    "drawDateKey": "2026-07-25",
-    "winningNumbers": "08 - 12 - 31 - 33 - 42",
+    "drawDate": "Sunday, July 26, 2026",
+    "drawDateKey": "2026-07-26",
+    "winningNumbers": "16 - 21 - 24 - 27 - 40",
     "drawType": "Night draw",
-    "lastUpdated": "July 26, 2026",
+    "lastUpdated": "July 27, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-25",
+      "drawDateKey": "2026-07-26",
       "consensusCount": 1,
       "candidateCount": 1
     }
