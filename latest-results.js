@@ -2,12 +2,12 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Saturday, July 25, 2026",
-    "drawDateKey": "2026-07-25",
-    "winningNumbers": "03 - 04 - 24 - 36 - 47",
+    "drawDate": "Monday, July 27, 2026",
+    "drawDateKey": "2026-07-27",
+    "winningNumbers": "06 - 26 - 46 - 58 - 65",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "17",
-    "lastUpdated": "July 27, 2026",
+    "extraNumber": "25",
+    "lastUpdated": "July 28, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-25",
+      "drawDateKey": "2026-07-27",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "02 - 05 - 42 - 44 - 60",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "01",
-    "lastUpdated": "July 27, 2026",
+    "lastUpdated": "July 28, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -46,20 +46,20 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Monday, July 27, 2026, 12:29 PM ET; Evening: Sunday, July 26, 2026, 6:59 PM ET",
+    "drawDate": "Midday: Monday, July 27, 2026, 12:29 PM ET; Evening: Monday, July 27, 2026, 6:59 PM ET",
     "middayDateKey": "2026-07-27",
-    "eveningDateKey": "2026-07-26",
+    "eveningDateKey": "2026-07-27",
     "middayDrawDate": "Monday, July 27, 2026",
-    "eveningDrawDate": "Sunday, July 26, 2026",
+    "eveningDrawDate": "Monday, July 27, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
     "middayDrawDateTime": "Monday, July 27, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Sunday, July 26, 2026, 6:59 PM ET",
+    "eveningDrawDateTime": "Monday, July 27, 2026, 6:59 PM ET",
     "middayWinningNumbers": "3 - 1 - 2 - 9 - 5",
-    "eveningWinningNumbers": "6 - 7 - 5 - 4 - 0",
-    "winningNumbers": "Midday: 3 - 1 - 2 - 9 - 5 | Evening: 6 - 7 - 5 - 4 - 0",
+    "eveningWinningNumbers": "5 - 1 - 6 - 5 - 3",
+    "winningNumbers": "Midday: 3 - 1 - 2 - 9 - 5 | Evening: 5 - 1 - 6 - 5 - 3",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "July 27, 2026",
+    "lastUpdated": "July 28, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -75,13 +75,13 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-07-27",
-      "eveningDateKey": "2026-07-26",
+      "eveningDateKey": "2026-07-27",
       "middayDrawDate": "Monday, July 27, 2026",
-      "eveningDrawDate": "Sunday, July 26, 2026",
+      "eveningDrawDate": "Monday, July 27, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Monday, July 27, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Sunday, July 26, 2026, 6:59 PM ET",
+      "eveningDrawDateTime": "Monday, July 27, 2026, 6:59 PM ET",
       "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Sunday, July 26, 2026",
-    "drawDateKey": "2026-07-26",
-    "winningNumbers": "16 - 21 - 24 - 27 - 40",
+    "drawDate": "Monday, July 27, 2026",
+    "drawDateKey": "2026-07-27",
+    "winningNumbers": "01 - 02 - 16 - 25 - 41",
     "drawType": "Night draw",
-    "lastUpdated": "July 27, 2026",
+    "lastUpdated": "July 28, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-26",
+      "drawDateKey": "2026-07-27",
       "consensusCount": 1,
       "candidateCount": 1
     }
