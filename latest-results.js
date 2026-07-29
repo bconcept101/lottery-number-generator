@@ -24,11 +24,11 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Friday, July 24, 2026",
-    "drawDateKey": "2026-07-24",
-    "winningNumbers": "02 - 05 - 42 - 44 - 60",
+    "drawDate": "Tuesday, July 28, 2026",
+    "drawDateKey": "2026-07-28",
+    "winningNumbers": "34 - 48 - 49 - 59 - 70",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "01",
+    "extraNumber": "12",
     "lastUpdated": "July 28, 2026",
     "meta": {
       "source": "WSB-TV",
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-24",
+      "drawDateKey": "2026-07-28",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -46,18 +46,18 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Tuesday, July 28, 2026, 12:29 PM ET; Evening: Monday, July 27, 2026, 6:59 PM ET",
+    "drawDate": "Midday: Tuesday, July 28, 2026, 12:29 PM ET; Evening: Tuesday, July 28, 2026, 6:59 PM ET",
     "middayDateKey": "2026-07-28",
-    "eveningDateKey": "2026-07-27",
+    "eveningDateKey": "2026-07-28",
     "middayDrawDate": "Tuesday, July 28, 2026",
-    "eveningDrawDate": "Monday, July 27, 2026",
+    "eveningDrawDate": "Tuesday, July 28, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
     "middayDrawDateTime": "Tuesday, July 28, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Monday, July 27, 2026, 6:59 PM ET",
+    "eveningDrawDateTime": "Tuesday, July 28, 2026, 6:59 PM ET",
     "middayWinningNumbers": "5 - 4 - 1 - 8 - 0",
-    "eveningWinningNumbers": "5 - 1 - 6 - 5 - 3",
-    "winningNumbers": "Midday: 5 - 4 - 1 - 8 - 0 | Evening: 5 - 1 - 6 - 5 - 3",
+    "eveningWinningNumbers": "2 - 9 - 5 - 5 - 3",
+    "winningNumbers": "Midday: 5 - 4 - 1 - 8 - 0 | Evening: 2 - 9 - 5 - 5 - 3",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "July 28, 2026",
     "meta": {
@@ -75,13 +75,13 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-07-28",
-      "eveningDateKey": "2026-07-27",
+      "eveningDateKey": "2026-07-28",
       "middayDrawDate": "Tuesday, July 28, 2026",
-      "eveningDrawDate": "Monday, July 27, 2026",
+      "eveningDrawDate": "Tuesday, July 28, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Tuesday, July 28, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Monday, July 27, 2026, 6:59 PM ET",
+      "eveningDrawDateTime": "Tuesday, July 28, 2026, 6:59 PM ET",
       "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
