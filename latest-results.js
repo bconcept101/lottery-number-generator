@@ -2,11 +2,11 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, July 27, 2026",
-    "drawDateKey": "2026-07-27",
-    "winningNumbers": "06 - 26 - 46 - 58 - 65",
+    "drawDate": "Wednesday, July 29, 2026",
+    "drawDateKey": "2026-07-29",
+    "winningNumbers": "30 - 36 - 40 - 42 - 57",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "25",
+    "extraNumber": "02",
     "lastUpdated": "July 29, 2026",
     "meta": {
       "source": "WSB-TV",
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-27",
+      "drawDateKey": "2026-07-29",
       "consensusCount": 1,
       "candidateCount": 1
     }
