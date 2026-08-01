@@ -24,11 +24,11 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, July 28, 2026",
-    "drawDateKey": "2026-07-28",
-    "winningNumbers": "34 - 48 - 49 - 59 - 70",
+    "drawDate": "Friday, July 31, 2026",
+    "drawDateKey": "2026-07-31",
+    "winningNumbers": "04 - 18 - 26 - 43 - 51",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "12",
+    "extraNumber": "04",
     "lastUpdated": "July 31, 2026",
     "meta": {
       "source": "WSB-TV",
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-07-28",
+      "drawDateKey": "2026-07-31",
       "consensusCount": 1,
       "candidateCount": 1
     }
