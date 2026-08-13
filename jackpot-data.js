@@ -1,10 +1,10 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "August 12, 2026 at 10:46 PM EDT",
+  "updatedAt": "August 13, 2026 at 1:48 AM EDT",
   "games": {
     "powerball": {
-      "amount": "$1 Billion",
-      "cashValue": "$433.1 Million",
-      "nextDrawing": "Wednesday, August 12, 2026 · 10:59 PM ET",
+      "amount": "$20 Million",
+      "cashValue": "$8.7 Million",
+      "nextDrawing": "Saturday, August 15, 2026 · 10:59 PM ET",
       "status": "Estimated Jackpot"
     },
     "mega": {
@@ -14,9 +14,9 @@ window.PILOT_JACKPOTS = {
       "status": "Estimated Jackpot"
     },
     "fantasy5": {
-      "amount": "$554,000",
+      "amount": "$746,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Wednesday, August 12, 2026 · 11:34 PM ET",
+      "nextDrawing": "Thursday, August 13, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
