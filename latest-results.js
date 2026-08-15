@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "04 - 26 - 66 - 67 - 69",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "09",
-    "lastUpdated": "August 14, 2026",
+    "lastUpdated": "August 15, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "03 - 23 - 27 - 46 - 60",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "11",
-    "lastUpdated": "August 14, 2026",
+    "lastUpdated": "August 15, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -59,7 +59,7 @@ const latestResults = {
     "eveningWinningNumbers": "7 - 1 - 4 - 2 - 5",
     "winningNumbers": "Midday: 1 - 4 - 7 - 3 - 2 | Evening: 7 - 1 - 4 - 2 - 5",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "August 14, 2026",
+    "lastUpdated": "August 15, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Thursday, August 13, 2026",
-    "drawDateKey": "2026-08-13",
-    "winningNumbers": "20 - 33 - 34 - 38 - 42",
+    "drawDate": "Friday, August 14, 2026",
+    "drawDateKey": "2026-08-14",
+    "winningNumbers": "02 - 05 - 17 - 22 - 23",
     "drawType": "Night draw",
-    "lastUpdated": "August 14, 2026",
+    "lastUpdated": "August 15, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-08-13",
+      "drawDateKey": "2026-08-14",
       "consensusCount": 1,
       "candidateCount": 1
     }
