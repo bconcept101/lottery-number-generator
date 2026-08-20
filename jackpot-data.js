@@ -1,10 +1,10 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "August 19, 2026 at 9:50 PM EDT",
+  "updatedAt": "August 19, 2026 at 11:09 PM EDT",
   "games": {
     "powerball": {
       "amount": "$48 Million",
       "cashValue": "$20.8 Million",
-      "nextDrawing": "Wednesday, August 19, 2026 · 10:59 PM ET",
+      "nextDrawing": "Saturday, August 22, 2026 · 10:59 PM ET",
       "status": "Estimated Jackpot"
     },
     "mega": {
