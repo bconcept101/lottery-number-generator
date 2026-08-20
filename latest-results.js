@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "10 - 21 - 58 - 61 - 64",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "17",
-    "lastUpdated": "August 19, 2026",
+    "lastUpdated": "August 20, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "05 - 19 - 30 - 38 - 59",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "12",
-    "lastUpdated": "August 19, 2026",
+    "lastUpdated": "August 20, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -59,7 +59,7 @@ const latestResults = {
     "eveningWinningNumbers": "0 - 0 - 7 - 3 - 4",
     "winningNumbers": "Midday: 1 - 7 - 2 - 0 - 0 | Evening: 0 - 0 - 7 - 3 - 4",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "August 19, 2026",
+    "lastUpdated": "August 20, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -91,24 +91,22 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, August 18, 2026",
-    "drawDateKey": "2026-08-18",
-    "winningNumbers": "01 - 13 - 32 - 39 - 40",
+    "drawDate": "Wednesday, August 19, 2026",
+    "drawDateKey": "2026-08-19",
+    "winningNumbers": "01 - 13 - 16 - 34 - 36",
     "drawType": "Night draw",
-    "lastUpdated": "August 19, 2026",
+    "lastUpdated": "August 20, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-08-18",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "drawDateKey": "2026-08-19",
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
