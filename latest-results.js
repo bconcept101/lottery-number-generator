@@ -63,9 +63,11 @@ const latestResults = {
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
+        "WSB-TV",
         "Lottery.net"
       ],
       "middaySourceUrls": [
+        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
@@ -82,7 +84,7 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Friday, August 21, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Friday, August 21, 2026, 6:59 PM ET",
-      "middayConsensusCount": 1,
+      "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
   },
@@ -95,16 +97,18 @@ const latestResults = {
     "drawType": "Night draw",
     "lastUpdated": "August 21, 2026",
     "meta": {
-      "source": "Lottery.net",
+      "source": "WSB-TV",
       "sourceNames": [
+        "WSB-TV",
         "Lottery.net"
       ],
       "sourceUrls": [
+        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
       "drawDateKey": "2026-08-20",
-      "consensusCount": 1,
-      "candidateCount": 1
+      "consensusCount": 2,
+      "candidateCount": 2
     }
   }
 };
