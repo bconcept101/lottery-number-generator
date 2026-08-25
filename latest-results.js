@@ -4,9 +4,9 @@ const latestResults = {
     "status": "Latest result reviewed daily",
     "drawDate": "Saturday, August 22, 2026",
     "drawDateKey": "2026-08-22",
-    "winningNumbers": "13 - 31 - 54 - 57 - 65",
+    "winningNumbers": "03 - 16 - 33 - 38 - 68",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "23",
+    "extraNumber": "02",
     "lastUpdated": "August 24, 2026",
     "meta": {
       "source": "WSB-TV",
