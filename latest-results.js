@@ -46,45 +46,43 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Friday, September 4, 2026, 12:29 PM ET; Evening: Friday, September 4, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-09-04",
-    "eveningDateKey": "2026-09-04",
-    "middayDrawDate": "Friday, September 4, 2026",
-    "eveningDrawDate": "Friday, September 4, 2026",
+    "drawDate": "Midday: Saturday, September 5, 2026, 12:29 PM ET; Evening: Saturday, September 5, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-09-05",
+    "eveningDateKey": "2026-09-05",
+    "middayDrawDate": "Saturday, September 5, 2026",
+    "eveningDrawDate": "Saturday, September 5, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Friday, September 4, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Friday, September 4, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "2 - 0 - 5 - 6 - 2",
-    "eveningWinningNumbers": "5 - 7 - 4 - 8 - 4",
-    "winningNumbers": "Midday: 2 - 0 - 5 - 6 - 2 | Evening: 5 - 7 - 4 - 8 - 4",
+    "middayDrawDateTime": "Saturday, September 5, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Saturday, September 5, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "0 - 9 - 3 - 3 - 7",
+    "eveningWinningNumbers": "0 - 9 - 3 - 3 - 7",
+    "winningNumbers": "Midday: 0 - 9 - 3 - 3 - 7 | Evening: 0 - 9 - 3 - 3 - 7",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 5, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
         "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-09-04",
-      "eveningDateKey": "2026-09-04",
-      "middayDrawDate": "Friday, September 4, 2026",
-      "eveningDrawDate": "Friday, September 4, 2026",
+      "middayDateKey": "2026-09-05",
+      "eveningDateKey": "2026-09-05",
+      "middayDrawDate": "Saturday, September 5, 2026",
+      "eveningDrawDate": "Saturday, September 5, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Friday, September 4, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Friday, September 4, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayDrawDateTime": "Saturday, September 5, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Saturday, September 5, 2026, 6:59 PM ET",
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
@@ -97,12 +95,12 @@ const latestResults = {
     "drawType": "Night draw",
     "lastUpdated": "September 5, 2026",
     "meta": {
-      "source": "WSB-TV",
+      "source": "Lottery.net",
       "sourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
       "drawDateKey": "2026-09-04",
       "consensusCount": 1,
