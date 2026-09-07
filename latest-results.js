@@ -56,23 +56,25 @@ const latestResults = {
     "middayDrawDateTime": "Sunday, September 6, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Sunday, September 6, 2026, 6:59 PM ET",
     "middayWinningNumbers": "8 - 1 - 6 - 8 - 4",
-    "eveningWinningNumbers": "8 - 1 - 6 - 8 - 4",
-    "winningNumbers": "Midday: 8 - 1 - 6 - 8 - 4 | Evening: 8 - 1 - 6 - 8 - 4",
+    "eveningWinningNumbers": "9 - 7 - 3 - 1 - 3",
+    "winningNumbers": "Midday: 8 - 1 - 6 - 8 - 4 | Evening: 9 - 7 - 3 - 1 - 3",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 6, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV"
+        "WSB-TV",
+        "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.wsbtv.com/lottery/",
+        "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "Current Website Data"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://lottery-number-generator-6ey.pages.dev/latest-results.js"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-09-06",
       "eveningDateKey": "2026-09-06",
@@ -82,7 +84,7 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Sunday, September 6, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Sunday, September 6, 2026, 6:59 PM ET",
-      "middayConsensusCount": 1,
+      "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
   },
@@ -97,14 +99,16 @@ const latestResults = {
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV"
+        "WSB-TV",
+        "Lottery.net"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.wsbtv.com/lottery/",
+        "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
       "drawDateKey": "2026-09-05",
-      "consensusCount": 1,
-      "candidateCount": 1
+      "consensusCount": 2,
+      "candidateCount": 2
     }
   }
 };
