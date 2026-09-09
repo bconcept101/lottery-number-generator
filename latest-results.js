@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "15 - 19 - 28 - 39 - 56",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "03",
-    "lastUpdated": "September 8, 2026",
+    "lastUpdated": "September 9, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -24,12 +24,12 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Friday, September 4, 2026",
-    "drawDateKey": "2026-09-04",
-    "winningNumbers": "06 - 26 - 34 - 59 - 61",
+    "drawDate": "Tuesday, September 8, 2026",
+    "drawDateKey": "2026-09-08",
+    "winningNumbers": "17 - 30 - 43 - 58 - 66",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "24",
-    "lastUpdated": "September 8, 2026",
+    "extraNumber": "20",
+    "lastUpdated": "September 9, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-09-04",
+      "drawDateKey": "2026-09-08",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -59,16 +59,14 @@ const latestResults = {
     "eveningWinningNumbers": "6 - 8 - 4 - 5 - 8",
     "winningNumbers": "Midday: 8 - 4 - 2 - 1 - 1 | Evening: 6 - 8 - 4 - 5 - 8",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "September 8, 2026",
+    "lastUpdated": "September 9, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -84,31 +82,29 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Tuesday, September 8, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Tuesday, September 8, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, September 7, 2026",
-    "drawDateKey": "2026-09-07",
-    "winningNumbers": "02 - 07 - 13 - 20 - 27",
+    "drawDate": "Tuesday, September 8, 2026",
+    "drawDateKey": "2026-09-08",
+    "winningNumbers": "03 - 04 - 12 - 16 - 31",
     "drawType": "Night draw",
-    "lastUpdated": "September 8, 2026",
+    "lastUpdated": "September 9, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-09-07",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "drawDateKey": "2026-09-08",
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
