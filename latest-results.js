@@ -56,23 +56,23 @@ const latestResults = {
     "middayDrawDateTime": "Tuesday, September 8, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Tuesday, September 8, 2026, 6:59 PM ET",
     "middayWinningNumbers": "8 - 4 - 2 - 1 - 1",
-    "eveningWinningNumbers": "6 - 8 - 4 - 5 - 8",
-    "winningNumbers": "Midday: 8 - 4 - 2 - 1 - 1 | Evening: 6 - 8 - 4 - 5 - 8",
+    "eveningWinningNumbers": "8 - 4 - 2 - 1 - 1",
+    "winningNumbers": "Midday: 8 - 4 - 2 - 1 - 1 | Evening: 8 - 4 - 2 - 1 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 9, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
       "middayDateKey": "2026-09-08",
       "eveningDateKey": "2026-09-08",
@@ -95,12 +95,12 @@ const latestResults = {
     "drawType": "Night draw",
     "lastUpdated": "September 9, 2026",
     "meta": {
-      "source": "WSB-TV",
+      "source": "Lottery.net",
       "sourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
       "drawDateKey": "2026-09-08",
       "consensusCount": 1,
