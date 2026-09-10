@@ -46,29 +46,27 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Wednesday, September 9, 2026, 12:29 PM ET; Evening: Wednesday, September 9, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-09-09",
+    "drawDate": "Midday: Thursday, September 10, 2026, 12:29 PM ET; Evening: Wednesday, September 9, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-09-10",
     "eveningDateKey": "2026-09-09",
-    "middayDrawDate": "Wednesday, September 9, 2026",
+    "middayDrawDate": "Thursday, September 10, 2026",
     "eveningDrawDate": "Wednesday, September 9, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Wednesday, September 9, 2026, 12:29 PM ET",
+    "middayDrawDateTime": "Thursday, September 10, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Wednesday, September 9, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "0 - 9 - 1 - 3 - 6",
+    "middayWinningNumbers": "8 - 5 - 0 - 3 - 0",
     "eveningWinningNumbers": "1 - 2 - 1 - 6 - 9",
-    "winningNumbers": "Midday: 0 - 9 - 1 - 3 - 6 | Evening: 1 - 2 - 1 - 6 - 9",
+    "winningNumbers": "Midday: 8 - 5 - 0 - 3 - 0 | Evening: 1 - 2 - 1 - 6 - 9",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 10, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -76,15 +74,15 @@ const latestResults = {
       "eveningSourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "middayDateKey": "2026-09-09",
+      "middayDateKey": "2026-09-10",
       "eveningDateKey": "2026-09-09",
-      "middayDrawDate": "Wednesday, September 9, 2026",
+      "middayDrawDate": "Thursday, September 10, 2026",
       "eveningDrawDate": "Wednesday, September 9, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Wednesday, September 9, 2026, 12:29 PM ET",
+      "middayDrawDateTime": "Thursday, September 10, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Wednesday, September 9, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
@@ -99,16 +97,14 @@ const latestResults = {
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "drawDateKey": "2026-09-09",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
