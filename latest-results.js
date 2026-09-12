@@ -56,8 +56,8 @@ const latestResults = {
     "middayDrawDateTime": "Friday, September 11, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Friday, September 11, 2026, 6:59 PM ET",
     "middayWinningNumbers": "3 - 7 - 8 - 2 - 3",
-    "eveningWinningNumbers": "3 - 7 - 8 - 2 - 3",
-    "winningNumbers": "Midday: 3 - 7 - 8 - 2 - 3 | Evening: 3 - 7 - 8 - 2 - 3",
+    "eveningWinningNumbers": "9 - 8 - 3 - 1 - 1",
+    "winningNumbers": "Midday: 3 - 7 - 8 - 2 - 3 | Evening: 9 - 8 - 3 - 1 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 11, 2026",
     "meta": {
@@ -71,10 +71,10 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "Lottery.net"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://www.lottery.net/georgia/five-evening/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-09-11",
       "eveningDateKey": "2026-09-11",
