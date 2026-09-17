@@ -46,18 +46,18 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Wednesday, September 16, 2026, 12:29 PM ET; Evening: Wednesday, September 16, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-09-16",
-    "eveningDateKey": "2026-09-16",
-    "middayDrawDate": "Wednesday, September 16, 2026",
-    "eveningDrawDate": "Wednesday, September 16, 2026",
+    "drawDate": "Midday: Thursday, September 17, 2026, 12:29 PM ET; Evening: Thursday, September 17, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-09-17",
+    "eveningDateKey": "2026-09-17",
+    "middayDrawDate": "Thursday, September 17, 2026",
+    "eveningDrawDate": "Thursday, September 17, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Wednesday, September 16, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Wednesday, September 16, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "6 - 1 - 6 - 8 - 3",
-    "eveningWinningNumbers": "0 - 7 - 4 - 7 - 4",
-    "winningNumbers": "Midday: 6 - 1 - 6 - 8 - 3 | Evening: 0 - 7 - 4 - 7 - 4",
+    "middayDrawDateTime": "Thursday, September 17, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Thursday, September 17, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "5 - 1 - 7 - 4 - 0",
+    "eveningWinningNumbers": "5 - 1 - 7 - 4 - 0",
+    "winningNumbers": "Midday: 5 - 1 - 7 - 4 - 0 | Evening: 5 - 1 - 7 - 4 - 0",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "September 17, 2026",
     "meta": {
@@ -71,19 +71,19 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-09-16",
-      "eveningDateKey": "2026-09-16",
-      "middayDrawDate": "Wednesday, September 16, 2026",
-      "eveningDrawDate": "Wednesday, September 16, 2026",
+      "middayDateKey": "2026-09-17",
+      "eveningDateKey": "2026-09-17",
+      "middayDrawDate": "Thursday, September 17, 2026",
+      "eveningDrawDate": "Thursday, September 17, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Wednesday, September 16, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Wednesday, September 16, 2026, 6:59 PM ET",
+      "middayDrawDateTime": "Thursday, September 17, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Thursday, September 17, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
