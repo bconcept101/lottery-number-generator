@@ -1,10 +1,10 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "September 20, 2026 at 6:25 PM EDT",
+  "updatedAt": "September 21, 2026 at 12:53 AM EDT",
   "games": {
     "powerball": {
       "amount": "$313 Million",
       "cashValue": "$133.6 Million",
-      "nextDrawing": "Monday, September 21, 2026 · 10:59 PM ET",
+      "nextDrawing": "Wednesday, September 23, 2026 · 10:59 PM ET",
       "status": "Estimated Jackpot"
     },
     "mega": {
@@ -16,7 +16,7 @@ window.PILOT_JACKPOTS = {
     "fantasy5": {
       "amount": "$150,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Sunday, September 20, 2026 · 11:34 PM ET",
+      "nextDrawing": "Tuesday, September 22, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
