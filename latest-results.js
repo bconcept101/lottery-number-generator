@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "04 - 06 - 23 - 33 - 44",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "13",
-    "lastUpdated": "October 1, 2026",
+    "lastUpdated": "October 2, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "10 - 15 - 16 - 27 - 64",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "23",
-    "lastUpdated": "October 1, 2026",
+    "lastUpdated": "October 2, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -59,16 +59,14 @@ const latestResults = {
     "eveningWinningNumbers": "1 - 5 - 8 - 8 - 7",
     "winningNumbers": "Midday: 5 - 0 - 8 - 6 - 9 | Evening: 1 - 5 - 8 - 8 - 7",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "October 1, 2026",
+    "lastUpdated": "October 2, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -84,31 +82,29 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Thursday, October 1, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Thursday, October 1, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Wednesday, September 30, 2026",
-    "drawDateKey": "2026-09-30",
-    "winningNumbers": "04 - 09 - 11 - 34 - 39",
+    "drawDate": "Thursday, October 1, 2026",
+    "drawDateKey": "2026-10-01",
+    "winningNumbers": "05 - 06 - 19 - 36 - 42",
     "drawType": "Night draw",
-    "lastUpdated": "October 1, 2026",
+    "lastUpdated": "October 2, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-09-30",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "drawDateKey": "2026-10-01",
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
