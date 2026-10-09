@@ -46,45 +46,43 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Thursday, October 8, 2026, 12:29 PM ET; Evening: Thursday, October 8, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-10-08",
-    "eveningDateKey": "2026-10-08",
-    "middayDrawDate": "Thursday, October 8, 2026",
-    "eveningDrawDate": "Thursday, October 8, 2026",
+    "drawDate": "Midday: Friday, October 9, 2026, 12:29 PM ET; Evening: Friday, October 9, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-10-09",
+    "eveningDateKey": "2026-10-09",
+    "middayDrawDate": "Friday, October 9, 2026",
+    "eveningDrawDate": "Friday, October 9, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Thursday, October 8, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Thursday, October 8, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "3 - 9 - 6 - 2 - 5",
-    "eveningWinningNumbers": "0 - 9 - 8 - 9 - 0",
-    "winningNumbers": "Midday: 3 - 9 - 6 - 2 - 5 | Evening: 0 - 9 - 8 - 9 - 0",
+    "middayDrawDateTime": "Friday, October 9, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Friday, October 9, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "2 - 5 - 5 - 6 - 1",
+    "eveningWinningNumbers": "2 - 5 - 5 - 6 - 1",
+    "winningNumbers": "Midday: 2 - 5 - 5 - 6 - 1 | Evening: 2 - 5 - 5 - 6 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "October 9, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
         "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-10-08",
-      "eveningDateKey": "2026-10-08",
-      "middayDrawDate": "Thursday, October 8, 2026",
-      "eveningDrawDate": "Thursday, October 8, 2026",
+      "middayDateKey": "2026-10-09",
+      "eveningDateKey": "2026-10-09",
+      "middayDrawDate": "Friday, October 9, 2026",
+      "eveningDrawDate": "Friday, October 9, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Thursday, October 8, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Thursday, October 8, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayDrawDateTime": "Friday, October 9, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Friday, October 9, 2026, 6:59 PM ET",
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
