@@ -46,29 +46,27 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Monday, October 12, 2026, 12:29 PM ET; Evening: Monday, October 12, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-10-12",
+    "drawDate": "Midday: Tuesday, October 13, 2026, 12:29 PM ET; Evening: Monday, October 12, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-10-13",
     "eveningDateKey": "2026-10-12",
-    "middayDrawDate": "Monday, October 12, 2026",
+    "middayDrawDate": "Tuesday, October 13, 2026",
     "eveningDrawDate": "Monday, October 12, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Monday, October 12, 2026, 12:29 PM ET",
+    "middayDrawDateTime": "Tuesday, October 13, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Monday, October 12, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "3 - 5 - 1 - 3 - 2",
+    "middayWinningNumbers": "8 - 4 - 5 - 6 - 6",
     "eveningWinningNumbers": "8 - 2 - 8 - 0 - 0",
-    "winningNumbers": "Midday: 3 - 5 - 1 - 3 - 2 | Evening: 8 - 2 - 8 - 0 - 0",
+    "winningNumbers": "Midday: 8 - 4 - 5 - 6 - 6 | Evening: 8 - 2 - 8 - 0 - 0",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "October 13, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -76,15 +74,15 @@ const latestResults = {
       "eveningSourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "middayDateKey": "2026-10-12",
+      "middayDateKey": "2026-10-13",
       "eveningDateKey": "2026-10-12",
-      "middayDrawDate": "Monday, October 12, 2026",
+      "middayDrawDate": "Tuesday, October 13, 2026",
       "eveningDrawDate": "Monday, October 12, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Monday, October 12, 2026, 12:29 PM ET",
+      "middayDrawDateTime": "Tuesday, October 13, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Monday, October 12, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
@@ -99,16 +97,14 @@ const latestResults = {
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "drawDateKey": "2026-10-12",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
