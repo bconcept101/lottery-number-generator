@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "22 - 28 - 38 - 51 - 69",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "09",
-    "lastUpdated": "October 13, 2026",
+    "lastUpdated": "October 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -24,12 +24,12 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Friday, October 9, 2026",
-    "drawDateKey": "2026-10-09",
-    "winningNumbers": "02 - 07 - 16 - 63 - 70",
+    "drawDate": "Tuesday, October 13, 2026",
+    "drawDateKey": "2026-10-13",
+    "winningNumbers": "11 - 12 - 15 - 40 - 66",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "08",
-    "lastUpdated": "October 13, 2026",
+    "extraNumber": "17",
+    "lastUpdated": "October 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-10-09",
+      "drawDateKey": "2026-10-13",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -59,14 +59,16 @@ const latestResults = {
     "eveningWinningNumbers": "7 - 8 - 7 - 0 - 2",
     "winningNumbers": "Midday: 8 - 4 - 5 - 6 - 6 | Evening: 7 - 8 - 7 - 0 - 2",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "October 13, 2026",
+    "lastUpdated": "October 14, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV"
+        "WSB-TV",
+        "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.wsbtv.com/lottery/",
+        "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -82,29 +84,31 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Tuesday, October 13, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Tuesday, October 13, 2026, 6:59 PM ET",
-      "middayConsensusCount": 1,
+      "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
   },
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, October 12, 2026",
-    "drawDateKey": "2026-10-12",
-    "winningNumbers": "03 - 15 - 18 - 28 - 41",
+    "drawDate": "Tuesday, October 13, 2026",
+    "drawDateKey": "2026-10-13",
+    "winningNumbers": "01 - 03 - 15 - 30 - 31",
     "drawType": "Night draw",
-    "lastUpdated": "October 13, 2026",
+    "lastUpdated": "October 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV"
+        "WSB-TV",
+        "Lottery.net"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.wsbtv.com/lottery/",
+        "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
-      "drawDateKey": "2026-10-12",
-      "consensusCount": 1,
-      "candidateCount": 1
+      "drawDateKey": "2026-10-13",
+      "consensusCount": 2,
+      "candidateCount": 2
     }
   }
 };
