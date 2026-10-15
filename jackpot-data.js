@@ -1,5 +1,5 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "October 15, 2026 at 12:36 AM EDT",
+  "updatedAt": "October 15, 2026 at 7:26 AM EDT",
   "games": {
     "powerball": {
       "amount": "$600 Million",
@@ -16,7 +16,7 @@ window.PILOT_JACKPOTS = {
     "fantasy5": {
       "amount": "$125,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Friday, October 16, 2026 · 11:34 PM ET",
+      "nextDrawing": "Thursday, October 15, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
