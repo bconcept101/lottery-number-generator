@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "03 - 34 - 37 - 42 - 46",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "20",
-    "lastUpdated": "October 16, 2026",
+    "lastUpdated": "October 17, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -24,12 +24,12 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, October 13, 2026",
-    "drawDateKey": "2026-10-13",
-    "winningNumbers": "11 - 12 - 15 - 40 - 66",
+    "drawDate": "Friday, October 16, 2026",
+    "drawDateKey": "2026-10-16",
+    "winningNumbers": "02 - 15 - 31 - 41 - 68",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "17",
-    "lastUpdated": "October 16, 2026",
+    "extraNumber": "11",
+    "lastUpdated": "October 17, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-10-13",
+      "drawDateKey": "2026-10-16",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -59,7 +59,7 @@ const latestResults = {
     "eveningWinningNumbers": "0 - 3 - 9 - 2 - 1",
     "winningNumbers": "Midday: 3 - 2 - 6 - 0 - 9 | Evening: 0 - 3 - 9 - 2 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "October 16, 2026",
+    "lastUpdated": "October 17, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Thursday, October 15, 2026",
-    "drawDateKey": "2026-10-15",
-    "winningNumbers": "04 - 07 - 17 - 27 - 38",
+    "drawDate": "Friday, October 16, 2026",
+    "drawDateKey": "2026-10-16",
+    "winningNumbers": "08 - 13 - 22 - 23 - 29",
     "drawType": "Night draw",
-    "lastUpdated": "October 16, 2026",
+    "lastUpdated": "October 17, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-10-15",
+      "drawDateKey": "2026-10-16",
       "consensusCount": 1,
       "candidateCount": 1
     }
