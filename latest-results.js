@@ -46,18 +46,18 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Thursday, October 22, 2026, 12:29 PM ET; Evening: Thursday, October 22, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-10-22",
-    "eveningDateKey": "2026-10-22",
-    "middayDrawDate": "Thursday, October 22, 2026",
-    "eveningDrawDate": "Thursday, October 22, 2026",
+    "drawDate": "Midday: Friday, October 23, 2026, 12:29 PM ET; Evening: Friday, October 23, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-10-23",
+    "eveningDateKey": "2026-10-23",
+    "middayDrawDate": "Friday, October 23, 2026",
+    "eveningDrawDate": "Friday, October 23, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Thursday, October 22, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Thursday, October 22, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "1 - 7 - 7 - 7 - 6",
-    "eveningWinningNumbers": "8 - 1 - 1 - 9 - 4",
-    "winningNumbers": "Midday: 1 - 7 - 7 - 7 - 6 | Evening: 8 - 1 - 1 - 9 - 4",
+    "middayDrawDateTime": "Friday, October 23, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Friday, October 23, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "9 - 1 - 0 - 7 - 3",
+    "eveningWinningNumbers": "9 - 1 - 0 - 7 - 3",
+    "winningNumbers": "Midday: 9 - 1 - 0 - 7 - 3 | Evening: 9 - 1 - 0 - 7 - 3",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "October 23, 2026",
     "meta": {
@@ -71,19 +71,19 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-10-22",
-      "eveningDateKey": "2026-10-22",
-      "middayDrawDate": "Thursday, October 22, 2026",
-      "eveningDrawDate": "Thursday, October 22, 2026",
+      "middayDateKey": "2026-10-23",
+      "eveningDateKey": "2026-10-23",
+      "middayDrawDate": "Friday, October 23, 2026",
+      "eveningDrawDate": "Friday, October 23, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Thursday, October 22, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Thursday, October 22, 2026, 6:59 PM ET",
+      "middayDrawDateTime": "Friday, October 23, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Friday, October 23, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
