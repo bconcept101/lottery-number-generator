@@ -1,22 +1,22 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "October 24, 2026 at 12:34 AM EDT",
+  "updatedAt": "October 24, 2026 at 6:57 AM EDT",
   "games": {
     "powerball": {
       "amount": "$674 Million",
       "cashValue": "$283.9 Million",
-      "nextDrawing": "Monday, October 26, 2026 · 10:59 PM ET",
+      "nextDrawing": "Saturday, October 24, 2026 · 10:59 PM ET",
       "status": "Estimated Jackpot"
     },
     "mega": {
-      "amount": "$433 Million",
-      "cashValue": "$178.6 Million",
+      "amount": "$443 Million",
+      "cashValue": "$186.5 Million",
       "nextDrawing": "Tuesday, October 27, 2026 · 11:00 PM ET",
       "status": "Estimated Jackpot"
     },
     "fantasy5": {
       "amount": "$195,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Sunday, October 25, 2026 · 11:34 PM ET",
+      "nextDrawing": "Saturday, October 24, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
