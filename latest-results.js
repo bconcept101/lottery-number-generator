@@ -46,29 +46,27 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Monday, October 26, 2026, 12:29 PM ET; Evening: Monday, October 26, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-10-26",
+    "drawDate": "Midday: Tuesday, October 27, 2026, 12:29 PM ET; Evening: Monday, October 26, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-10-27",
     "eveningDateKey": "2026-10-26",
-    "middayDrawDate": "Monday, October 26, 2026",
+    "middayDrawDate": "Tuesday, October 27, 2026",
     "eveningDrawDate": "Monday, October 26, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Monday, October 26, 2026, 12:29 PM ET",
+    "middayDrawDateTime": "Tuesday, October 27, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Monday, October 26, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "3 - 9 - 1 - 0 - 4",
+    "middayWinningNumbers": "2 - 2 - 3 - 6 - 9",
     "eveningWinningNumbers": "4 - 9 - 5 - 4 - 8",
-    "winningNumbers": "Midday: 3 - 9 - 1 - 0 - 4 | Evening: 4 - 9 - 5 - 4 - 8",
+    "winningNumbers": "Midday: 2 - 2 - 3 - 6 - 9 | Evening: 4 - 9 - 5 - 4 - 8",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "October 27, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
         "WSB-TV"
@@ -76,15 +74,15 @@ const latestResults = {
       "eveningSourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "middayDateKey": "2026-10-26",
+      "middayDateKey": "2026-10-27",
       "eveningDateKey": "2026-10-26",
-      "middayDrawDate": "Monday, October 26, 2026",
+      "middayDrawDate": "Tuesday, October 27, 2026",
       "eveningDrawDate": "Monday, October 26, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Monday, October 26, 2026, 12:29 PM ET",
+      "middayDrawDateTime": "Tuesday, October 27, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Monday, October 26, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
@@ -106,7 +104,7 @@ const latestResults = {
       ],
       "drawDateKey": "2026-10-26",
       "consensusCount": 1,
-      "candidateCount": 2
+      "candidateCount": 1
     }
   }
 };
