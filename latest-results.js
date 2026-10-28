@@ -46,45 +46,43 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Tuesday, October 27, 2026, 12:29 PM ET; Evening: Tuesday, October 27, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-10-27",
-    "eveningDateKey": "2026-10-27",
-    "middayDrawDate": "Tuesday, October 27, 2026",
-    "eveningDrawDate": "Tuesday, October 27, 2026",
+    "drawDate": "Midday: Wednesday, October 28, 2026, 12:29 PM ET; Evening: Wednesday, October 28, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-10-28",
+    "eveningDateKey": "2026-10-28",
+    "middayDrawDate": "Wednesday, October 28, 2026",
+    "eveningDrawDate": "Wednesday, October 28, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Tuesday, October 27, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Tuesday, October 27, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "2 - 2 - 3 - 6 - 9",
-    "eveningWinningNumbers": "6 - 3 - 8 - 7 - 9",
-    "winningNumbers": "Midday: 2 - 2 - 3 - 6 - 9 | Evening: 6 - 3 - 8 - 7 - 9",
+    "middayDrawDateTime": "Wednesday, October 28, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Wednesday, October 28, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "6 - 4 - 9 - 8 - 1",
+    "eveningWinningNumbers": "6 - 4 - 9 - 8 - 1",
+    "winningNumbers": "Midday: 6 - 4 - 9 - 8 - 1 | Evening: 6 - 4 - 9 - 8 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "October 28, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
         "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-10-27",
-      "eveningDateKey": "2026-10-27",
-      "middayDrawDate": "Tuesday, October 27, 2026",
-      "eveningDrawDate": "Tuesday, October 27, 2026",
+      "middayDateKey": "2026-10-28",
+      "eveningDateKey": "2026-10-28",
+      "middayDrawDate": "Wednesday, October 28, 2026",
+      "eveningDrawDate": "Wednesday, October 28, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Tuesday, October 27, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Tuesday, October 27, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayDrawDateTime": "Wednesday, October 28, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Wednesday, October 28, 2026, 6:59 PM ET",
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
