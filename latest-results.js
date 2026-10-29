@@ -2,12 +2,12 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, October 26, 2026",
-    "drawDateKey": "2026-10-26",
-    "winningNumbers": "18 - 26 - 49 - 50 - 54",
+    "drawDate": "Wednesday, October 28, 2026",
+    "drawDateKey": "2026-10-28",
+    "winningNumbers": "11 - 13 - 16 - 47 - 60",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "01",
-    "lastUpdated": "October 28, 2026",
+    "extraNumber": "13",
+    "lastUpdated": "October 29, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-10-26",
+      "drawDateKey": "2026-10-28",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "14 - 19 - 21 - 45 - 67",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "03",
-    "lastUpdated": "October 28, 2026",
+    "lastUpdated": "October 29, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -56,10 +56,10 @@ const latestResults = {
     "middayDrawDateTime": "Wednesday, October 28, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Wednesday, October 28, 2026, 6:59 PM ET",
     "middayWinningNumbers": "6 - 4 - 9 - 8 - 1",
-    "eveningWinningNumbers": "6 - 4 - 9 - 8 - 1",
-    "winningNumbers": "Midday: 6 - 4 - 9 - 8 - 1 | Evening: 6 - 4 - 9 - 8 - 1",
+    "eveningWinningNumbers": "8 - 1 - 8 - 1 - 0",
+    "winningNumbers": "Midday: 6 - 4 - 9 - 8 - 1 | Evening: 8 - 1 - 8 - 1 - 0",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "October 28, 2026",
+    "lastUpdated": "October 29, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -71,10 +71,10 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "Lottery.net"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://www.lottery.net/georgia/five-evening/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-10-28",
       "eveningDateKey": "2026-10-28",
@@ -91,11 +91,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, October 27, 2026",
-    "drawDateKey": "2026-10-27",
-    "winningNumbers": "07 - 15 - 18 - 20 - 31",
+    "drawDate": "Wednesday, October 28, 2026",
+    "drawDateKey": "2026-10-28",
+    "winningNumbers": "09 - 12 - 23 - 33 - 34",
     "drawType": "Night draw",
-    "lastUpdated": "October 28, 2026",
+    "lastUpdated": "October 29, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -106,7 +106,7 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
-      "drawDateKey": "2026-10-27",
+      "drawDateKey": "2026-10-28",
       "consensusCount": 2,
       "candidateCount": 2
     }
