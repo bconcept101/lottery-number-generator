@@ -1,5 +1,5 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "October 30, 2026 at 3:20 PM EDT",
+  "updatedAt": "October 30, 2026 at 7:44 PM EDT",
   "games": {
     "powerball": {
       "amount": "$760 Million",
