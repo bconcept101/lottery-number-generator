@@ -2,11 +2,11 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Saturday, November 7, 2026",
-    "drawDateKey": "2026-11-07",
-    "winningNumbers": "03 - 36 - 37 - 56 - 61",
+    "drawDate": "Monday, November 9, 2026",
+    "drawDateKey": "2026-11-09",
+    "winningNumbers": "13 - 34 - 41 - 45 - 48",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "21",
+    "extraNumber": "25",
     "lastUpdated": "November 9, 2026",
     "meta": {
       "source": "WSB-TV",
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-07",
+      "drawDateKey": "2026-11-09",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -56,25 +56,23 @@ const latestResults = {
     "middayDrawDateTime": "Monday, November 9, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Monday, November 9, 2026, 6:59 PM ET",
     "middayWinningNumbers": "8 - 5 - 6 - 2 - 9",
-    "eveningWinningNumbers": "8 - 5 - 6 - 2 - 9",
-    "winningNumbers": "Midday: 8 - 5 - 6 - 2 - 9 | Evening: 8 - 5 - 6 - 2 - 9",
+    "eveningWinningNumbers": "4 - 2 - 1 - 6 - 1",
+    "winningNumbers": "Midday: 8 - 5 - 6 - 2 - 9 | Evening: 4 - 2 - 1 - 6 - 1",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "November 9, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/five-midday/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
-        "Lottery.net"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://www.lottery.net/georgia/five-evening/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-11-09",
       "eveningDateKey": "2026-11-09",
@@ -84,7 +82,7 @@ const latestResults = {
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Monday, November 9, 2026, 12:29 PM ET",
       "eveningDrawDateTime": "Monday, November 9, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
@@ -99,16 +97,14 @@ const latestResults = {
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
-        "WSB-TV",
-        "Lottery.net"
+        "WSB-TV"
       ],
       "sourceUrls": [
-        "https://www.wsbtv.com/lottery/",
-        "https://www.lottery.net/georgia/fantasy-5/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "drawDateKey": "2026-11-08",
-      "consensusCount": 2,
-      "candidateCount": 2
+      "consensusCount": 1,
+      "candidateCount": 1
     }
   }
 };
