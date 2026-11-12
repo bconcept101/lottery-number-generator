@@ -46,18 +46,18 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Wednesday, November 11, 2026, 12:29 PM ET; Evening: Wednesday, November 11, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-11-11",
-    "eveningDateKey": "2026-11-11",
-    "middayDrawDate": "Wednesday, November 11, 2026",
-    "eveningDrawDate": "Wednesday, November 11, 2026",
+    "drawDate": "Midday: Thursday, November 12, 2026, 12:29 PM ET; Evening: Thursday, November 12, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-11-12",
+    "eveningDateKey": "2026-11-12",
+    "middayDrawDate": "Thursday, November 12, 2026",
+    "eveningDrawDate": "Thursday, November 12, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Wednesday, November 11, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Wednesday, November 11, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "6 - 3 - 2 - 0 - 0",
-    "eveningWinningNumbers": "3 - 1 - 3 - 7 - 5",
-    "winningNumbers": "Midday: 6 - 3 - 2 - 0 - 0 | Evening: 3 - 1 - 3 - 7 - 5",
+    "middayDrawDateTime": "Thursday, November 12, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Thursday, November 12, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "8 - 6 - 8 - 5 - 6",
+    "eveningWinningNumbers": "8 - 6 - 8 - 5 - 6",
+    "winningNumbers": "Midday: 8 - 6 - 8 - 5 - 6 | Evening: 8 - 6 - 8 - 5 - 6",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "November 12, 2026",
     "meta": {
@@ -71,19 +71,19 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-11-11",
-      "eveningDateKey": "2026-11-11",
-      "middayDrawDate": "Wednesday, November 11, 2026",
-      "eveningDrawDate": "Wednesday, November 11, 2026",
+      "middayDateKey": "2026-11-12",
+      "eveningDateKey": "2026-11-12",
+      "middayDrawDate": "Thursday, November 12, 2026",
+      "eveningDrawDate": "Thursday, November 12, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Wednesday, November 11, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Wednesday, November 11, 2026, 6:59 PM ET",
+      "middayDrawDateTime": "Thursday, November 12, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Thursday, November 12, 2026, 6:59 PM ET",
       "middayConsensusCount": 2,
       "eveningConsensusCount": 1
     }
