@@ -46,45 +46,43 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Thursday, November 12, 2026, 12:29 PM ET; Evening: Thursday, November 12, 2026, 6:59 PM ET",
-    "middayDateKey": "2026-11-12",
-    "eveningDateKey": "2026-11-12",
-    "middayDrawDate": "Thursday, November 12, 2026",
-    "eveningDrawDate": "Thursday, November 12, 2026",
+    "drawDate": "Midday: Friday, November 13, 2026, 12:29 PM ET; Evening: Friday, November 13, 2026, 6:59 PM ET",
+    "middayDateKey": "2026-11-13",
+    "eveningDateKey": "2026-11-13",
+    "middayDrawDate": "Friday, November 13, 2026",
+    "eveningDrawDate": "Friday, November 13, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
-    "middayDrawDateTime": "Thursday, November 12, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Thursday, November 12, 2026, 6:59 PM ET",
-    "middayWinningNumbers": "8 - 6 - 8 - 5 - 6",
-    "eveningWinningNumbers": "4 - 9 - 1 - 0 - 6",
-    "winningNumbers": "Midday: 8 - 6 - 8 - 5 - 6 | Evening: 4 - 9 - 1 - 0 - 6",
+    "middayDrawDateTime": "Friday, November 13, 2026, 12:29 PM ET",
+    "eveningDrawDateTime": "Friday, November 13, 2026, 6:59 PM ET",
+    "middayWinningNumbers": "0 - 9 - 4 - 7 - 6",
+    "eveningWinningNumbers": "0 - 9 - 4 - 7 - 6",
+    "winningNumbers": "Midday: 0 - 9 - 4 - 7 - 6 | Evening: 0 - 9 - 4 - 7 - 6",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "November 13, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
-        "WSB-TV",
         "Lottery.net"
       ],
       "middaySourceUrls": [
-        "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "WSB-TV"
+        "Lottery.net"
       ],
       "eveningSourceUrls": [
-        "https://www.wsbtv.com/lottery/"
+        "https://www.lottery.net/georgia/five-evening/numbers"
       ],
-      "middayDateKey": "2026-11-12",
-      "eveningDateKey": "2026-11-12",
-      "middayDrawDate": "Thursday, November 12, 2026",
-      "eveningDrawDate": "Thursday, November 12, 2026",
+      "middayDateKey": "2026-11-13",
+      "eveningDateKey": "2026-11-13",
+      "middayDrawDate": "Friday, November 13, 2026",
+      "eveningDrawDate": "Friday, November 13, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
-      "middayDrawDateTime": "Thursday, November 12, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Thursday, November 12, 2026, 6:59 PM ET",
-      "middayConsensusCount": 2,
+      "middayDrawDateTime": "Friday, November 13, 2026, 12:29 PM ET",
+      "eveningDrawDateTime": "Friday, November 13, 2026, 6:59 PM ET",
+      "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
   },
