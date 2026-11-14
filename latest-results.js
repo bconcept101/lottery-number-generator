@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "08 - 42 - 45 - 51 - 57",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "17",
-    "lastUpdated": "November 13, 2026",
+    "lastUpdated": "November 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -24,12 +24,12 @@ const latestResults = {
   "mega": {
     "gameName": "Mega Millions",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, November 10, 2026",
-    "drawDateKey": "2026-11-10",
-    "winningNumbers": "02 - 18 - 25 - 30 - 65",
+    "drawDate": "Friday, November 13, 2026",
+    "drawDateKey": "2026-11-13",
+    "winningNumbers": "10 - 22 - 33 - 49 - 57",
     "extraNumberLabel": "Mega Ball Number",
-    "extraNumber": "22",
-    "lastUpdated": "November 13, 2026",
+    "extraNumber": "18",
+    "lastUpdated": "November 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -38,7 +38,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-10",
+      "drawDateKey": "2026-11-13",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -56,10 +56,10 @@ const latestResults = {
     "middayDrawDateTime": "Friday, November 13, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Friday, November 13, 2026, 6:59 PM ET",
     "middayWinningNumbers": "0 - 9 - 4 - 7 - 6",
-    "eveningWinningNumbers": "0 - 9 - 4 - 7 - 6",
-    "winningNumbers": "Midday: 0 - 9 - 4 - 7 - 6 | Evening: 0 - 9 - 4 - 7 - 6",
+    "eveningWinningNumbers": "0 - 8 - 8 - 9 - 0",
+    "winningNumbers": "Midday: 0 - 9 - 4 - 7 - 6 | Evening: 0 - 8 - 8 - 9 - 0",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "November 13, 2026",
+    "lastUpdated": "November 14, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -69,10 +69,10 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/"
       ],
       "eveningSourceNames": [
-        "Current Website Data"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://lottery-number-generator-6ey.pages.dev/latest-results.js"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-11-13",
       "eveningDateKey": "2026-11-13",
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Thursday, November 12, 2026",
-    "drawDateKey": "2026-11-12",
-    "winningNumbers": "11 - 15 - 18 - 20 - 23",
+    "drawDate": "Friday, November 13, 2026",
+    "drawDateKey": "2026-11-13",
+    "winningNumbers": "06 - 07 - 28 - 30 - 34",
     "drawType": "Night draw",
-    "lastUpdated": "November 13, 2026",
+    "lastUpdated": "November 14, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-12",
+      "drawDateKey": "2026-11-13",
       "consensusCount": 1,
       "candidateCount": 1
     }
