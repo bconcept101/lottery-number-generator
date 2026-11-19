@@ -1,10 +1,10 @@
 window.PILOT_JACKPOTS = {
-  "updatedAt": "November 18, 2026 at 7:21 PM EST",
+  "updatedAt": "November 19, 2026 at 5:18 AM EST",
   "games": {
     "powerball": {
-      "amount": "$92 Million",
-      "cashValue": "$38.5 Million",
-      "nextDrawing": "Wednesday, November 18, 2026 · 10:59 PM ET",
+      "amount": "$114 Million",
+      "cashValue": "$47.7 Million",
+      "nextDrawing": "Saturday, November 21, 2026 · 10:59 PM ET",
       "status": "Estimated Jackpot"
     },
     "mega": {
@@ -14,9 +14,9 @@ window.PILOT_JACKPOTS = {
       "status": "Estimated Jackpot"
     },
     "fantasy5": {
-      "amount": "$125,000",
+      "amount": "$150,000",
       "cashValue": "Cash jackpot",
-      "nextDrawing": "Wednesday, November 18, 2026 · 11:34 PM ET",
+      "nextDrawing": "Thursday, November 19, 2026 · 11:34 PM ET",
       "status": "Estimated Jackpot"
     },
     "pick5": {
