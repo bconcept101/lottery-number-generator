@@ -2,12 +2,12 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, November 16, 2026",
-    "drawDateKey": "2026-11-16",
-    "winningNumbers": "17 - 35 - 48 - 60 - 69",
+    "drawDate": "Wednesday, November 18, 2026",
+    "drawDateKey": "2026-11-18",
+    "winningNumbers": "18 - 31 - 43 - 51 - 62",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "17",
-    "lastUpdated": "November 18, 2026",
+    "extraNumber": "12",
+    "lastUpdated": "November 19, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-16",
+      "drawDateKey": "2026-11-18",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "03 - 10 - 19 - 28 - 33",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "21",
-    "lastUpdated": "November 18, 2026",
+    "lastUpdated": "November 19, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -46,20 +46,20 @@ const latestResults = {
   "pick5": {
     "gameName": "Pick 5 / Georgia Five",
     "status": "Latest result reviewed daily",
-    "drawDate": "Midday: Wednesday, November 18, 2026, 12:29 PM ET; Evening: Tuesday, November 17, 2026, 6:59 PM ET",
+    "drawDate": "Midday: Wednesday, November 18, 2026, 12:29 PM ET; Evening: Wednesday, November 18, 2026, 6:59 PM ET",
     "middayDateKey": "2026-11-18",
-    "eveningDateKey": "2026-11-17",
+    "eveningDateKey": "2026-11-18",
     "middayDrawDate": "Wednesday, November 18, 2026",
-    "eveningDrawDate": "Tuesday, November 17, 2026",
+    "eveningDrawDate": "Wednesday, November 18, 2026",
     "middayDrawTime": "12:29 PM ET",
     "eveningDrawTime": "6:59 PM ET",
     "middayDrawDateTime": "Wednesday, November 18, 2026, 12:29 PM ET",
-    "eveningDrawDateTime": "Tuesday, November 17, 2026, 6:59 PM ET",
+    "eveningDrawDateTime": "Wednesday, November 18, 2026, 6:59 PM ET",
     "middayWinningNumbers": "3 - 0 - 0 - 1 - 1",
-    "eveningWinningNumbers": "5 - 5 - 0 - 8 - 9",
-    "winningNumbers": "Midday: 3 - 0 - 0 - 1 - 1 | Evening: 5 - 5 - 0 - 8 - 9",
+    "eveningWinningNumbers": "0 - 6 - 9 - 3 - 6",
+    "winningNumbers": "Midday: 3 - 0 - 0 - 1 - 1 | Evening: 0 - 6 - 9 - 3 - 6",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "November 18, 2026",
+    "lastUpdated": "November 19, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -75,13 +75,13 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-11-18",
-      "eveningDateKey": "2026-11-17",
+      "eveningDateKey": "2026-11-18",
       "middayDrawDate": "Wednesday, November 18, 2026",
-      "eveningDrawDate": "Tuesday, November 17, 2026",
+      "eveningDrawDate": "Wednesday, November 18, 2026",
       "middayDrawTime": "12:29 PM ET",
       "eveningDrawTime": "6:59 PM ET",
       "middayDrawDateTime": "Wednesday, November 18, 2026, 12:29 PM ET",
-      "eveningDrawDateTime": "Tuesday, November 17, 2026, 6:59 PM ET",
+      "eveningDrawDateTime": "Wednesday, November 18, 2026, 6:59 PM ET",
       "middayConsensusCount": 1,
       "eveningConsensusCount": 1
     }
@@ -89,11 +89,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, November 17, 2026",
-    "drawDateKey": "2026-11-17",
-    "winningNumbers": "01 - 12 - 20 - 26 - 42",
+    "drawDate": "Wednesday, November 18, 2026",
+    "drawDateKey": "2026-11-18",
+    "winningNumbers": "14 - 25 - 26 - 32 - 34",
     "drawType": "Night draw",
-    "lastUpdated": "November 18, 2026",
+    "lastUpdated": "November 19, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -102,7 +102,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-17",
+      "drawDateKey": "2026-11-18",
       "consensusCount": 1,
       "candidateCount": 1
     }
