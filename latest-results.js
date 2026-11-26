@@ -2,11 +2,11 @@ const latestResults = {
   "powerball": {
     "gameName": "Powerball",
     "status": "Latest result reviewed daily",
-    "drawDate": "Monday, November 23, 2026",
-    "drawDateKey": "2026-11-23",
-    "winningNumbers": "07 - 09 - 27 - 40 - 58",
+    "drawDate": "Wednesday, November 25, 2026",
+    "drawDateKey": "2026-11-25",
+    "winningNumbers": "23 - 43 - 57 - 58 - 68",
     "extraNumberLabel": "Powerball Number",
-    "extraNumber": "19",
+    "extraNumber": "12",
     "lastUpdated": "November 25, 2026",
     "meta": {
       "source": "WSB-TV",
@@ -16,7 +16,7 @@ const latestResults = {
       "sourceUrls": [
         "https://www.wsbtv.com/lottery/"
       ],
-      "drawDateKey": "2026-11-23",
+      "drawDateKey": "2026-11-25",
       "consensusCount": 1,
       "candidateCount": 1
     }
@@ -56,8 +56,8 @@ const latestResults = {
     "middayDrawDateTime": "Wednesday, November 25, 2026, 12:29 PM ET",
     "eveningDrawDateTime": "Wednesday, November 25, 2026, 6:59 PM ET",
     "middayWinningNumbers": "3 - 9 - 5 - 2 - 3",
-    "eveningWinningNumbers": "3 - 9 - 5 - 2 - 3",
-    "winningNumbers": "Midday: 3 - 9 - 5 - 2 - 3 | Evening: 3 - 9 - 5 - 2 - 3",
+    "eveningWinningNumbers": "1 - 7 - 1 - 9 - 7",
+    "winningNumbers": "Midday: 3 - 9 - 5 - 2 - 3 | Evening: 1 - 7 - 1 - 9 - 7",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
     "lastUpdated": "November 25, 2026",
     "meta": {
@@ -71,10 +71,10 @@ const latestResults = {
         "https://www.lottery.net/georgia/five-midday/numbers"
       ],
       "eveningSourceNames": [
-        "Lottery.net"
+        "WSB-TV"
       ],
       "eveningSourceUrls": [
-        "https://www.lottery.net/georgia/five-evening/numbers"
+        "https://www.wsbtv.com/lottery/"
       ],
       "middayDateKey": "2026-11-25",
       "eveningDateKey": "2026-11-25",
