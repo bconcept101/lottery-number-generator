@@ -7,7 +7,7 @@ const latestResults = {
     "winningNumbers": "23 - 43 - 57 - 58 - 68",
     "extraNumberLabel": "Powerball Number",
     "extraNumber": "12",
-    "lastUpdated": "November 25, 2026",
+    "lastUpdated": "November 26, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -29,7 +29,7 @@ const latestResults = {
     "winningNumbers": "38 - 42 - 44 - 45 - 62",
     "extraNumberLabel": "Mega Ball Number",
     "extraNumber": "16",
-    "lastUpdated": "November 25, 2026",
+    "lastUpdated": "November 26, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -59,7 +59,7 @@ const latestResults = {
     "eveningWinningNumbers": "1 - 7 - 1 - 9 - 7",
     "winningNumbers": "Midday: 3 - 9 - 5 - 2 - 3 | Evening: 1 - 7 - 1 - 9 - 7",
     "drawType": "Midday draw: 12:29 PM ET; Evening draw: 6:59 PM ET",
-    "lastUpdated": "November 25, 2026",
+    "lastUpdated": "November 26, 2026",
     "meta": {
       "source": "Multi-source validation",
       "middaySourceNames": [
@@ -91,11 +91,11 @@ const latestResults = {
   "fantasy5": {
     "gameName": "Fantasy 5 / Georgia Fantasy 5",
     "status": "Latest result reviewed daily",
-    "drawDate": "Tuesday, November 24, 2026",
-    "drawDateKey": "2026-11-24",
-    "winningNumbers": "15 - 18 - 30 - 32 - 36",
+    "drawDate": "Wednesday, November 25, 2026",
+    "drawDateKey": "2026-11-25",
+    "winningNumbers": "19 - 24 - 28 - 34 - 40",
     "drawType": "Night draw",
-    "lastUpdated": "November 25, 2026",
+    "lastUpdated": "November 26, 2026",
     "meta": {
       "source": "WSB-TV",
       "sourceNames": [
@@ -106,7 +106,7 @@ const latestResults = {
         "https://www.wsbtv.com/lottery/",
         "https://www.lottery.net/georgia/fantasy-5/numbers"
       ],
-      "drawDateKey": "2026-11-24",
+      "drawDateKey": "2026-11-25",
       "consensusCount": 2,
       "candidateCount": 2
     }
